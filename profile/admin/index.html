@@ -21,8 +21,6 @@
         }
 
         body {
-            background-color: #12100e;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -35,7 +33,6 @@
         }
 
         .back-btn {
-            color: #ffb703;
             font-size: 18px;
             text-decoration: none;
         }
@@ -43,7 +40,6 @@
         .main-title {
             font-size: 18px;
             font-weight: 900;
-            color: #ffb703;
         }
 
         .menu-grid {
@@ -53,20 +49,13 @@
         }
 
         .menu-item {
-            background: #191612;
-            border: 1px solid #26221c;
             border-radius: 16px;
             padding: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             text-decoration: none;
-            color: #fff;
             transition: 0.2s;
-        }
-
-        .menu-item:active {
-            border-color: #ffb703;
         }
 
         .menu-left {
@@ -78,8 +67,6 @@
         .menu-icon {
             width: 40px;
             height: 40px;
-            background: rgba(255, 183, 3, 0.15);
-            color: #ffb703;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -95,11 +82,9 @@
 
         .menu-info p {
             font-size: 11px;
-            color: #888;
         }
 
         .menu-arrow {
-            color: #ffb703;
             font-size: 14px;
         }
     </style>
@@ -142,11 +127,12 @@
                     <p>Manage social handles and channels</p>
                 </div>
             </div>
-            <div class="menu-arrow"><c class="fa-solid fa-chevron-right"></c></div>
+            <div class="menu-arrow"><i class="fa-solid fa-chevron-right"></i></div>
         </a>
     </div>
 
-    <!-- Firebase Realtime Database Integration -->
+    <!-- Linked to Profile Folder's Centralized Aura JS -->
+    <script src="../aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
