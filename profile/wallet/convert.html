@@ -17,8 +17,6 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -31,9 +29,6 @@
         }
 
         .back-btn {
-            background: #141414;
-            border: 1px solid #222;
-            color: #ffb703;
             width: 36px;
             height: 36px;
             border-radius: 10px;
@@ -50,16 +45,12 @@
         }
 
         .convert-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .input-group {
-            background: #1c1c1c;
-            border: 1px solid #2a2a2a;
             border-radius: 14px;
             padding: 14px;
             margin-bottom: 12px;
@@ -67,7 +58,6 @@
 
         .input-label {
             font-size: 11px;
-            color: #777;
             margin-bottom: 6px;
             font-weight: 700;
             display: flex;
@@ -83,7 +73,6 @@
         .input-value {
             font-size: 20px;
             font-weight: 900;
-            color: #fff;
             background: transparent;
             border: none;
             outline: none;
@@ -94,13 +83,10 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            background: #141414;
             padding: 6px 12px;
             border-radius: 10px;
             font-size: 12px;
             font-weight: 800;
-            color: #ffb703;
-            border: 1px solid #2a2a2a;
         }
 
         .swap-icon-container {
@@ -113,19 +99,14 @@
         .swap-circle {
             width: 36px;
             height: 36px;
-            background: #ffb703;
-            color: #000;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
-            box-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
         }
 
         .convert-btn {
-            background: #ffb703;
-            color: #000;
             border: none;
             width: 100%;
             padding: 14px;
@@ -133,12 +114,10 @@
             font-weight: 900;
             font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
         }
 
         .info-note {
             font-size: 11px;
-            color: #777;
             text-align: center;
             margin-top: 12px;
         }
@@ -149,8 +128,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #111;
-            border-top: 1px solid #222;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -162,17 +139,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
             font-size: 10px;
             gap: 4px;
         }
 
         .nav-item i {
             font-size: 16px;
-        }
-
-        .nav-item.active {
-            color: #ffb703;
         }
     </style>
 </head>
@@ -191,7 +163,7 @@
             </div>
             <div class="input-field-row">
                 <input type="number" class="input-value" value="49">
-                <div class="currency-badge"><i class="fa-solid fa-bolt" style="color: #ffb703;"></i> WAVES</div>
+                <div class="currency-badge"><i class="fa-solid fa-bolt"></i> WAVES</div>
             </div>
         </div>
 
@@ -204,8 +176,8 @@
                 <span>YOU GET (ESTIMATED)</span>
             </div>
             <div class="input-field-row">
-                <input type="text" class="input-value" value="0.00" readonly style="color: #22c55e;">
-                <div class="currency-badge" style="color: #22c55e;"><i class="fa-solid fa-dollar-sign"></i> USDT</div>
+                <input type="text" class="input-value" value="0.00" readonly>
+                <div class="currency-badge"><i class="fa-solid fa-dollar-sign"></i> USDT</div>
             </div>
         </div>
 
@@ -237,6 +209,8 @@
         </a>
     </div>
 
+    <!-- Linked to Profile Folder's Centralized Aura JS -->
+    <script src="../aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
