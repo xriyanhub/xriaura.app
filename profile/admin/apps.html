@@ -17,8 +17,6 @@
         }
 
         body {
-            background-color: #12100e;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -31,9 +29,6 @@
         }
 
         .back-btn {
-            background: #191612;
-            border: 1px solid #26221c;
-            color: #ffb703;
             width: 36px;
             height: 36px;
             border-radius: 10px;
@@ -57,15 +52,12 @@
         .section-title {
             font-size: 11px;
             font-weight: 800;
-            color: #ffb703;
             text-transform: uppercase;
             margin-bottom: 10px;
             letter-spacing: 0.5px;
         }
 
         .menu-list {
-            background: #191612;
-            border: 1px solid #26221c;
             border-radius: 16px;
             overflow: hidden;
         }
@@ -75,14 +67,9 @@
             align-items: center;
             justify-content: space-between;
             padding: 14px 16px;
-            border-bottom: 1px solid #221e18;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
-        }
-
-        .menu-item:last-child {
-            border-bottom: none;
         }
 
         .menu-left {
@@ -101,12 +88,6 @@
             font-size: 15px;
         }
 
-        .icon-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .icon-yellow { background: rgba(255, 183, 3, 0.15); color: #ffb703; }
-        .icon-blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-        .icon-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
-        .icon-green { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
-
         .menu-info h5 {
             font-size: 13px;
             font-weight: 700;
@@ -115,12 +96,10 @@
 
         .menu-info p {
             font-size: 11px;
-            color: #888;
         }
 
         .menu-right {
             font-size: 12px;
-            color: #888;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -132,8 +111,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #14110d;
-            border-top: 1px solid #26221c;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -145,17 +122,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #777;
             font-size: 10px;
             gap: 4px;
         }
 
         .nav-item i {
             font-size: 16px;
-        }
-
-        .nav-item.active {
-            color: #ffb703;
         }
     </style>
 </head>
@@ -218,7 +190,7 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar (Path adjusted for profile/admin/ directory) -->
     <div class="nav-bar">
         <a href="../../../index.html" class="nav-item">
             <i class="fa-solid fa-house"></i>
@@ -242,6 +214,8 @@
         </a>
     </div>
 
+    <!-- Linked to Profile Folder's Aura JS (or custom admin aura) -->
+    <script src="../aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
