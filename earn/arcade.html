@@ -17,8 +17,6 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -29,7 +27,6 @@
 
         .subtitle {
             font-size: 11px;
-            color: #ffb703;
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -43,7 +40,6 @@
 
         .desc {
             font-size: 12px;
-            color: #888;
             margin-bottom: 16px;
         }
 
@@ -55,8 +51,6 @@
         }
 
         .stat-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 14px;
             flex: 1;
@@ -65,19 +59,15 @@
         .stat-card .val {
             font-size: 16px;
             font-weight: 800;
-            color: #ffb703;
             margin-bottom: 2px;
         }
 
         .stat-card .lbl {
             font-size: 11px;
-            color: #777;
         }
 
         /* Contest Results Banner */
         .contest-banner {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 12px 16px;
             display: flex;
@@ -94,7 +84,6 @@
 
         .contest-left i {
             font-size: 20px;
-            color: #ffb703;
         }
 
         .contest-info h5 {
@@ -104,12 +93,9 @@
 
         .contest-info p {
             font-size: 10px;
-            color: #777;
         }
 
         .view-btn {
-            background: #ffb703;
-            color: #000;
             border: none;
             padding: 6px 14px;
             border-radius: 10px;
@@ -120,8 +106,6 @@
 
         /* Featured Game Card */
         .featured-game {
-            background: linear-gradient(135deg, #2a220c, #141414);
-            border: 1px solid #ffb703;
             border-radius: 20px;
             padding: 16px;
             margin-bottom: 16px;
@@ -135,7 +119,6 @@
 
         .game-sub {
             font-size: 12px;
-            color: #aaa;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -143,8 +126,6 @@
         }
 
         .play-btn {
-            background: #ffb703;
-            color: #000;
             border: none;
             padding: 8px 20px;
             border-radius: 10px;
@@ -158,8 +139,6 @@
 
         /* Daily Bonus Card */
         .bonus-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 14px;
             display: flex;
@@ -180,13 +159,10 @@
             width: 42px;
             height: 42px;
             border-radius: 12px;
-            background: #1c1c1c;
-            border: 1px solid #2a2a2a;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            color: #ffb703;
         }
 
         .bonus-info h4 {
@@ -197,7 +173,6 @@
 
         .bonus-info p {
             font-size: 11px;
-            color: #777;
         }
 
         /* Categories Filter */
@@ -215,21 +190,12 @@
         }
 
         .cat-chip {
-            background: #141414;
-            border: 1px solid #222;
-            color: #888;
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
-        }
-
-        .cat-chip.active {
-            background: #ffb703;
-            color: #000;
-            border-color: #ffb703;
         }
 
         /* Game Grid */
@@ -241,8 +207,6 @@
         }
 
         .game-card-mini {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 12px;
             text-align: left;
@@ -251,14 +215,12 @@
         .mini-thumb {
             width: 100%;
             height: 80px;
-            background: #1c1c1c;
             border-radius: 10px;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            color: #ffb703;
         }
 
         .game-card-mini h5 {
@@ -269,7 +231,6 @@
 
         .game-card-mini p {
             font-size: 11px;
-            color: #ffb703;
             font-weight: 600;
         }
 
@@ -279,8 +240,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #111;
-            border-top: 1px solid #222;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -292,17 +251,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
             font-size: 10px;
             gap: 4px;
         }
 
         .nav-item i {
             font-size: 16px;
-        }
-
-        .nav-item.active {
-            color: #ffb703;
         }
     </style>
 </head>
@@ -398,16 +352,18 @@
             <i class="fa-solid fa-rotate"></i>
             <span>Earn</span>
         </a>
-        <a href="bio.html" class="nav-item">
+        <a href="../refer/index.html" class="nav-item">
             <i class="fa-solid fa-user-group"></i>
             <span>Refer</span>
         </a>
-        <a href="convert.html" class="nav-item">
+        <a href="../profile/index.html" class="nav-item">
             <i class="fa-solid fa-user"></i>
             <span>Profile</span>
         </a>
     </div>
 
+    <!-- Linked to Earn Folder's Centralized Aura JS -->
+    <script src="aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
