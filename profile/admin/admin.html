@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>XriAura - Secure Control Center</title>
+    <title>XriAura - Admin Control Center</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase App & Firestore SDKs (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -26,164 +30,139 @@
         .header-top {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .back-btn {
-            background: #191612;
-            border: 1px solid #26221c;
-            color: #ffb703;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            text-decoration: none;
-            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         .main-title {
             font-size: 18px;
             font-weight: 900;
-        }
-
-        /* Lockscreen PIN Box */
-        #lockScreen {
-            background: #191612;
-            border: 1px solid #26221c;
-            border-radius: 20px;
-            padding: 40px 20px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
             text-align: center;
-            margin-top: 40px;
         }
 
-        .lock-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 183, 3, 0.15);
-            color: #ffb703;
+        /* 3D Live Dynamic Glowing Cards */
+        @keyframes liveGlow3D {
+            0% {
+                border-color: #ffb703;
+                box-shadow: 0 10px 30px rgba(255, 183, 3, 0.15), inset 0 0 12px rgba(255, 183, 3, 0.08);
+            }
+            50% {
+                border-color: #fb8500;
+                box-shadow: 0 15px 35px rgba(251, 133, 0, 0.35), inset 0 0 20px rgba(251, 133, 0, 0.2);
+            }
+            100% {
+                border-color: #ffb703;
+                box-shadow: 0 10px 30px rgba(255, 183, 3, 0.15), inset 0 0 12px rgba(255, 183, 3, 0.08);
+            }
+        }
+
+        .admin-card {
+            background: linear-gradient(135deg, #2a220c, #141414);
+            border: 1px solid #ffb703;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 16px;
+            position: relative;
+            animation: liveGlow3D 3.5s infinite ease-in-out;
+        }
+
+        .card-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed rgba(255, 183, 3, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .card-title-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-thumb {
+            width: 42px;
+            height: 42px;
+            background: #1c1c1c;
+            border: 2px solid #ffb703;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 16px auto;
-            border: 2px solid #ffb703;
-        }
-
-        #lockScreen h3 {
+            color: #ffb703;
             font-size: 18px;
-            font-weight: 900;
-            margin-bottom: 6px;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.3);
         }
 
-        #lockScreen p {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 20px;
-        }
-
-        /* Admin Dashboard (Hidden initially) */
-        #adminDashboard {
-            display: none;
-        }
-
-        .tabs-container {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            margin-bottom: 20px;
-            padding-bottom: 4px;
-            scrollbar-width: none;
-        }
-
-        .tabs-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            background: #191612;
-            border: 1px solid #26221c;
-            color: #888;
-            padding: 10px 16px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            white-space: nowrap;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-        }
-
-        .tab-btn.active {
-            background: #ffb703;
-            color: #000000;
-            border-color: #ffb703;
-        }
-
-        .admin-card {
-            background: #191612;
-            border: 1px solid #26221c;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            font-size: 15px;
+        .card-title-box h3 {
+            font-size: 14px;
             font-weight: 800;
             color: #ffb703;
-            border-bottom: 1px dashed #26221c;
-            padding-bottom: 12px;
+        }
+
+        .slot-badge {
+            background: #1c1c1c;
+            color: #ffb703;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 10px;
+            border: 1px solid #ffb703;
+            box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
         }
 
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .input-label {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
-            color: #bbb;
-            margin-bottom: 6px;
+            color: #aaa;
+            margin-bottom: 4px;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .input-field {
             width: 100%;
-            background: #1f1b15;
-            border: 1px solid #2a241c;
+            background: #1c1c1c;
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
-            padding: 12px 14px;
+            padding: 10px 12px;
             color: #ffffff;
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
+            transition: 0.3s;
         }
 
         .input-field:focus {
             border-color: #ffb703;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
         }
 
+        /* Theme Gold 3D Gradient Button */
         .save-btn {
             background: #ffb703;
             color: #000000;
             border: none;
             width: 100%;
             padding: 14px;
-            border-radius: 14px;
+            border-radius: 12px;
             font-weight: 900;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             margin-top: 10px;
             box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
+            transition: 0.2s;
+        }
+
+        .save-btn:active {
+            transform: scale(0.98);
         }
 
         /* Bottom Navigation Bar */
@@ -192,12 +171,12 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #14110d;
-            border-top: 1px solid #26221c;
+            background: #111;
+            border-top: 1px solid #222;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -205,7 +184,7 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #777;
+            color: #666;
             font-size: 10px;
             gap: 4px;
         }
@@ -222,71 +201,123 @@
 <body>
 
     <div class="header-top">
-        <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <div class="main-title">Full App Control Center</div>
+        <div class="main-title">Home Features Control Center</div>
     </div>
 
-    <!-- Security Lock Screen -->
-    <div id="lockScreen">
-        <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
-        <h3>Restricted Access</h3>
-        <p>Enter Master Security Key to unlock</p>
-        <div class="input-group">
-            <input type="password" id="pinInput" class="input-field" placeholder="Enter password..." style="text-align: center;">
-        </div>
-        <button class="save-btn" onclick="verifyPin()">Unlock Panel</button>
-    </div>
-
-    <!-- Main Protected Dashboard -->
+    <!-- Main Control Dashboard -->
     <div id="adminDashboard">
-        <div class="tabs-container">
-            <button class="tab-btn active"><i class="fa-solid fa-gear"></i> General</button>
-            <a href="apps.html" class="tab-btn"><i class="fa-solid fa-cube"></i> Apps Hub</a>
-            <a href="owner_social.html" class="tab-btn"><i class="fa-solid fa-user-shield"></i> Owner Socials</a>
+
+        <!-- Slot 1: Bio Control (bio.html) -->
+        <div class="admin-card">
+            <div class="card-top-row">
+                <div class="card-title-box">
+                    <div class="card-thumb"><i class="fa-solid fa-id-badge"></i></div>
+                    <h3>Bio Settings Control</h3>
+                </div>
+                <span class="slot-badge">Bio Hub</span>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Bio Link Requirement Status</label>
+                <input type="text" id="bioStatus" class="input-field" value="Active / Required">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Bio Reward Bonus (WAVES)</label>
+                <input type="number" id="bioBonus" class="input-field" value="100">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Target Bio Keyword</label>
+                <input type="text" id="bioKeyword" class="input-field" value="@ThunderWaves">
+            </div>
         </div>
 
+        <!-- Slot 2: Currency Convert Control (convert.html) -->
         <div class="admin-card">
-            <div class="card-header">
-                <i class="fa-solid fa-robot"></i>
-                <span>Master Bot & App Configuration</span>
+            <div class="card-top-row">
+                <div class="card-title-box">
+                    <div class="card-thumb"><i class="fa-solid fa-rotate"></i></div>
+                    <h3>Convert Settings Control</h3>
+                </div>
+                <span class="slot-badge">Convert</span>
             </div>
             <div class="input-group">
-                <label class="input-label">Bot Username (Without @)</label>
-                <input type="text" class="input-field" value="xriyan_bot">
+                <label class="input-label">Conversion Rate (Points to Token)</label>
+                <input type="text" id="convertRate" class="input-field" value="1000 WAVES = 1 TON">
             </div>
             <div class="input-group">
-                <label class="input-label">Currency Symbol</label>
-                <input type="text" class="input-field" value="WAVES">
+                <label class="input-label">Minimum Convert Limit</label>
+                <input type="number" id="convertLimit" class="input-field" value="5000">
             </div>
             <div class="input-group">
-                <label class="input-label">System Maintenance Mode</label>
-                <input type="text" class="input-field" value="Online (Active)">
+                <label class="input-label">Convert Fee (%)</label>
+                <input type="text" id="convertFee" class="input-field" value="1%">
             </div>
         </div>
 
+        <!-- Slot 3: Withdraw Control (withdraw.html) -->
         <div class="admin-card">
-            <div class="card-header">
-                <i class="fa-solid fa-gift"></i>
-                <span>Earnings, Referral & Bonuses</span>
+            <div class="card-top-row">
+                <div class="card-title-box">
+                    <div class="card-thumb"><i class="fa-solid fa-wallet"></i></div>
+                    <h3>Withdrawal Settings Control</h3>
+                </div>
+                <span class="slot-badge">Withdraw</span>
             </div>
             <div class="input-group">
-                <label class="input-label">Daily Login Bonus (Amount)</label>
-                <input type="number" class="input-field" value="20">
+                <label class="input-label">Minimum Withdrawal Amount</label>
+                <input type="number" id="withdrawMin" class="input-field" value="10000">
             </div>
             <div class="input-group">
-                <label class="input-label">Bonus Per Referral</label>
-                <input type="number" class="input-field" value="5">
+                <label class="input-label">Withdrawal Status</label>
+                <input type="text" id="withdrawStatus" class="input-field" value="Open / Active">
             </div>
             <div class="input-group">
-                <label class="input-label">Tutorial Video Link (YouTube)</label>
-                <input type="text" class="input-field" value="https://youtube.com/@Xriyan_hub">
+                <label class="input-label">Supported Network</label>
+                <input type="text" id="withdrawNetwork" class="input-field" value="TON Network">
+            </div>
+        </div>
+
+        <!-- Slot 4: Spin Wheel Control (spin.html) -->
+        <div class="admin-card">
+            <div class="card-top-row">
+                <div class="card-title-box">
+                    <div class="card-thumb"><i class="fa-solid fa-circle-notch"></i></div>
+                    <h3>Spin Wheel Control</h3>
+                </div>
+                <span class="slot-badge">Spin</span>
             </div>
             <div class="input-group">
-                <label class="input-label">Support Group/Channel Link</label>
-                <input type="text" class="input-field" value="https://t.me/Xriyan_hub">
+                <label class="input-label">Daily Free Spins Limit</label>
+                <input type="number" id="spinLimit" class="input-field" value="3">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Spin Cost (If any)</label>
+                <input type="number" id="spinCost" class="input-field" value="50">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Max Reward per Spin</label>
+                <input type="number" id="spinMaxReward" class="input-field" value="500">
+            </div>
+        </div>
+
+        <!-- Slot 5: Master Save Action Slot -->
+        <div class="admin-card">
+            <div class="card-top-row">
+                <div class="card-title-box">
+                    <div class="card-thumb"><i class="fa-solid fa-sliders"></i></div>
+                    <h3>General Home Config</h3>
+                </div>
+                <span class="slot-badge">Config</span>
+            </div>
+            <div class="input-group">
+                <label class="input-label">App Announcement Header</label>
+                <input type="text" id="announcement" class="input-field" value="@ThunderWaves ⚡">
+            </div>
+            <div class="input-group">
+                <label class="input-label">System Notice / Banner</label>
+                <input type="text" id="systemNotice" class="input-field" value="Welcome to XriAura Web3 Platform">
             </div>
 
-            <button class="save-btn" onclick="alert('All system changes saved successfully!')">Save All Changes</button>
+            <button class="save-btn" onclick="saveAllSettings()"><i class="fa-solid fa-floppy-disk"></i> Save All Home Settings</button>
         </div>
     </div>
 
@@ -300,7 +331,7 @@
             <i class="fa-solid fa-list-check"></i>
             <span>Tasks</span>
         </a>
-        <a href="../../earn/arcade.html" class="nav-item">
+        <a href="../../earn/index.html" class="nav-item">
             <i class="fa-solid fa-rotate"></i>
             <span>Earn</span>
         </a>
@@ -315,21 +346,77 @@
     </div>
 
     <script>
+        // Telegram WebApp Initialization
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const K_TOKEN = "eHJpeWFuYXVyYQ==";
+        // Firebase Initialization with your config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
+            authDomain: "xriaura.firebaseapp.com",
+            projectId: "xriaura",
+            storageBucket: "xriaura.firebasestorage.app",
+            messagingSenderId: "937962536194",
+            appId: "1:937962536194:web:a5b024c230d50a7b58d61b",
+            measurementId: "G-F2W224J9CY"
+        };
 
-        function verifyPin() {
-            const enteredValue = document.getElementById('pinInput').value;
-            if (btoa(enteredValue) === K_TOKEN) {
-                document.getElementById('lockScreen').style.display = 'none';
-                document.getElementById('adminDashboard').style.display = 'block';
-            } else {
-                alert('Incorrect Security Password! Access Denied.');
-                document.getElementById('pinInput').value = '';
-            }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Save Data to Firebase Firestore
+        function saveAllSettings() {
+            const settingsData = {
+                bioStatus: document.getElementById('bioStatus').value,
+                bioBonus: document.getElementById('bioBonus').value,
+                bioKeyword: document.getElementById('bioKeyword').value,
+                convertRate: document.getElementById('convertRate').value,
+                convertLimit: document.getElementById('convertLimit').value,
+                convertFee: document.getElementById('convertFee').value,
+                withdrawMin: document.getElementById('withdrawMin').value,
+                withdrawStatus: document.getElementById('withdrawStatus').value,
+                withdrawNetwork: document.getElementById('withdrawNetwork').value,
+                spinLimit: document.getElementById('spinLimit').value,
+                spinCost: document.getElementById('spinCost').value,
+                spinMaxReward: document.getElementById('spinMaxReward').value,
+                announcement: document.getElementById('announcement').value,
+                systemNotice: document.getElementById('systemNotice').value,
+                updatedAt: new Date()
+            };
+
+            db.collection("admin").doc("homeSettings").set(settingsData)
+            .then(() => {
+                alert('All Home settings saved & synced to Firebase successfully!');
+            })
+            .catch((error) => {
+                alert('Error saving data: ' + error.message);
+            });
         }
+
+        // Load existing settings from Firebase on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            db.collection("admin").doc("homeSettings").get().then((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if(document.getElementById('bioStatus')) document.getElementById('bioStatus').value = data.bioStatus || '';
+                    if(document.getElementById('bioBonus')) document.getElementById('bioBonus').value = data.bioBonus || '';
+                    if(document.getElementById('bioKeyword')) document.getElementById('bioKeyword').value = data.bioKeyword || '';
+                    if(document.getElementById('convertRate')) document.getElementById('convertRate').value = data.convertRate || '';
+                    if(document.getElementById('convertLimit')) document.getElementById('convertLimit').value = data.convertLimit || '';
+                    if(document.getElementById('convertFee')) document.getElementById('convertFee').value = data.convertFee || '';
+                    if(document.getElementById('withdrawMin')) document.getElementById('withdrawMin').value = data.withdrawMin || '';
+                    if(document.getElementById('withdrawStatus')) document.getElementById('withdrawStatus').value = data.withdrawStatus || '';
+                    if(document.getElementById('withdrawNetwork')) document.getElementById('withdrawNetwork').value = data.withdrawNetwork || '';
+                    if(document.getElementById('spinLimit')) document.getElementById('spinLimit').value = data.spinLimit || '';
+                    if(document.getElementById('spinCost')) document.getElementById('spinCost').value = data.spinCost || '';
+                    if(document.getElementById('spinMaxReward')) document.getElementById('spinMaxReward').value = data.spinMaxReward || '';
+                    if(document.getElementById('announcement')) document.getElementById('announcement').value = data.announcement || '';
+                    if(document.getElementById('systemNotice')) document.getElementById('systemNotice').value = data.systemNotice || '';
+                }
+            }).catch((error) => {
+                console.log("Error loading settings: ", error);
+            });
+        });
     </script>
 </body>
 </html>
