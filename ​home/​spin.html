@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Lucky Spin</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            padding: 16px;
+            text-align: center;
+        }
+
+        /* Top Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #181818;
+            border: 1px solid #282828;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        /* Wheel Container */
+        .wheel-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 30px auto;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid #ffb703;
+            background: conic-gradient(
+                #1a1a1a 0deg 60deg,
+                #2a2a2a 60deg 120deg,
+                #1a1a1a 120deg 180deg,
+                #2a2a2a 180deg 240deg,
+                #1a1a1a 240deg 300deg,
+                #2a2a2a 300deg 360deg
+            );
+            position: relative;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            box-shadow: 0 0 30px rgba(255, 183, 3, 0.2);
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 24px solid #ffb703;
+            z-index: 10;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #ffb703;
+            border-radius: 50%;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .spin-btn {
+            width: 80%;
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 20px rgba(255, 183, 3, 0.3);
+        }
+
+        .spin-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="header-title">Lucky Spin Bonus</div>
+        <div style="width: 36px;"></div>
+    </div>
+
+    <!-- Spin Wheel UI -->
+    <div class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <div class="wheel" id="spinWheel"></div>
+        <div class="wheel-center">XRI</div>
+    </div>
+
+    <!-- Action Button -->
+    <button class="spin-btn" id="spinBtn">SPIN NOW</button>
+    <div class="spin-info">Come back daily for free WAVES rewards!</div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const spinBtn = document.getElementById('spinBtn');
+        const wheel = document.getElementById('spinWheel');
+
+        spinBtn.addEventListener('click', () => {
+            spinBtn.disabled = true;
+            let randomDegree = Math.floor(Math.random() * 3600) + 720;
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+            
+            setTimeout(() => {
+                tg.showAlert("Congratulations! You won 50 WAVES!");
+                spinBtn.disabled = false;
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
