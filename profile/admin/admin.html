@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Admin Panel</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #12100e;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: #191612;
+            border: 1px solid #26221c;
+            color: #ffb703;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .main-title {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        /* Admin Profile Card */
+        .admin-card {
+            background: #191612;
+            border: 1px solid #26221c;
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-avatar {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 183, 3, 0.15);
+            color: #ffb703;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 12px auto;
+            border: 2px solid #ffb703;
+        }
+
+        .admin-card h3 {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .admin-card p {
+            font-size: 12px;
+            color: #ffb703;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        /* Section Group */
+        .section-group {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffb703;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-list {
+            background: #191612;
+            border: 1px solid #26221c;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid #221e18;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .icon-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .icon-yellow { background: rgba(255, 183, 3, 0.15); color: #ffb703; }
+        .icon-blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .icon-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+        .menu-info h5 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .menu-info p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .menu-right {
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Bottom Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #14110d;
+            border-top: 1px solid #26221c;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-top">
+        <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="main-title">Admin Panel</div>
+    </div>
+
+    <div class="admin-card">
+        <div class="admin-avatar"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>Xri YΛη</h3>
+        <p>Lead Developer & Founder</p>
+    </div>
+
+    <div class="section-group">
+        <div class="section-title">Creator Socials</div>
+        <div class="menu-list">
+            <a href="https://youtube.com/@Xriyan_hub" target="_blank" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-red"><i class="fa-brands fa-youtube"></i></div>
+                    <div class="menu-info">
+                        <h5>YouTube Channel</h5>
+                        <p>Tutorials & updates</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square menu-right" style="font-size: 11px;"></i>
+            </a>
+            <a href="https://t.me/Xriyan_hub" target="_blank" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-blue"><i class="fa-brands fa-telegram"></i></div>
+                    <div class="menu-info">
+                        <h5>Telegram Hub</h5>
+                        <p>Official community</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square menu-right" style="font-size: 11px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-group">
+        <div class="section-title">App Master Control</div>
+        <div class="menu-list">
+            <div class="menu-item" onclick="alert('App Version: v0.3.0 | Status: Online')">
+                <div class="menu-left">
+                    <div class="menu-icon icon-yellow"><i class="fa-solid fa-server"></i></div>
+                    <div class="menu-info">
+                        <h5>System Status</h5>
+                        <p>v0.3.0 (Operational)</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </div>
+            <div class="menu-item" onclick="alert('Database cache cleared successfully!')">
+                <div class="menu-left">
+                    <div class="menu-icon icon-purple"><i class="fa-solid fa-database"></i></div>
+                    <div class="menu-info">
+                        <h5>Clear Cache</h5>
+                        <p>Refresh local state</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="../../index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="../../tasks/index.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="../../earn/arcade.html" class="nav-item">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Earn</span>
+        </a>
+        <a href="../../refer/index.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="../index.html" class="nav-item active">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+    </script>
+</body>
+</html>
