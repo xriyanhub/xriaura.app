@@ -2,99 +2,577 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XriAura - Refer</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Refer & Earn</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        /* Top Header */
+        .sub-header {
+            font-size: 11px;
+            color: #ffb703;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        /* Hero Reward Card */
+        .hero-card {
+            background: linear-gradient(180deg, #241a08 0%, #141414 100%);
+            border: 1px solid #3d2f13;
+            border-radius: 20px;
+            padding: 20px 16px;
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 10px;
+            color: #aaa;
+            letter-spacing: 1px;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-amount {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 36px;
+            font-weight: 900;
+            color: #ffb703;
+            margin-bottom: 2px;
+        }
+
+        .hero-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffb703;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid #fff;
+        }
+
+        .hero-sub {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+
+        /* 3 Reward Breakdown Cards */
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .bd-card {
+            background: #1a1a1a;
+            border: 1px solid #282828;
+            border-radius: 14px;
+            padding: 12px 6px;
+            text-align: center;
+        }
+
+        .bd-card.highlight {
+            border-color: #ffb703;
+            background: rgba(255, 183, 3, 0.08);
+        }
+
+        .bd-icon {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 6px;
+        }
+
+        .bd-card.highlight .bd-icon {
+            color: #ffb703;
+        }
+
+        .bd-val {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .bd-card.highlight .bd-val {
+            color: #ffb703;
+        }
+
+        .bd-label {
+            font-size: 10px;
+            color: #777;
+        }
+
+        .friend-gift-box {
+            background: rgba(255, 183, 3, 0.08);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .friend-gift-box i {
+            color: #38ef7d;
+        }
+
+        /* Stats Row */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #777;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .stat-num {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .stat-num.purple { color: #a55eea; }
+        .stat-num.green { color: #2ed573; }
+        .stat-num.yellow { color: #ffb703; }
+
+        /* Invite Link Card */
+        .invite-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .invite-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .link-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #222;
+            color: #ffb703;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .link-details {
+            flex: 1;
+        }
+
+        .link-title {
+            font-size: 10px;
+            color: #777;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .link-text {
+            font-size: 12px;
+            color: #ddd;
+            word-break: break-all;
+            font-family: monospace;
+        }
+
+        .invite-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: #222;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .share-btn {
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title span {
+            color: #ffb703;
+        }
+
+        /* Empty Friends Box */
+        .empty-friends-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .cloud-icon-box {
+            font-size: 40px;
+            color: #ffb703;
+            margin-bottom: 12px;
+        }
+
+        .empty-friends-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .empty-friends-card p {
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* How It Works Steps */
+        .steps-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 14px;
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        .step-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 32px;
+            bottom: 0;
+            width: 2px;
+            background: #333;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffb703;
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .step-info h5 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .step-info p {
+            font-size: 12px;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: #111111;
+            border-top: 1px solid #222222;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666666;
+            text-decoration: none;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+
+        .nav-item.center-btn {
+            position: relative;
+            top: -15px;
+        }
+
+        .center-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #ffb703;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 4px solid #0d0d0d;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="mobile-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="user-profile">
-                <div class="user-info">
-                    <h2 style="font-size: 20px;">Refer & Earn</h2>
-                    <p style="font-size: 11px; color: #888;">Invite friends, collect XAURA</p>
-                </div>
-            </div>
-            <div class="username">@xriyan_hub</div>
+    <!-- Header Section -->
+    <div class="sub-header"><i class="fa-solid fa-bolt"></i> INVITE & EARN</div>
+    <div class="main-title">Refer & Earn</div>
+
+    <!-- Hero Reward Card -->
+    <div class="hero-card">
+        <div class="hero-title">YOU EARN PER FRIEND</div>
+        <div class="hero-amount">
+            <div class="hero-icon"><i class="fa-solid fa-bolt"></i></div>
+            +1,000
         </div>
+        <div class="hero-sub">WAVES • ≈ $0.01</div>
 
-        <!-- Main Content -->
-        <div class="content">
-            <!-- Referral Stats Card -->
-            <div class="main-card" style="text-align: center; padding: 20px;">
-                <div style="font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px;">You earn per friend</div>
-                <div style="font-size: 32px; font-weight: 800; color: #ffb703; margin: 8px 0;">+1,000</div>
-                <div style="font-size: 12px; color: #888; margin-bottom: 15px;">XAURA ≈ $0.01</div>
-
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                    <div>
-                        <div style="font-size: 12px; font-weight: bold; color: #ffb703;">+500</div>
-                        <div style="font-size: 10px; color: #888; margin-top: 2px;">Join bonus</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 12px; font-weight: bold; color: #ffb703;">+500</div>
-                        <div style="font-size: 10px; color: #888; margin-top: 2px;">after 5 games</div>
-                    </div>
-                    <div style="background: rgba(255,183,3,0.1); border: 1px solid rgba(255,183,3,0.3); border-radius: 10px; padding: 4px;">
-                        <div style="font-size: 12px; font-weight: bold; color: #ffb703;">5%</div>
-                        <div style="font-size: 9px; color: #888;">Lifetime share</div>
-                    </div>
-                </div>
+        <div class="breakdown-grid">
+            <div class="bd-card">
+                <div class="bd-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <div class="bd-val">+500</div>
+                <div class="bd-label">Join bonus</div>
             </div>
-
-            <!-- Stats Bar -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px;">
-                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
-                    <div style="font-size: 14px; font-weight: bold;">0</div>
-                    <div style="font-size: 10px; color: #888; margin-top: 2px;">FRIENDS</div>
-                </div>
-                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
-                    <div style="font-size: 14px; font-weight: bold; color: #2ec4b6;">0</div>
-                    <div style="font-size: 10px; color: #888; margin-top: 2px;">ACTIVE</div>
-                </div>
-                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
-                    <div style="font-size: 14px; font-weight: bold; color: #ffb703;">0</div>
-                    <div style="font-size: 10px; color: #888; margin-top: 2px;">TOTAL EARNED</div>
-                </div>
+            <div class="bd-card">
+                <div class="bd-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="bd-val">+500</div>
+                <div class="bd-label">after 5 games</div>
             </div>
-
-            <!-- Invite Link Box -->
-            <div class="main-card" style="padding: 15px;">
-                <div style="font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 4px;">Your Invite Link</div>
-                <div style="font-size: 11px; color: #ffb703; word-break: break-all; margin-bottom: 12px;">t.me/XriAuraBot/App?startapp=ref_xriyan</div>
-                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px;">
-                    <button style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 12px; font-weight: 600; font-size: 12px; cursor: pointer;">Copy</button>
-                    <button style="background: #ffb703; color: #000; border: none; padding: 10px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">Share</button>
-                </div>
+            <div class="bd-card highlight">
+                <div class="bd-icon"><i class="fa-solid fa-infinity"></i></div>
+                <div class="bd-val">5%</div>
+                <div class="bd-label">Lifetime share</div>
             </div>
         </div>
 
-        <!-- Bottom Navigation -->
-        <div class="bottom-nav">
-            <a href="index.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                Home
-            </a>
-            <a href="tasks.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                Tasks
-            </a>
-            <a href="earn.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                Earn
-            </a>
-            <a href="refer.html" class="nav-item active">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                Refer
-            </a>
-            <a href="profile.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                Profile
-            </a>
+        <div class="friend-gift-box">
+            <i class="fa-solid fa-gift"></i> Your friend gets 500 WAVES to start
         </div>
     </div>
 
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-label">FRIENDS</div>
+            <div class="stat-num purple" id="friends-count">0</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">ACTIVE</div>
+            <div class="stat-num green" id="active-count">0</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">TOTAL EARNED</div>
+            <div class="stat-num yellow" id="earned-count">0</div>
+        </div>
+    </div>
+
+    <!-- Invite Link Card -->
+    <div class="invite-card">
+        <div class="invite-top">
+            <div class="link-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="link-details">
+                <div class="link-title">YOUR INVITE LINK</div>
+                <div class="link-text" id="invite-link">t.me/xriaurabot/app?startapp=ref123</div>
+            </div>
+        </div>
+        <div class="invite-actions">
+            <button class="copy-btn" onclick="copyLink()"><i class="fa-solid fa-copy"></i> Copy</button>
+            <button class="share-btn" onclick="shareLink()"><i class="fa-solid fa-paper-plane"></i> Share</button>
+        </div>
+    </div>
+
+    <!-- Top Friends Section -->
+    <div class="section-title"><span>|</span> Top friends</div>
+    <div class="empty-friends-card">
+        <div class="cloud-icon-box"><i class="fa-solid fa-cloud-bolt"></i></div>
+        <h4>No friends yet</h4>
+        <p>Share your link and start earning together.</p>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="section-title"><span>|</span> How it works</div>
+    <div class="steps-card">
+        <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-info">
+                <h5><i class="fa-solid fa-link" style="color:#ffb703;"></i> Share your link</h5>
+                <p>Send your personal invite link to friends</p>
+            </div>
+        </div>
+        <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-info">
+                <h5><i class="fa-solid fa-user-plus" style="color:#ffb703;"></i> Friends join</h5>
+                <p>They open XriAura through your link</p>
+            </div>
+        </div>
+        <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-info">
+                <h5><i class="fa-solid fa-gift" style="color:#ffb703;"></i> You both earn</h5>
+                <p>You get 500 WAVES when they join and 500 more once they've played 5 games — plus 5% of their daily task rewards. They get 500 WAVES.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="tasks.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="earn.html" class="nav-item center-btn">
+            <div class="center-circle">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <span>Earn</span>
+        </a>
+        <a href="frends.html" class="nav-item active">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="wallet.html" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // Dynamically Set Telegram Invite Link
+        if(tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const userId = tg.initDataUnsafe.user.id;
+            const link = `https://t.me/xriaurabot/app?startapp=${userId}`;
+            document.getElementById('invite-link').innerText = link;
+        }
+
+        function copyLink() {
+            const linkText = document.getElementById('invite-link').innerText;
+            navigator.clipboard.writeText(linkText).then(() => {
+                tg.showAlert('Invite link copied to clipboard!');
+            });
+        }
+
+        function shareLink() {
+            const linkText = document.getElementById('invite-link').innerText;
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(linkText)}&text=${encodeURIComponent("Join XriAura and earn free WAVES tokens with me!")}`;
+            tg.openTelegramLink(shareUrl);
+        }
+    </script>
 </body>
 </html>
