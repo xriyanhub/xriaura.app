@@ -7,9 +7,9 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase App & Firestore SDKs (Compat Version) -->
+    <!-- Firebase App & Realtime Database SDKs (Compat Version) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <style>
         * {
@@ -354,6 +354,7 @@
         const firebaseConfig = {
             apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
             authDomain: "xriaura.firebaseapp.com",
+            databaseURL: "https://xriaura-default-rtdb.firebaseio.com",
             projectId: "xriaura",
             storageBucket: "xriaura.firebasestorage.app",
             messagingSenderId: "937962536194",
@@ -362,9 +363,9 @@
         };
 
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        const db = firebase.database();
 
-        // Save Data to Firebase Firestore
+        // Save Data to Firebase Realtime Database
         function saveAllSettings() {
             const settingsData = {
                 bioStatus: document.getElementById('bioStatus').value,
@@ -381,23 +382,23 @@
                 spinMaxReward: document.getElementById('spinMaxReward').value,
                 announcement: document.getElementById('announcement').value,
                 systemNotice: document.getElementById('systemNotice').value,
-                updatedAt: new Date()
+                updatedAt: new Date().toISOString()
             };
 
-            db.collection("admin").doc("homeSettings").set(settingsData)
+            db.ref("admin/homeSettings").set(settingsData)
             .then(() => {
-                alert('All Home settings saved & synced to Firebase successfully!');
+                alert('All Home settings saved & synced to Realtime Database successfully!');
             })
             .catch((error) => {
                 alert('Error saving data: ' + error.message);
             });
         }
 
-        // Load existing settings from Firebase on page load
+        // Load existing settings from Firebase Realtime Database on page load
         window.addEventListener('DOMContentLoaded', () => {
-            db.collection("admin").doc("homeSettings").get().then((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
+            db.ref("admin/homeSettings").once('value').then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
                     if(document.getElementById('bioStatus')) document.getElementById('bioStatus').value = data.bioStatus || '';
                     if(document.getElementById('bioBonus')) document.getElementById('bioBonus').value = data.bioBonus || '';
                     if(document.getElementById('bioKeyword')) document.getElementById('bioKeyword').value = data.bioKeyword || '';
