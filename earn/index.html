@@ -21,8 +21,6 @@
         }
 
         body {
-            background-color: #12100e;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -37,7 +35,6 @@
         .main-title {
             font-size: 18px;
             font-weight: 900;
-            color: #ffb703;
         }
 
         .earn-grid {
@@ -47,20 +44,13 @@
         }
 
         .earn-card {
-            background: #191612;
-            border: 1px solid #26221c;
             border-radius: 20px;
             padding: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             text-decoration: none;
-            color: #fff;
             transition: 0.2s;
-        }
-
-        .earn-card:active {
-            border-color: #ffb703;
         }
 
         .card-left {
@@ -72,14 +62,11 @@
         .card-icon {
             width: 50px;
             height: 50px;
-            background: rgba(255, 183, 3, 0.15);
-            color: #ffb703;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            border: 1px solid rgba(255, 183, 3, 0.3);
         }
 
         .card-info h3 {
@@ -90,11 +77,9 @@
 
         .card-info p {
             font-size: 12px;
-            color: #888;
         }
 
         .card-arrow {
-            color: #ffb703;
             font-size: 14px;
         }
 
@@ -104,8 +89,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #14110d;
-            border-top: 1px solid #26221c;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -117,7 +100,6 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #777;
             font-size: 10px;
             gap: 4px;
         }
@@ -125,16 +107,12 @@
         .nav-item i {
             font-size: 16px;
         }
-
-        .nav-item.active {
-            color: #ffb703;
-        }
     </style>
 </head>
 <body>
 
     <div class="header-top">
-        <div class="main-title"><i class="fa-solid fa-rotate"></i> Earn Hub</div>
+        <div class="main-title" id="earnTitle"><i class="fa-solid fa-rotate"></i> Earn Hub</div>
     </div>
 
     <div class="earn-grid">
@@ -185,7 +163,8 @@
         </a>
     </div>
 
-    <!-- Firebase Realtime Database Integration -->
+    <!-- External Earn Aura JS Controller -->
+    <script src="aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
@@ -205,13 +184,10 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Listen for Realtime Spin & System Updates from Admin
         db.ref("admin/homeSettings").on("value", (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
                 const limitText = document.getElementById('spinLimitText');
-                
-                // If admin sets spin limit, show it live here
                 if (data.spinLimit && limitText) {
                     limitText.innerText = `Daily Free Spins Limit: ${data.spinLimit}`;
                 }
