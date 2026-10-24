@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>XriAura - Tasks</title>
+    <title>XriAura - Tasks Hub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -107,11 +107,11 @@
             border-radius: 10px;
         }
 
-        /* Sub Tab Bar (Tasks / My tasks / Add task) */
+        /* Sub Nav Bar */
         .sub-nav {
             display: flex;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .sub-btn {
@@ -133,82 +133,12 @@
             border-color: #ffb703;
         }
 
-        /* Task Item Card */
-        .task-list-title {
-            font-size: 14px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .task-card {
-            background: #141414;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .task-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .task-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: #1c1c1c;
-            border: 1px solid #2a2a2a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #ffb703;
-            overflow: hidden;
-        }
-
-        .task-icon img {
+        /* Iframe Container for Modular Tasks */
+        .content-frame {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .task-info h4 {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 3px;
-        }
-
-        .task-info p {
-            font-size: 11px;
-            color: #777;
-            margin-bottom: 4px;
-        }
-
-        .task-reward {
-            font-size: 11px;
-            color: #ffb703;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .start-btn {
-            background: #ffb703;
-            color: #000;
+            height: 450px;
             border: none;
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 12px;
-            cursor: pointer;
+            background: transparent;
         }
 
         /* Bottom Navigation Bar */
@@ -254,22 +184,22 @@
 
     <!-- Category Tabs -->
     <div class="categories">
-        <div class="cat-card active" onclick="switchTab('social')">
+        <div class="cat-card active" onclick="loadTab('social.html', this)">
             <div class="badge">4</div>
             <div class="cat-icon"><i class="fa-solid fa-bullhorn"></i></div>
             <div class="cat-name">Social</div>
         </div>
-        <div class="cat-card" onclick="switchTab('daily')">
+        <div class="cat-card" onclick="loadTab('daily.html', this)">
             <div class="badge">7</div>
             <div class="cat-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="cat-name">Daily</div>
         </div>
-        <div class="cat-card" onclick="switchTab('exclusive')">
+        <div class="cat-card" onclick="loadTab('exclusive.html', this)">
             <div class="badge">2</div>
             <div class="cat-icon"><i class="fa-solid fa-gem"></i></div>
             <div class="cat-name">Exclusive</div>
         </div>
-        <div class="cat-card" onclick="switchTab('partner')">
+        <div class="cat-card" onclick="loadTab('partner.html', this)">
             <div class="badge">22</div>
             <div class="cat-icon"><i class="fa-solid fa-handshake"></i></div>
             <div class="cat-name">Partner</div>
@@ -283,38 +213,8 @@
         <div class="sub-btn" style="color: #ffb703;">+ Add task</div>
     </div>
 
-    <!-- Tasks List Container -->
-    <div class="task-list-title">
-        <span id="categoryTitle">Social</span>
-        <span style="font-size: 11px; color: #777;" id="taskProgress">0/4 done</span>
-    </div>
-
-    <div id="taskListContent">
-        <!-- Default Social Tasks -->
-        <div class="task-card">
-            <div class="task-left">
-                <div class="task-icon"><i class="fa-solid fa-bullhorn" style="color:#ffb703;"></i></div>
-                <div class="task-info">
-                    <h4>Join announcement channel</h4>
-                    <p>Get news, drops and announc...</p>
-                    <div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div>
-                </div>
-            </div>
-            <button class="start-btn" onclick="alert('Task started!')">Start</button>
-        </div>
-
-        <div class="task-card">
-            <div class="task-left">
-                <div class="task-icon"><i class="fa-solid fa-comments" style="color:#ffb703;"></i></div>
-                <div class="task-info">
-                    <h4>Join the community chat</h4>
-                    <p>Join official ThunderWaves C...</p>
-                    <div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div>
-                </div>
-            </div>
-            <button class="start-btn" onclick="alert('Task started!')">Start</button>
-        </div>
-    </div>
+    <!-- Dynamic Modular Content Loader -->
+    <iframe id="taskFrame" src="social.html" class="content-frame"></iframe>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
@@ -344,41 +244,10 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        function switchTab(tab) {
+        function loadTab(page, element) {
             document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            
-            const titleEl = document.getElementById('categoryTitle');
-            const progressEl = document.getElementById('taskProgress');
-            const contentEl = document.getElementById('taskListContent');
-
-            if(tab === 'social') {
-                titleEl.innerText = 'Social';
-                progressEl.innerText = '0/4 done';
-                contentEl.innerHTML = `
-                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-bullhorn" style="color:#ffb703;"></i></div><div class="task-info"><h4>Join announcement channel</h4><p>Get news, drops and announc...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
-                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-comments" style="color:#ffb703;"></i></div><div class="task-info"><h4>Join the community chat</h4><p>Join official ThunderWaves C...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
-                `;
-            } else if(tab === 'daily') {
-                titleEl.innerText = 'Daily';
-                progressEl.innerText = '0/7 done';
-                contentEl.innerHTML = `
-                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-video" style="color:#ffb703;"></i></div><div class="task-info"><h4>Adsgram</h4><p>Watch Adsgram ad and earn...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +1,150</div></div></div><button class="start-btn" style="background:#222; color:#ffb703;">▶ 0/15</button></div>
-                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-play" style="color:#ffb703;"></i></div><div class="task-info"><h4>Monetag</h4><p>Watch monetag ads and earn...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +385</div></div></div><button class="start-btn" style="background:#222; color:#ffb703;">▶ 0/8</button></div>
-                `;
-            } else if(tab === 'exclusive') {
-                titleEl.innerText = 'Exclusive';
-                progressEl.innerText = '0/2 done';
-                contentEl.innerHTML = `
-                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-box-open" style="color:#ffb703;"></i></div><div class="task-info"><h4>Open Free Case</h4><p>Open a free case on Epic Gift...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +200</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
-                `;
-            } else if(tab === 'partner') {
-                titleEl.innerText = 'Partner';
-                progressEl.innerText = '0/22 done';
-                contentEl.innerHTML = `
-                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-robot" style="color:#ffb703;"></i></div><div class="task-info"><h4>RG Crypto Lab</h4><p>Join our partner telegram ch...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +75</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
-                `;
-            }
+            element.classList.add('active');
+            document.getElementById('taskFrame').src = page;
         }
     </script>
 </body>
