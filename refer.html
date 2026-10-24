@@ -12,12 +12,9 @@
         <!-- Header -->
         <div class="header">
             <div class="user-profile">
-                <div class="avatar-box">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar">
-                </div>
                 <div class="user-info">
-                    <h2>Referrals</h2>
-                    <span class="badge">⚡️ Invite & Earn</span>
+                    <h2 style="font-size: 20px;">Refer & Earn</h2>
+                    <p style="font-size: 11px; color: #888;">Invite friends, collect XAURA</p>
                 </div>
             </div>
             <div class="username">@xriyan_hub</div>
@@ -25,20 +22,56 @@
 
         <!-- Main Content -->
         <div class="content">
-            <div class="balance-card" style="text-align: left; padding: 20px;">
-                <h3 style="font-size: 15px; margin-bottom: 8px; color: #ffb703;">Invite Friends</h3>
-                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">Get 5% lifetime bonus from your friends' mining earnings!</p>
-                
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.1); padding: 15px; border-radius: 14px; text-align: center; margin-bottom: 15px;">
-                    <div style="font-size: 11px; color: #888; margin-bottom: 5px;">Your Invite Link</div>
-                    <div style="font-size: 12px; color: #ffb703; word-break: break-all; font-weight: 600;">t.me/XriAuraBot?start=ref_xriyan</div>
-                </div>
+            <!-- Referral Stats Card -->
+            <div class="main-card" style="text-align: center; padding: 20px;">
+                <div style="font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px;">You earn per friend</div>
+                <div style="font-size: 32px; font-weight: 800; color: #ffb703; margin: 8px 0;">+1,000</div>
+                <div style="font-size: 12px; color: #888; margin-bottom: 15px;">XAURA ≈ $0.01</div>
 
-                <button style="width: 100%; background: #ffb703; color: #000; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 0 15px rgba(255,183,3,0.2);">Copy Link</button>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                    <div>
+                        <div style="font-size: 12px; font-weight: bold; color: #ffb703;">+500</div>
+                        <div style="font-size: 10px; color: #888; margin-top: 2px;">Join bonus</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; font-weight: bold; color: #ffb703;">+500</div>
+                        <div style="font-size: 10px; color: #888; margin-top: 2px;">after 5 games</div>
+                    </div>
+                    <div style="background: rgba(255,183,3,0.1); border: 1px solid rgba(255,183,3,0.3); border-radius: 10px; padding: 4px;">
+                        <div style="font-size: 12px; font-weight: bold; color: #ffb703;">5%</div>
+                        <div style="font-size: 9px; color: #888;">Lifetime share</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px;">
+                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
+                    <div style="font-size: 14px; font-weight: bold;">0</div>
+                    <div style="font-size: 10px; color: #888; margin-top: 2px;">FRIENDS</div>
+                </div>
+                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
+                    <div style="font-size: 14px; font-weight: bold; color: #2ec4b6;">0</div>
+                    <div style="font-size: 10px; color: #888; margin-top: 2px;">ACTIVE</div>
+                </div>
+                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
+                    <div style="font-size: 14px; font-weight: bold; color: #ffb703;">0</div>
+                    <div style="font-size: 10px; color: #888; margin-top: 2px;">TOTAL EARNED</div>
+                </div>
+            </div>
+
+            <!-- Invite Link Box -->
+            <div class="main-card" style="padding: 15px;">
+                <div style="font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 4px;">Your Invite Link</div>
+                <div style="font-size: 11px; color: #ffb703; word-break: break-all; margin-bottom: 12px;">t.me/XriAuraBot/App?startapp=ref_xriyan</div>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px;">
+                    <button style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 12px; font-weight: 600; font-size: 12px; cursor: pointer;">Copy</button>
+                    <button style="background: #ffb703; color: #000; border: none; padding: 10px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">Share</button>
+                </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <a href="index.html" class="nav-item">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
