@@ -17,8 +17,6 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
             padding: 16px;
         }
 
@@ -34,9 +32,6 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: #181818;
-            border: 1px solid #282828;
-            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -51,16 +46,12 @@
 
         /* Convert Card */
         .convert-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .input-group {
-            background: #0a0a0a;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 14px;
             margin-bottom: 12px;
@@ -68,7 +59,6 @@
 
         .input-label {
             font-size: 11px;
-            color: #777;
             margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
@@ -83,7 +73,6 @@
         .convert-input {
             background: transparent;
             border: none;
-            color: #fff;
             font-size: 22px;
             font-weight: 800;
             width: 60%;
@@ -94,16 +83,10 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            background: #1c1c1c;
             padding: 6px 12px;
             border-radius: 12px;
             font-size: 13px;
             font-weight: 700;
-            color: #ffb703;
-        }
-
-        .currency-badge.usdt {
-            color: #2ed573;
         }
 
         /* Swap Icon Divider */
@@ -119,9 +102,6 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: #ffb703;
-            color: #000;
-            border: 3px solid #0d0d0d;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -131,7 +111,6 @@
 
         .rate-info {
             font-size: 11px;
-            color: #666;
             text-align: center;
             margin-top: 16px;
         }
@@ -139,8 +118,6 @@
         /* Convert Action Button */
         .submit-btn {
             width: 100%;
-            background: #ffb703;
-            color: #000;
             border: none;
             padding: 16px;
             border-radius: 16px;
@@ -171,7 +148,7 @@
             <div class="input-wrapper">
                 <input type="number" value="49" class="convert-input" id="from-amount">
                 <div class="currency-badge">
-                    <i class="fa-solid fa-bolt" style="color: #ffb703;"><span>WAVES</span></i>
+                    <i class="fa-solid fa-bolt"><span>WAVES</span></i>
                 </div>
             </div>
         </div>
@@ -201,6 +178,8 @@
     <!-- Convert Button -->
     <button class="submit-btn">Convert Now</button>
 
+    <!-- Linked to Home Folder's Centralized Aura JS -->
+    <script src="aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
