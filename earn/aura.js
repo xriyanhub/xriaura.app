@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const themeColor = "#ffb703";
+    const themeColor = "#ffb703"; // Golden Amber Theme
     const bgDark = "#0d0d0d";
     const cardBg = "#141414";
     const cardBorder = "#222";
@@ -7,65 +7,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.documentElement.style.setProperty('--primary-glow', themeColor);
     
-    if (!document.getElementById('earn-aura-styles')) {
+    if (!document.getElementById('earn-hub-styles')) {
         const styleSheet = document.createElement("style");
-        styleSheet.id = 'earn-aura-styles';
+        styleSheet.id = 'earn-hub-styles';
         styleSheet.innerHTML = `
             body {
                 background-color: ${bgDark} !important;
                 color: #ffffff !important;
             }
+            .earn-card:active {
+                border-color: ${themeColor} !important;
+            }
         `;
         document.head.appendChild(styleSheet);
     }
 
-    // Subtitles & Main Titles
-    const subtitle = document.querySelector('.subtitle');
-    if (subtitle) subtitle.style.color = themeColor;
+    // Header Title
+    const earnTitle = document.getElementById('earnTitle');
+    if (earnTitle) earnTitle.style.color = themeColor;
 
-    const mainTitle = document.querySelector('.main-title');
-    if (mainTitle) mainTitle.style.color = "#fff";
+    // Earn Cards Styling
+    const earnCards = document.querySelectorAll('.earn-card');
+    earnCards.forEach(card => {
+        card.style.background = cardBg;
+        card.style.border = `1px solid ${cardBorder}`;
+    });
 
-    const desc = document.querySelector('.desc');
-    if (desc) desc.style.color = "#888";
+    const cardIcons = document.querySelectorAll('.card-icon');
+    cardIcons.forEach(icon => {
+        icon.style.background = "#1c1c1c";
+        icon.style.border = "1px solid #2a2a2a";
+        icon.style.color = themeColor;
+        icon.style.boxShadow = `0 0 10px ${glowShadow}`;
+    });
 
-    // Spin Wheel Elements
-    const wheel = document.getElementById('wheel');
-    if (wheel) {
-        wheel.style.background = `conic-gradient(
-            ${themeColor} 0deg 60deg,
-            #1c1c1c 60deg 120deg,
-            ${themeColor} 120deg 180deg,
-            #222 180deg 240deg,
-            ${themeColor} 240deg 300deg,
-            #141414 300deg 360deg
-        )`;
-        wheel.style.boxShadow = `0 0 20px ${glowShadow}`;
-    }
+    const cardTitles = document.querySelectorAll('.card-info h3');
+    cardTitles.forEach(h3 => h3.style.color = "#fff");
 
-    const wheelCenter = document.querySelector('.wheel-center');
-    if (wheelCenter) {
-        wheelCenter.style.background = "#111";
-        wheelCenter.style.border = `4px solid ${themeColor}`;
-        wheelCenter.style.color = themeColor;
-    }
+    const cardParas = document.querySelectorAll('.card-info p');
+    cardParas.forEach(p => p.style.color = "#888");
 
-    const pointer = document.querySelector('.pointer');
-    if (pointer) {
-        pointer.style.borderBottomColor = themeColor;
-    }
+    const cardArrows = document.querySelectorAll('.card-arrow');
+    cardArrows.forEach(arrow => arrow.style.color = themeColor);
 
-    const spinBtn = document.querySelector('.spin-btn');
-    if (spinBtn) {
-        spinBtn.style.background = themeColor;
-        spinBtn.style.color = "#000";
-        spinBtn.style.boxShadow = `0 4px 15px ${glowShadow}`;
-    }
-
-    const spinInfo = document.getElementById('spinInfo');
-    if (spinInfo) spinInfo.style.color = "#888";
-
-    // Bottom Navigation Bar
+    // Bottom Navigation Bar & Active Tab (Earn) Glow
     const navBar = document.querySelector('.nav-bar');
     if (navBar) {
         navBar.style.background = "#111";
