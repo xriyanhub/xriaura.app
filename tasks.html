@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XriAura - Earn / Arcade</title>
+    <title>XriAura - Tasks</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
         <div class="header">
             <div class="user-profile">
                 <div class="user-info">
-                    <h2 style="font-size: 20px;">Arcade</h2>
-                    <p style="font-size: 11px; color: #888;">Play mini-games, win XAURA</p>
+                    <h2 style="font-size: 20px;">Tasks</h2>
+                    <p style="font-size: 11px; color: #888;">Complete tasks, collect XAURA</p>
                 </div>
             </div>
             <div class="username">@xriyan_hub</div>
@@ -22,54 +22,82 @@
 
         <!-- Main Content -->
         <div class="content">
-            <!-- Stats Row -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                <div class="main-card" style="margin-bottom: 0; padding: 15px;">
-                    <div style="font-size: 11px; color: #ffb703; font-weight: bold;">+49</div>
-                    <div style="font-size: 11px; color: #888; margin-top: 2px;">Earned today</div>
-                </div>
-                <div class="main-card" style="margin-bottom: 0; padding: 15px;">
-                    <div style="font-size: 11px; color: #fff; font-weight: bold;">36</div>
-                    <div style="font-size: 11px; color: #888; margin-top: 2px;">Plays left</div>
+            <!-- Claim Banner / Roadmap Card -->
+            <div class="main-card" style="text-align: center; padding: 18px;">
+                <button class="btn-gold" style="width: 100%; margin-bottom: 12px; font-size: 14px;">⚡️ Claim +100</button>
+                <div style="font-size: 10px; color: #ffb703; margin-bottom: 15px;">✉️ Invite link in your bio is needed — how?</div>
+                
+                <!-- Roadmap Dots Layout -->
+                <div style="display: flex; justify-content: space-around; align-items: center; position: relative; padding: 10px 0;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #ffb703; color: #000; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px #ffb703;">1</div>
+                        <span style="font-size: 9px; color: #888;">100</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #888; font-size: 12px; display: flex; align-items: center; justify-content: center;">2</div>
+                        <span style="font-size: 9px; color: #888;">150</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #888; font-size: 12px; display: flex; align-items: center; justify-content: center;">3</div>
+                        <span style="font-size: 9px; color: #888;">200</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #888; font-size: 12px; display: flex; align-items: center; justify-content: center;">5</div>
+                        <span style="font-size: 9px; color: #888;">500</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Featured Game Card -->
-            <div class="main-card" style="padding: 0; overflow: hidden; border: 1px solid rgba(255,183,3,0.3);">
-                <div style="background: linear-gradient(135deg, #2b1055, #7597de); height: 130px; display: flex; align-items: center; justify-content: center; position: relative;">
-                    <span style="position: absolute; top: 10px; left: 10px; background: #ffb703; color: #000; font-size: 9px; font-weight: bold; padding: 2px 8px; border-radius: 6px;">★ FEATURED GAME</span>
-                    <span style="font-size: 36px;">🚀</span>
+            <!-- Quick Tasks Header & Progress -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 13px; font-weight: 700; color: #ffb703;">⚡️ Quick tasks</span>
+                <span style="font-size: 11px; color: #888;">35 available ›</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 12px;">
+                <span>0 of 35 done</span>
+                <span style="color: #ffb703;">0%</span>
+            </div>
+
+            <!-- Task Item 1 -->
+            <div class="main-card" style="display: flex; align-items: center; justify-content: space-between; padding: 14px; margin-bottom: 10px;">
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 3px;">Join announcement channel</div>
+                    <div style="font-size: 11px; color: #ffb703; font-weight: 600;">⚡️ +150 XAURA</div>
                 </div>
-                <div style="padding: 15px;">
-                    <div style="font-size: 15px; font-weight: 700; margin-bottom: 4px;">Space Shooter</div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                        <span style="font-size: 11px; color: #ffb703;">⚡️ Up to 330</span>
-                        <button style="background: #ffb703; color: #000; border: none; padding: 8px 20px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">Play</button>
-                    </div>
+                <button class="btn-gold" style="padding: 8px 16px; border-radius: 12px;">Start</button>
+            </div>
+
+            <!-- Task Item 2 -->
+            <div class="main-card" style="display: flex; align-items: center; justify-content: space-between; padding: 14px; margin-bottom: 10px;">
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 3px;">Adsgram</div>
+                    <div style="font-size: 11px; color: #888; margin-bottom: 3px;">Watch ad and earn...</div>
+                    <div style="font-size: 11px; color: #ffb703; font-weight: 600;">⚡️ +1,150</div>
                 </div>
+                <button style="background: rgba(255,183,3,0.15); border: 1px solid rgba(255,183,3,0.4); color: #ffb703; padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">▶ 0/15</button>
             </div>
         </div>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <a href="index.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
                 Home
             </a>
-            <a href="tasks.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <a href="tasks.html" class="nav-item active">
+                <svg width="22" height="22" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                 Tasks
             </a>
-            <a href="earn.html" class="nav-item active">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <a href="earn.html" class="nav-item">
+                <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                 Earn
             </a>
             <a href="refer.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                 Refer
             </a>
             <a href="profile.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 Profile
             </a>
         </div>
