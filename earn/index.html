@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Earn Hub</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #12100e;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffb703;
+        }
+
+        .earn-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .earn-card {
+            background: #191612;
+            border: 1px solid #26221c;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.2s;
+        }
+
+        .earn-card:active {
+            border-color: #ffb703;
+        }
+
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 183, 3, 0.15);
+            color: #ffb703;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border: 1px solid rgba(255, 183, 3, 0.3);
+        }
+
+        .card-info h3 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .card-info p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .card-arrow {
+            color: #ffb703;
+            font-size: 14px;
+        }
+
+        /* Bottom Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #14110d;
+            border-top: 1px solid #26221c;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-top">
+        <div class="main-title"><i class="fa-solid fa-rotate"></i> Earn Hub</div>
+    </div>
+
+    <div class="earn-grid">
+        <a href="arcade.html" class="earn-card">
+            <div class="card-left">
+                <div class="card-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="card-info">
+                    <h3>Arcade Games</h3>
+                    <p>Play & earn WAVES instantly</p>
+                </div>
+            </div>
+            <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+
+        <a href="spin.html" class="earn-card">
+            <div class="card-left">
+                <div class="card-icon"><i class="fa-solid fa-circle-notch"></i></div>
+                <div class="card-info">
+                    <h3>Lucky Spin</h3>
+                    <p>Spin the wheel for daily prizes</p>
+                </div>
+            </div>
+            <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="../tasks/index.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="index.html" class="nav-item active">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Earn</span>
+        </a>
+        <a href="../refer/index.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="../profile/index.html" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+    </script>
+</body>
+</html>
