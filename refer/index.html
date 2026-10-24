@@ -7,6 +7,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDKs (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -325,40 +329,40 @@
 
     <div class="refer-hero">
         <div class="refer-badge-icon"><i class="fa-solid fa-bolt"></i></div>
-        <h2>+1,000</h2>
+        <h2 id="referBonusTitle">+1,000</h2>
         <p>WAVES &approx; $0.01 per friend</p>
         
         <div class="refer-breakdown">
             <div class="breakdown-box">
-                <div class="val">+500</div>
+                <div class="val" id="referJoinBonus">+500</div>
                 <div class="lbl">Join bonus</div>
             </div>
             <div class="breakdown-box">
-                <div class="val">+500</div>
+                <div class="val" id="referGameBonus">+500</div>
                 <div class="lbl">after 5 games</div>
             </div>
             <div class="breakdown-box">
-                <div class="val">5%</div>
+                <div class="val" id="referSharePercent">5%</div>
                 <div class="lbl">Lifetime share</div>
             </div>
         </div>
 
         <div class="bonus-hint">
-            <i class="fa-solid fa-gift"></i> Your friend gets 500 WAVES to start
+            <i class="fa-solid fa-gift"></i> <span id="friendBonusText">Your friend gets 500 WAVES to start</span>
         </div>
     </div>
 
     <div class="stats-row">
         <div class="stat-card">
-            <div class="val">0</div>
+            <div class="val" id="friendsCount">0</div>
             <div class="lbl">Friends</div>
         </div>
         <div class="stat-card">
-            <div class="val">0</div>
+            <div class="val" id="activeFriendsCount">0</div>
             <div class="lbl">Active</div>
         </div>
         <div class="stat-card">
-            <div class="val">0</div>
+            <div class="val" id="totalEarnedCount">0</div>
             <div class="lbl">Total earned</div>
         </div>
     </div>
@@ -428,9 +432,46 @@
         </a>
     </div>
 
+    <!-- Firebase Realtime Database Integration -->
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
+            authDomain: "xriaura.firebaseapp.com",
+            databaseURL: "https://xriaura-default-rtdb.firebaseio.com",
+            projectId: "xriaura",
+            storageBucket: "xriaura.firebasestorage.app",
+            messagingSenderId: "937962536194",
+            appId: "1:937962536194:web:a5b024c230d50a7b58d61b",
+            measurementId: "G-F2W224J9CY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Listen for Realtime Admin Settings Updates for Refer System
+        db.ref("admin/homeSettings").on("value", (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                
+                const bonusTitle = document.getElementById('referBonusTitle');
+                const joinBonus = document.getElementById('referJoinBonus');
+                const gameBonus = document.getElementById('referGameBonus');
+                const sharePercent = document.getElementById('referSharePercent');
+                const friendHint = document.getElementById('friendBonusText');
+
+                if (data.referBonusTotal && bonusTitle) bonusTitle.innerText = `+${data.referBonusTotal}`;
+                if (data.referJoinBonus && joinBonus) {
+                    joinBonus.innerText = `+${data.referJoinBonus}`;
+                    if (friendHint) friendHint.innerText = `Your friend gets ${data.referJoinBonus} WAVES to start`;
+                }
+                if (data.referGameBonus && gameBonus) gameBonus.innerText = `+${data.referGameBonus}`;
+                if (data.referSharePercent && sharePercent) sharePercent.innerText = `${data.referSharePercent}%`;
+            }
+        });
 
         function copyLink() {
             const linkText = document.getElementById('inviteLink').innerText;
