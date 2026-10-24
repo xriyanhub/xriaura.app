@@ -4,18 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Social Tasks</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #0d0d0d; color: #fff; padding: 4px; }
-        .task-list-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; }
-        .task-card { background: #141414; border: 1px solid #222; border-radius: 16px; padding: 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-        .task-left { display: flex; align-items: center; gap: 12px; }
-        .task-icon { width: 42px; height: 42px; border-radius: 12px; background: #1c1c1c; border: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #ffb703; }
-        .task-info h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; color: #fff; }
-        .task-info p { font-size: 11px; color: #777; margin-bottom: 4px; }
-        .task-reward { font-size: 11px; color: #ffb703; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-        .start-btn { background: #ffb703; color: #000; border: none; padding: 8px 18px; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer; text-decoration: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .task-list-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-card {
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .task-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .task-info h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .task-info p {
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        .task-reward {
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .start-btn {
+            border: none;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -73,5 +139,11 @@
         <button class="start-btn" onclick="alert('Task started!')">Start</button>
     </div>
 
+    <!-- Linked to Tasks Folder's Centralized Aura JS -->
+    <script src="aura.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+    </script>
 </body>
 </html>
