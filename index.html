@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>XriAura - Home</title>
+    <title>XriAura - Web3 Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -17,187 +17,71 @@
         }
 
         body {
-            background-color: #0d0d0d;
+            background-color: #12100e;
             color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
 
-        /* Top Bar */
-        .top-bar {
+        .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 20px;
         }
 
-        .bot-name {
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .bot-name i {
-            color: #ffb703;
-        }
-
-        /* Claim Streak Card */
-        .claim-card {
-            background: linear-gradient(135deg, #241c0a, #141414);
-            border: 1px solid #3a2c08;
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .claim-btn {
-            background: #ffb703;
-            color: #000;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 16px;
-            font-weight: 900;
-            font-size: 15px;
-            cursor: pointer;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 20px rgba(255, 183, 3, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bio-guide-link {
-            font-size: 12px;
-            color: #ffb703;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 16px;
-        }
-
-        /* Streak Progress Timeline */
-        .streak-timeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.3);
-            padding: 14px 10px;
-            border-radius: 14px;
-            border: 1px solid #222;
-        }
-
-        .streak-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 10px;
-            color: #777;
-            gap: 4px;
-        }
-
-        .streak-circle {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 11px;
-            color: #aaa;
-        }
-
-        .streak-step.active .streak-circle {
-            background: #ffb703;
-            color: #000;
-            border-color: #ffb703;
-            box-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
-        }
-
-        .streak-step.active {
-            color: #ffb703;
-            font-weight: 700;
-        }
-
-        /* Quick Tasks Section */
-        .section-title {
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .task-count {
-            font-size: 11px;
-            color: #ffb703;
-            background: rgba(255, 183, 3, 0.1);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 183, 3, 0.2);
-        }
-
-        .task-card {
-            background: #141414;
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .task-left {
+        .user-box {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .task-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: #1c1c1c;
-            border: 1px solid #2a2a2a;
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffb703, #fb8500);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: bold;
+            color: #12100e;
             font-size: 18px;
-            color: #ffb703;
+            border: 2px solid #ffb703;
         }
 
-        .task-info h4 {
+        .user-info h4 {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .user-info h2 {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .balance-card {
+            background: linear-gradient(145deg, #1b1713, #14110d);
+            border: 1px solid #26221c;
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .balance-card h3 {
             font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 3px;
+            color: #888;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
-        .task-reward {
-            font-size: 11px;
+        .balance-amount {
+            font-size: 42px;
+            font-weight: 900;
             color: #ffb703;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .task-btn {
-            background: #ffb703;
-            color: #000;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 12px;
-            cursor: pointer;
-            text-decoration: none;
+            margin-bottom: 15px;
         }
 
         /* Bottom Navigation Bar */
@@ -206,12 +90,12 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #111;
-            border-top: 1px solid #222;
+            background: #14110d;
+            border-top: 1px solid #26221c;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -219,13 +103,14 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
+            color: #777;
             font-size: 10px;
             gap: 4px;
+            transition: 0.2s;
         }
 
         .nav-item i {
-            font-size: 16px;
+            font-size: 18px;
         }
 
         .nav-item.active {
@@ -235,102 +120,40 @@
 </head>
 <body>
 
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="bot-name"><i class="fa-solid fa-bolt"></i> @ThunderWaves</div>
-        <a href="home/convert.html" class="task-count" style="text-decoration: none;"><i class="fa-solid fa-right-left"></i> Convert</a>
-    </div>
-
-    <!-- Claim Streak Card -->
-    <div class="claim-card">
-        <button class="claim-btn" onclick="window.location.href='home/spin.html'"><i class="fa-solid fa-bolt"></i> Claim +100</button>
-        <div>
-            <a href="home/bio.html" class="bio-guide-link"><i class="fa-solid fa-arrow-right-to-bracket"></i> Invite link in your bio is needed — how?</a>
-        </div>
-
-        <!-- Streak Timeline -->
-        <div class="streak-timeline">
-            <div class="streak-step active">
-                <div class="streak-circle">1</div>
-                <span>100</span>
-            </div>
-            <div class="streak-step">
-                <div class="streak-circle">2</div>
-                <span>150</span>
-            </div>
-            <div class="streak-step">
-                <div class="streak-circle">3</div>
-                <span>200</span>
-            </div>
-            <div class="streak-step">
-                <div class="streak-circle">4</div>
-                <span>250</span>
-            </div>
-            <div class="streak-step">
-                <div class="streak-circle">5</div>
-                <span>300</span>
+    <div class="header">
+        <div class="user-box">
+            <div class="avatar">XY</div>
+            <div class="user-info">
+                <h4>Welcome back,</h4>
+                <h2>XriAura</h2>
             </div>
         </div>
     </div>
 
-    <!-- Quick Tasks Section -->
-    <div class="section-title">
-        <span>Quick tasks</span>
-        <span class="task-count">35 available ></span>
+    <div class="balance-card">
+        <h3>TOTAL BALANCE</h3>
+        <div class="balance-amount">49</div>
     </div>
 
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon"><i class="fa-solid fa-bullhorn"></i></div>
-            <div class="task-info">
-                <h4>Join announcement channel</h4>
-                <div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div>
-            </div>
-        </div>
-        <button class="task-btn" onclick="alert('Task started!')">Start</button>
-    </div>
-
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon"><i class="fa-solid fa-video"></i></div>
-            <div class="task-info">
-                <h4>Adsgram</h4>
-                <div class="task-reward"><i class="fa-solid fa-bolt"></i> +1,150</div>
-            </div>
-        </div>
-        <button class="task-btn" style="background: #222; color: #ffb703;">▶ 0/15</button>
-    </div>
-
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon"><i class="fa-solid fa-robot"></i></div>
-            <div class="task-info">
-                <h4>RG Crypto Lab</h4>
-                <div class="task-reward"><i class="fa-solid fa-bolt"></i> +75</div>
-            </div>
-        </div>
-        <button class="task-btn" onclick="alert('Task started!')">Start</button>
-    </div>
-
-    <!-- Bottom Navigation Bar -->
+    <!-- Consistent Bottom Navigation Bar -->
     <div class="nav-bar">
         <a href="index.html" class="nav-item active">
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
-        <a href="home/withdraw.html" class="nav-item">
-            <i class="fa-solid fa-wallet"></i>
-            <span>Withdraw</span>
+        <a href="tasks/index.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
         </a>
-        <a href="home/spin.html" class="nav-item">
+        <a href="earn/index.html" class="nav-item">
             <i class="fa-solid fa-rotate"></i>
-            <span>Spin</span>
+            <span>Earn</span>
         </a>
-        <a href="home/bio.html" class="nav-item">
+        <a href="refer/index.html" class="nav-item">
             <i class="fa-solid fa-user-group"></i>
             <span>Refer</span>
         </a>
-        <a href="home/convert.html" class="nav-item">
+        <a href="profile/index.html" class="nav-item">
             <i class="fa-solid fa-user"></i>
             <span>Profile</span>
         </a>
