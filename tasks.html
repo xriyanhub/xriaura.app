@@ -12,12 +12,9 @@
         <!-- Header -->
         <div class="header">
             <div class="user-profile">
-                <div class="avatar-box">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar">
-                </div>
                 <div class="user-info">
-                    <h2>Daily Tasks</h2>
-                    <span class="badge">⚡️ Earn Rewards</span>
+                    <h2 style="font-size: 20px;">Tasks</h2>
+                    <p style="font-size: 11px; color: #888;">Complete tasks, collect XAURA</p>
                 </div>
             </div>
             <div class="username">@xriyan_hub</div>
@@ -25,29 +22,34 @@
 
         <!-- Main Content -->
         <div class="content">
-            <div class="balance-card" style="text-align: left; padding: 20px;">
-                <h3 style="font-size: 15px; margin-bottom: 8px; color: #ffb703;">Social Missions</h3>
-                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">Complete tasks to claim instant XriAura tokens.</p>
-                
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.1); padding: 12px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <div>
-                        <div style="font-size: 13px; font-weight: 600;">Join Telegram Channel</div>
-                        <div style="font-size: 11px; color: #ffb703;">+500 XAURA</div>
-                    </div>
-                    <button style="background: #ffb703; color: #000; border: none; padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">Start</button>
-                </div>
+            <!-- Category Tabs -->
+            <div style="display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px;">
+                <div style="background: #ffb703; color: #000; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; white-space: nowrap;">Social</div>
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); color: #888; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; white-space: nowrap;">Daily</div>
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); color: #888; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; white-space: nowrap;">Exclusive</div>
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); color: #888; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; white-space: nowrap;">Partner</div>
+            </div>
 
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.1); padding: 12px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 13px; font-weight: 600;">Follow on X (Twitter)</div>
-                        <div style="font-size: 11px; color: #ffb703;">+500 XAURA</div>
-                    </div>
-                    <button style="background: #ffb703; color: #000; border: none; padding: 6px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">Start</button>
+            <!-- Task Item 1 -->
+            <div class="main-card" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-bottom: 10px;">
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Join announcement channel</div>
+                    <div style="font-size: 11px; color: #ffb703;">⚡️ +150 XAURA</div>
                 </div>
+                <button style="background: #ffb703; color: #000; border: none; padding: 8px 16px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">Start</button>
+            </div>
+
+            <!-- Task Item 2 -->
+            <div class="main-card" style="display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-bottom: 10px;">
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Join the community chat</div>
+                    <div style="font-size: 11px; color: #ffb703;">⚡️ +150 XAURA</div>
+                </div>
+                <button style="background: #ffb703; color: #000; border: none; padding: 8px 16px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer;">Start</button>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <a href="index.html" class="nav-item">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
