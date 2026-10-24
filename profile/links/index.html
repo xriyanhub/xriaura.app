@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>XriAura - Bio Links Hub</title>
+    <title>XriAura - Community Links Hub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -46,50 +46,61 @@
             color: #ffb703;
         }
 
-        .card {
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-item {
             background: #191612;
             border: 1px solid #26221c;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .card h3 {
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: #ffb703;
-        }
-
-        .card p {
-            font-size: 12px;
-            color: #aaa;
-            margin-bottom: 14px;
-            line-height: 1.5;
-        }
-
-        .input-field {
-            width: 100%;
-            background: #12100e;
-            border: 1px solid #26221c;
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
             color: #fff;
-            font-size: 13px;
-            outline: none;
-            margin-bottom: 12px;
+            transition: 0.2s;
         }
 
-        .action-btn {
-            background: #ffb703;
-            color: #000;
-            border: none;
-            width: 100%;
-            padding: 14px;
+        .menu-item:active {
+            border-color: #ffb703;
+        }
+
+        .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 183, 3, 0.15);
+            color: #ffb703;
             border-radius: 12px;
-            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .menu-info h3 {
             font-size: 14px;
-            cursor: pointer;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .menu-info p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .menu-arrow {
+            color: #ffb703;
+            font-size: 14px;
         }
 
         /* Bottom Navigation Bar */
@@ -129,19 +140,53 @@
 
     <div class="header-top">
         <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <div class="main-title"><i class="fa-solid fa-id-badge"></i> Bio Link Task</div>
+        <div class="main-title"><i class="fa-solid fa-link"></i> Links & Channels Hub</div>
     </div>
 
-    <div class="card">
-        <h3>Add Keyword to Telegram Bio</h3>
-        <p id="bioDescText">Add the target keyword to your Telegram profile bio and claim your reward bonus.</p>
-        
-        <div style="font-size: 12px; color: #ffb703; font-weight: 700; margin-bottom: 6px;">Target Keyword:</div>
-        <input type="text" id="targetKeyword" class="input-field" value="@ThunderWaves" readonly>
-        
-        <div style="font-size: 12px; color: #22c55e; font-weight: 700; margin-bottom: 12px;" id="bioRewardDisplay">Reward Bonus: Loading...</div>
-        
-        <button class="action-btn" onclick="verifyBio()">Verify Bio Link</button>
+    <div class="menu-grid">
+        <a href="channel.html" class="menu-item">
+            <div class="menu-left">
+                <div class="menu-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                <div class="menu-info">
+                    <h3>Official Channel</h3>
+                    <p>Join our main Telegram channel</p>
+                </div>
+            </div>
+            <div class="menu-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+
+        <a href="chat.html" class="menu-item">
+            <div class="menu-left">
+                <div class="menu-icon"><i class="fa-solid fa-comments"></i></div>
+                <div class="menu-info">
+                    <h3>Community Chat</h3>
+                    <p>Chat with other members</p>
+                </div>
+            </div>
+            <div class="menu-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+
+        <a href="payouts.html" class="menu-item">
+            <div class="menu-left">
+                <div class="menu-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div class="menu-info">
+                    <h3>Payout Proofs</h3>
+                    <p>Check recent user withdrawals</p>
+                </div>
+            </div>
+            <div class="menu-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+
+        <a href="support.html" class="menu-item">
+            <div class="menu-left">
+                <div class="menu-icon"><i class="fa-solid fa-headset"></i></div>
+                <div class="menu-info">
+                    <h3>Support Center</h3>
+                    <p>Contact admin & get help</p>
+                </div>
+            </div>
+            <div class="menu-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
     </div>
 
     <!-- Bottom Navigation Bar -->
@@ -173,7 +218,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
             authDomain: "xriaura.firebaseapp.com",
@@ -187,27 +231,6 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-
-        // Listen for Realtime Admin Settings Updates for Bio Task
-        db.ref("admin/homeSettings").on("value", (snapshot) => {
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                
-                const keywordInput = document.getElementById('targetKeyword');
-                const rewardDisplay = document.getElementById('bioRewardDisplay');
-
-                if (data.bioKeyword && keywordInput) {
-                    keywordInput.value = data.bioKeyword;
-                }
-                if (data.bioBonus && rewardDisplay) {
-                    rewardDisplay.innerText = `Reward Bonus: +${data.bioBonus} WAVES`;
-                }
-            }
-        });
-
-        function verifyBio() {
-            alert("Checking Telegram bio status...");
-        }
     </script>
 </body>
 </html>
