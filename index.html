@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XriAura - Crypto Earning Mini App</title>
+    <title>XriAura - Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,16 +25,49 @@
 
         <!-- Main Content -->
         <div class="content">
-            <div class="balance-card">
-                <div class="balance-title">Total Balance</div>
-                <div class="balance-amount">2,500</div>
-                <div class="usdt-equivalent">
-                    <span>🟢 $0.025 USDT</span>
+            <!-- Balance & Progress Card -->
+            <div class="main-card">
+                <div style="font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Balance</div>
+                <div style="font-size: 36px; font-weight: 800; color: #ffb703; text-shadow: 0 0 15px rgba(255,183,3,0.3); margin-bottom: 10px;">49</div>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(40, 200, 64, 0.1); color: #2ec4b6; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(46, 196, 182, 0.2);">
+                        <span>🟢 $0.00049 USDT</span>
+                    </div>
+                    <div style="font-size: 11px; color: #888;">1 XAURA = 0.00001 USDT</div>
+                </div>
+
+                <!-- Quick Action Buttons Inside Card -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
+                    <a href="earn.html" style="background: rgba(255,183,3,0.15); border: 1px solid rgba(255,183,3,0.3); border-radius: 14px; padding: 12px 0; text-align: center; text-decoration: none; color: #fff; font-size: 12px; font-weight: 600;">⚡️ Earn</a>
+                    <a href="profile.html" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.15); border-radius: 14px; padding: 12px 0; text-align: center; text-decoration: none; color: #fff; font-size: 12px; font-weight: 600;">🔄 Convert</a>
+                    <a href="profile.html" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.15); border-radius: 14px; padding: 12px 0; text-align: center; text-decoration: none; color: #fff; font-size: 12px; font-weight: 600;">📥 Withdraw</a>
+                </div>
+            </div>
+
+            <!-- Redeem Code Section -->
+            <div class="main-card">
+                <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Have a code? <span style="color: #888; font-weight: normal;">Redeem for free XAURA</span></div>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" placeholder="Enter code" style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,183,3,0.2); padding: 10px 14px; border-radius: 12px; color: #fff; font-size: 13px; outline: none;">
+                    <button style="background: #ffb703; color: #000; border: none; padding: 0 16px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer;">Redeem</button>
+                </div>
+            </div>
+
+            <!-- Daily Bonus Card -->
+            <div class="main-card" style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Daily Bonus</div>
+                    <div style="font-size: 15px; font-weight: 700; color: #fff; margin-top: 2px;">Lucky Spin</div>
+                    <div style="font-size: 11px; color: #ffb703; margin-top: 2px;">Come back tomorrow</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,183,3,0.2); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #888;">
+                    🔒
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <a href="index.html" class="nav-item active">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
