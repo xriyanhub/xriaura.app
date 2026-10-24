@@ -16,8 +16,8 @@
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar">
                 </div>
                 <div class="user-info">
-                    <h2>Profile & Wallet</h2>
-                    <span class="badge">⚡️ Level 1</span>
+                    <h2>Xriyan</h2>
+                    <span class="badge">⚡️ Lv 1</span>
                 </div>
             </div>
             <div class="username">@xriyan_hub</div>
@@ -25,25 +25,74 @@
 
         <!-- Main Content -->
         <div class="content">
-            <div class="balance-card" style="text-align: left; padding: 20px;">
-                <h3 style="font-size: 15px; margin-bottom: 8px; color: #ffb703;">Account Details</h3>
-                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">Manage your connected wallet and account status.</p>
-                
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.1); padding: 12px; border-radius: 14px; margin-bottom: 10px;">
-                    <div style="font-size: 11px; color: #888;">Telegram ID</div>
-                    <div style="font-size: 13px; font-weight: 600; color: #fff;">7849201948</div>
+            <!-- Progress Bar Card -->
+            <div class="main-card">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;">
+                    <span>Progress to level 2</span>
+                    <span style="color: #ffb703; font-weight: bold;">49 / 10K</span>
+                </div>
+                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
+                    <div style="width: 1%; height: 100%; background: #ffb703; border-radius: 3px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #888;">9,951 XAURA more to reach level 2</div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px;">
+                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
+                    <div style="font-size: 10px; color: #888;">EARNED</div>
+                    <div style="font-size: 15px; font-weight: bold; color: #ffb703; margin-top: 4px;">49</div>
+                </div>
+                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
+                    <div style="font-size: 10px; color: #888;">WITHDRAWN</div>
+                    <div style="font-size: 15px; font-weight: bold; color: #2ec4b6; margin-top: 4px;">$0.00</div>
+                </div>
+                <div class="main-card" style="text-align: center; padding: 12px; margin-bottom: 0;">
+                    <div style="font-size: 10px; color: #888;">FRIENDS</div>
+                    <div style="font-size: 15px; font-weight: bold; color: #b5838d; margin-top: 4px;">0</div>
+                </div>
+            </div>
+
+            <!-- Wallet Menu Options -->
+            <div style="font-size: 11px; color: #ffb703; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: bold;">Wallet</div>
+            
+            <div class="main-card" style="padding: 0; overflow: hidden;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border-color); cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="background: rgba(255,183,3,0.15); padding: 8px; border-radius: 10px;">🔄</span>
+                        <div>
+                            <div style="font-size: 13px; font-weight: 600;">Convert</div>
+                            <div style="font-size: 11px; color: #888;">Swap XAURA for USDT</div>
+                        </div>
+                    </div>
+                    <span style="color: #888;">›</span>
                 </div>
 
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,3,0.1); padding: 12px; border-radius: 14px; margin-bottom: 15px;">
-                    <div style="font-size: 11px; color: #888;">Wallet Status</div>
-                    <div style="font-size: 13px; font-weight: 600; color: #2ec4b6;">Not Connected</div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border-color); cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="background: rgba(46,196,182,0.15); padding: 8px; border-radius: 10px;">📥</span>
+                        <div>
+                            <div style="font-size: 13px; font-weight: 600;">Withdraw</div>
+                            <div style="font-size: 11px; color: #888;">Send USDT to your wallet</div>
+                        </div>
+                    </div>
+                    <span style="color: #888;">›</span>
                 </div>
 
-                <button style="width: 100%; background: #ffb703; color: #000; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 0 15px rgba(255,183,3,0.2);">Connect Wallet</button>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="background: rgba(255,255,255,0.05); padding: 8px; border-radius: 10px;">👛</span>
+                        <div>
+                            <div style="font-size: 13px; font-weight: 600;">Set wallet</div>
+                            <div style="font-size: 11px; color: #888;">Not connected</div>
+                        </div>
+                    </div>
+                    <span style="color: #888;">›</span>
+                </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <a href="index.html" class="nav-item">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
