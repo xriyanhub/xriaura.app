@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Select Language</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            background: #141414;
+            border: 1px solid #222;
+            color: #ffb703;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .main-title {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .lang-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lang-item {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .lang-item.active {
+            border-color: #ffb703;
+            background: linear-gradient(135deg, #2a220c, #141414);
+        }
+
+        .lang-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .lang-flag {
+            font-size: 20px;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: #ffb703;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        /* Bottom Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #111;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-top">
+        <div class="header-left">
+            <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <div class="main-title">Language</div>
+        </div>
+    </div>
+
+    <div class="lang-list">
+        <div class="lang-item active" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇬🇧</span>
+                <span>English</span>
+            </div>
+            <div class="check-icon"><i class="fa-solid fa-check"></i></div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇮🇳</span>
+                <span>हिन्दी</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇷🇺</span>
+                <span>Русский</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇧🇩</span>
+                <span>বাংলা</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇪🇸</span>
+                <span>Español</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇹🇷</span>
+                <span>Türkçe</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇸🇦</span>
+                <span>العربية</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇮🇩</span>
+                <span>Bahasa Indonesia</span>
+            </div>
+        </div>
+        <div class="lang-item" onclick="selectLang(this)">
+            <div class="lang-info">
+                <span class="lang-flag">🇳🇬</span>
+                <span>Hausa</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="../../index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="../../tasks/index.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="../../earn/arcade.html" class="nav-item">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Earn</span>
+        </a>
+        <a href="../../refer/index.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="../index.html" class="nav-item active">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function selectLang(element) {
+            document.querySelectorAll('.lang-item').forEach(item => {
+                item.classList.remove('active');
+                const check = item.querySelector('.check-icon');
+                if (check) check.remove();
+            });
+            element.classList.add('active');
+            const checkDiv = document.createElement('div');
+            checkDiv.className = 'check-icon';
+            checkDiv.innerHTML = '<i class="fa-solid fa-check"></i>';
+            element.appendChild(checkDiv);
+        }
+    </script>
+</body>
+</html>
