@@ -111,7 +111,7 @@ body {
     display: none;
 }
 
-/* 3D Glassmorphism Cards */
+/* Cards */
 .main-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -119,48 +119,9 @@ body {
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,183,3,0.2);
     margin-bottom: 15px;
-    position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.main-card:active {
-    transform: scale(0.98);
-}
-
-/* Floating 3D Animation for Icons/Badges */
-@keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-6px) rotate(2deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.floating-3d {
-    animation: float 4s ease-in-out infinite;
-}
-
-/* Buttons with 3D Gold Glow */
-.btn-gold {
-    background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
-    color: #000;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 14px;
-    font-weight: 800;
-    font-size: 13px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(255,183,3,0.4), inset 0 2px 3px rgba(255,255,255,0.4);
-    transition: all 0.2s ease;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-gold:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 10px rgba(255,183,3,0.3);
-}
-
-/* Bottom Navigation Bar */
+/* Bottom Navigation Bar with exact center glowing button layout */
 .bottom-nav {
     position: absolute;
     bottom: 0;
@@ -171,7 +132,8 @@ body {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-around;
-    padding: 10px 0 22px 0;
+    align-items: center;
+    padding: 8px 0 20px 0;
     z-index: 100;
 }
 
@@ -184,15 +146,12 @@ body {
     font-size: 11px;
     gap: 4px;
     cursor: pointer;
-    transition: color 0.2s ease;
 }
 
 .nav-item.active {
     color: var(--gold-primary);
-    text-shadow: 0 0 10px var(--gold-glow);
 }
 
 .nav-item.active svg {
     fill: var(--gold-primary);
-    filter: drop-shadow(0 0 8px var(--gold-glow));
 }
