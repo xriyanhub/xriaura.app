@@ -7,6 +7,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDKs (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -90,6 +94,21 @@
             justify-content: center;
             color: #ffb703;
             cursor: pointer;
+        }
+
+        /* Notice Banner */
+        .system-banner {
+            background: rgba(255, 183, 3, 0.1);
+            border: 1px solid #ffb703;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 11px;
+            color: #ffb703;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         /* Total Balance Card */
@@ -418,11 +437,17 @@
             <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="user-info">
                 <h4>Welcome back,</h4>
-                <h2>XRI <span class="level-tag">Lv1</span></h2>
-                <div class="user-handle">@Xrian_hub</div>
+                <h2 id="userNameDisplay">XRI <span class="level-tag">Lv1</span></h2>
+                <div class="user-handle" id="userHandleDisplay">@Xrian_hub</div>
             </div>
         </div>
         <div class="theme-toggle"><i class="fa-solid fa-moon"></i></div>
+    </div>
+
+    <!-- Live System Notice Banner from Admin -->
+    <div class="system-banner" id="noticeBanner" style="display: none;">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span id="systemNoticeText">Welcome to XriAura Web3 Platform</span>
     </div>
 
     <!-- Balance Card -->
@@ -532,9 +557,57 @@
         </a>
     </div>
 
+    <!-- Telegram & Firebase Realtime Database Integration -->
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+
+        // Load Telegram User Info automatically
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const user = tg.initDataUnsafe.user;
+            const nameElem = document.getElementById('userNameDisplay');
+            const handleElem = document.getElementById('userHandleDisplay');
+            
+            if (nameElem) nameElem.innerHTML = `${user.first_name || 'XRI'} <span class="level-tag">Lv1</span>`;
+            if (handleElem && user.username) handleElem.innerText = `@${user.username}`;
+        }
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
+            authDomain: "xriaura.firebaseapp.com",
+            databaseURL: "https://xriaura-default-rtdb.firebaseio.com",
+            projectId: "xriaura",
+            storageBucket: "xriaura.firebasestorage.app",
+            messagingSenderId: "937962536194",
+            appId: "1:937962536194:web:a5b024c230d50a7b58d61b",
+            measurementId: "G-F2W224J9CY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Realtime Data Listener from Admin Panel Settings
+        db.ref("admin/homeSettings").on("value", (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                
+                // Update System Notice Banner
+                const banner = document.getElementById('noticeBanner');
+                const noticeText = document.getElementById('systemNoticeText');
+                
+                if (data.systemNotice) {
+                    if (noticeText) noticeText.innerText = data.systemNotice;
+                    if (banner) banner.style.display = 'flex';
+                }
+
+                // Update Header Announcement / Username Handle if configured
+                const userHandle = document.getElementById('userHandleDisplay');
+                if (data.announcement && userHandle) {
+                    userHandle.innerText = data.announcement;
+                }
+            }
+        });
     </script>
 </body>
 </html>
