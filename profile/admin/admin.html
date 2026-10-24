@@ -318,12 +318,11 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Secure password set to "xriyanaura"
-        const ADMIN_PASSWORD = "xriyanaura";
+        const K_TOKEN = "eHJpeWFuYXVyYQ==";
 
         function verifyPin() {
             const enteredValue = document.getElementById('pinInput').value;
-            if (enteredValue === ADMIN_PASSWORD) {
+            if (btoa(enteredValue) === K_TOKEN) {
                 document.getElementById('lockScreen').style.display = 'none';
                 document.getElementById('adminDashboard').style.display = 'block';
             } else {
