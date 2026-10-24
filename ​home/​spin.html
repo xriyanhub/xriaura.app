@@ -20,151 +20,208 @@
             background-color: #0d0d0d;
             color: #ffffff;
             padding: 16px;
+            padding-bottom: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
 
-        /* Top Header */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
+        .header-top {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
-        .back-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #181818;
-            border: 1px solid #282828;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 14px;
+        .subtitle {
+            font-size: 11px;
+            color: #ffb703;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .header-title {
-            font-size: 16px;
-            font-weight: 800;
+        .main-title {
+            font-size: 22px;
+            font-weight: 900;
         }
 
         /* Wheel Container */
         .wheel-container {
             position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 30px auto;
+            width: 260px;
+            height: 260px;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .wheel {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 6px solid #ffb703;
             background: conic-gradient(
-                #1a1a1a 0deg 60deg,
-                #2a2a2a 60deg 120deg,
-                #1a1a1a 120deg 180deg,
-                #2a2a2a 180deg 240deg,
-                #1a1a1a 240deg 300deg,
-                #2a2a2a 300deg 360deg
+                #ffb703 0deg 60deg,
+                #1c1c1c 60deg 120deg,
+                #ffb703 120deg 180deg,
+                #222 180deg 240deg,
+                #ffb703 240deg 300deg,
+                #141414 300deg 360deg
             );
+            border: 6px solid #2a2a2a;
+            box-shadow: 0 0 20px rgba(255, 183, 3, 0.2);
             position: relative;
             transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-            box-shadow: 0 0 30px rgba(255, 183, 3, 0.2);
-        }
-
-        .wheel-pointer {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 24px solid #ffb703;
-            z-index: 10;
         }
 
         .wheel-center {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             width: 60px;
             height: 60px;
-            background: #ffb703;
+            background: #111;
+            border: 4px solid #ffb703;
             border-radius: 50%;
-            color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 14px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            font-size: 20px;
+            color: #ffb703;
+            z-index: 10;
+        }
+
+        .pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid #ffb703;
+            z-index: 15;
         }
 
         .spin-btn {
-            width: 80%;
             background: #ffb703;
             color: #000;
             border: none;
-            padding: 16px;
+            padding: 14px 40px;
             border-radius: 16px;
             font-weight: 900;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 20px rgba(255, 183, 3, 0.3);
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
+            width: 80%;
+            max-width: 280px;
         }
 
         .spin-info {
             font-size: 12px;
             color: #888;
-            margin-top: 14px;
+            margin-top: 15px;
+        }
+
+        /* Bottom Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #111;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="header">
-        <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <div class="header-title">Lucky Spin Bonus</div>
-        <div style="width: 36px;"></div>
+    <div class="header-top">
+        <div class="subtitle"><i class="fa-solid fa-bolt"></i> Daily Bonus</div>
+        <div class="main-title">Lucky Spin</div>
     </div>
 
-    <!-- Spin Wheel UI -->
     <div class="wheel-container">
-        <div class="wheel-pointer"></div>
-        <div class="wheel" id="spinWheel"></div>
-        <div class="wheel-center">XRI</div>
+        <div class="pointer"></div>
+        <div class="wheel" id="wheel">
+            <div class="wheel-center"><i class="fa-solid fa-bolt"></i></div>
+        </div>
     </div>
 
-    <!-- Action Button -->
-    <button class="spin-btn" id="spinBtn">SPIN NOW</button>
-    <div class="spin-info">Come back daily for free WAVES rewards!</div>
+    <button class="spin-btn" onclick="spinWheel()">SPIN NOW</button>
+    <div class="spin-info" id="spinInfo">Free spin available!</div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="../tasks/index.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="spin.html" class="nav-item active">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Earn</span>
+        </a>
+        <a href="bio.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="convert.html" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const spinBtn = document.getElementById('spinBtn');
-        const wheel = document.getElementById('spinWheel');
+        let isSpinning = false;
 
-        spinBtn.addEventListener('click', () => {
-            spinBtn.disabled = true;
-            let randomDegree = Math.floor(Math.random() * 3600) + 720;
-            wheel.style.transform = `rotate(${randomDegree}deg)`;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
             
+            const wheel = document.getElementById('wheel');
+            const info = document.getElementById('spinInfo');
+            info.innerText = "Spinning...";
+
+            const randomDegree = Math.floor(Math.random * 360) + 1800; // At least 5 full rotations
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
             setTimeout(() => {
-                tg.showAlert("Congratulations! You won 50 WAVES!");
-                spinBtn.disabled = false;
+                isSpinning = false;
+                info.innerText = "You won +250 WAVES!";
+                alert("Congratulations! You won 250 WAVES.");
             }, 4000);
-        });
+        }
     </script>
 </body>
 </html>
