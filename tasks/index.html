@@ -7,6 +7,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDKs (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -125,6 +129,7 @@
             cursor: pointer;
             flex: 1;
             text-align: center;
+            text-decoration: none;
         }
 
         .sub-btn.active {
@@ -178,29 +183,29 @@
 
     <div class="header-top">
         <div class="subtitle"><i class="fa-solid fa-bolt"></i> Complete & Collect</div>
-        <div class="main-title">Tasks</div>
+        <div class="main-title">Tasks Hub</div>
     </div>
-    <div class="desc">Complete tasks, collect WAVES</div>
+    <div class="desc" id="taskHeaderDesc">Complete tasks, collect WAVES</div>
 
-    <!-- Category Tabs -->
+    <!-- Category Tabs linking the 4 Modular Files -->
     <div class="categories">
         <div class="cat-card active" onclick="loadTab('social.html', this)">
-            <div class="badge">4</div>
+            <div class="badge" id="socialBadge">4</div>
             <div class="cat-icon"><i class="fa-solid fa-bullhorn"></i></div>
             <div class="cat-name">Social</div>
         </div>
         <div class="cat-card" onclick="loadTab('daily.html', this)">
-            <div class="badge">7</div>
+            <div class="badge" id="dailyBadge">7</div>
             <div class="cat-icon"><i class="fa-solid fa-calendar-days"></i></div>
             <div class="cat-name">Daily</div>
         </div>
         <div class="cat-card" onclick="loadTab('exclusive.html', this)">
-            <div class="badge">2</div>
+            <div class="badge" id="exclusiveBadge">2</div>
             <div class="cat-icon"><i class="fa-solid fa-gem"></i></div>
             <div class="cat-name">Exclusive</div>
         </div>
         <div class="cat-card" onclick="loadTab('partner.html', this)">
-            <div class="badge">22</div>
+            <div class="badge" id="partnerBadge">22</div>
             <div class="cat-icon"><i class="fa-solid fa-handshake"></i></div>
             <div class="cat-name">Partner</div>
         </div>
@@ -213,7 +218,7 @@
         <div class="sub-btn" style="color: #ffb703;">+ Add task</div>
     </div>
 
-    <!-- Dynamic Modular Content Loader -->
+    <!-- Dynamic Modular Content Loader for files: social.html, daily.html, exclusive.html, partner.html -->
     <iframe id="taskFrame" src="social.html" class="content-frame"></iframe>
 
     <!-- Bottom Navigation Bar -->
@@ -240,9 +245,42 @@
         </a>
     </div>
 
+    <!-- Firebase Realtime Database Integration -->
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
+            authDomain: "xriaura.firebaseapp.com",
+            databaseURL: "https://xriaura-default-rtdb.firebaseio.com",
+            projectId: "xriaura",
+            storageBucket: "xriaura.firebasestorage.app",
+            messagingSenderId: "937962536194",
+            appId: "1:937962536194:web:a5b024c230d50a7b58d61b",
+            measurementId: "G-F2W224J9CY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Listen for Realtime Admin Settings Updates for Tasks Badges & Counts
+        db.ref("admin/homeSettings").on("value", (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                
+                const socialB = document.getElementById('socialBadge');
+                const dailyB = document.getElementById('dailyBadge');
+                const exclusiveB = document.getElementById('exclusiveBadge');
+                const partnerB = document.getElementById('partnerBadge');
+
+                if (data.socialTaskCount && socialB) socialB.innerText = data.socialTaskCount;
+                if (data.dailyTaskCount && dailyB) dailyB.innerText = data.dailyTaskCount;
+                if (data.exclusiveTaskCount && exclusiveB) exclusiveB.innerText = data.exclusiveTaskCount;
+                if (data.partnerTaskCount && partnerB) partnerB.innerText = data.partnerTaskCount;
+            }
+        });
 
         function loadTab(page, element) {
             document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
