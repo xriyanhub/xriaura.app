@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>XriAura - Dark Mode Settings</title>
+    <title>XriAura - Light Mode Settings</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -17,8 +17,8 @@
         }
 
         body {
-            background-color: #12100e;
-            color: #ffffff;
+            background-color: #f7f3e9;
+            color: #2b2219;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -31,8 +31,8 @@
         }
 
         .back-btn {
-            background: #191612;
-            border: 1px solid #26221c;
+            background: #ffffff;
+            border: 1px solid #e3d9c6;
             color: #ffb703;
             width: 36px;
             height: 36px;
@@ -50,13 +50,14 @@
         }
 
         .settings-card {
-            background: #191612;
-            border: 1px solid #26221c;
+            background: #ffffff;
+            border: 1px solid #e3d9c6;
             border-radius: 16px;
             padding: 18px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         .settings-left {
@@ -69,7 +70,7 @@
             width: 40px;
             height: 40px;
             background: rgba(255, 183, 3, 0.15);
-            color: #ffb703;
+            color: #d99300;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -81,11 +82,12 @@
             font-size: 14px;
             font-weight: 700;
             margin-bottom: 2px;
+            color: #2b2219;
         }
 
         .settings-info p {
             font-size: 11px;
-            color: #888;
+            color: #7a6e5d;
         }
 
         /* Toggle Switch */
@@ -106,7 +108,7 @@
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #26221c;
+            background-color: #d8cebd;
             transition: .3s;
             border-radius: 28px;
         }
@@ -137,8 +139,8 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #14110d;
-            border-top: 1px solid #26221c;
+            background: #ffffff;
+            border-top: 1px solid #e3d9c6;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -150,7 +152,7 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #777;
+            color: #7a6e5d;
             font-size: 10px;
             gap: 4px;
         }
@@ -173,14 +175,14 @@
 
     <div class="settings-card">
         <div class="settings-left">
-            <div class="settings-icon"><i class="fa-solid fa-moon"></i></div>
+            <div class="settings-icon"><i class="fa-solid fa-sun"></i></div>
             <div class="settings-info">
-                <h5>Dark mode</h5>
-                <p>Always use dark aesthetic</p>
+                <h5>Light mode</h5>
+                <p>Use bright beige aesthetic theme</p>
             </div>
         </div>
         <label class="switch">
-            <input type="checkbox" checked id="darkModeToggle" onchange="toggleTheme(this)">
+            <input type="checkbox" checked id="lightModeToggle" onchange="toggleTheme(this)">
             <span class="slider"></span>
         </label>
     </div>
@@ -195,7 +197,7 @@
             <i class="fa-solid fa-list-check"></i>
             <span>Tasks</span>
         </a>
-        <a href="../../earn/arcade.html" class="nav-item">
+        <a href="../../earn/spin.html" class="nav-item">
             <i class="fa-solid fa-rotate"></i>
             <span>Earn</span>
         </a>
@@ -215,9 +217,9 @@
 
         function toggleTheme(checkbox) {
             if(checkbox.checked) {
-                document.body.style.backgroundColor = "#12100e";
+                document.body.style.backgroundColor = "#f7f3e9";
             } else {
-                document.body.style.backgroundColor = "#1c1915";
+                document.body.style.backgroundColor = "#12100e";
             }
         }
     </script>
