@@ -17,8 +17,6 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -37,9 +35,6 @@
         }
 
         .back-btn {
-            background: #141414;
-            border: 1px solid #222;
-            color: #ffb703;
             width: 36px;
             height: 36px;
             border-radius: 10px;
@@ -62,8 +57,6 @@
         }
 
         .lang-item {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 16px;
             display: flex;
@@ -73,11 +66,6 @@
             transition: 0.2s;
             text-decoration: none;
             color: inherit;
-        }
-
-        .lang-item.active {
-            border-color: #ffb703;
-            background: linear-gradient(135deg, #2a220c, #141414);
         }
 
         .lang-info {
@@ -95,8 +83,6 @@
         .check-icon {
             width: 24px;
             height: 24px;
-            background: #ffb703;
-            color: #000;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -111,8 +97,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #111;
-            border-top: 1px solid #222;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -124,17 +108,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
             font-size: 10px;
             gap: 4px;
         }
 
         .nav-item i {
             font-size: 16px;
-        }
-
-        .nav-item.active {
-            color: #ffb703;
         }
     </style>
 </head>
@@ -207,19 +186,19 @@
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="../../index.html" class="nav-item">
+        <a href="../../../index.html" class="nav-item">
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
-        <a href="../../tasks/index.html" class="nav-item">
+        <a href="../../../tasks/index.html" class="nav-item">
             <i class="fa-solid fa-list-check"></i>
             <span>Tasks</span>
         </a>
-        <a href="../../earn/arcade.html" class="nav-item">
+        <a href="../../../earn/arcade.html" class="nav-item">
             <i class="fa-solid fa-rotate"></i>
             <span>Earn</span>
         </a>
-        <a href="../../refer/index.html" class="nav-item">
+        <a href="../../../refer/index.html" class="nav-item">
             <i class="fa-solid fa-user-group"></i>
             <span>Refer</span>
         </a>
@@ -229,6 +208,8 @@
         </a>
     </div>
 
+    <!-- Linked to Profile Folder's Centralized Aura JS -->
+    <script src="../aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
@@ -236,12 +217,19 @@
         function selectLang(element) {
             document.querySelectorAll('.lang-item').forEach(item => {
                 item.classList.remove('active');
+                item.style.borderColor = "#26221c";
+                item.style.background = "#191612";
                 const check = item.querySelector('.check-icon');
                 if (check) check.remove();
             });
             element.classList.add('active');
+            element.style.borderColor = "#ffb703";
+            element.style.background = "linear-gradient(135deg, #2a220c, #191612)";
+            
             const checkDiv = document.createElement('div');
             checkDiv.className = 'check-icon';
+            checkDiv.style.background = "#ffb703";
+            checkDiv.style.color = "#000";
             checkDiv.innerHTML = '<i class="fa-solid fa-check"></i>';
             element.appendChild(checkDiv);
         }
