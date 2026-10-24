@@ -17,8 +17,6 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
             display: flex;
@@ -35,7 +33,6 @@
 
         .subtitle {
             font-size: 11px;
-            color: #ffb703;
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -71,7 +68,6 @@
                 #141414 300deg 360deg
             );
             border: 6px solid #2a2a2a;
-            box-shadow: 0 0 20px rgba(255, 183, 3, 0.2);
             position: relative;
             transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
         }
@@ -87,7 +83,6 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            color: #ffb703;
             z-index: 10;
         }
 
@@ -105,8 +100,6 @@
         }
 
         .spin-btn {
-            background: #ffb703;
-            color: #000;
             border: none;
             padding: 14px 40px;
             border-radius: 16px;
@@ -114,14 +107,12 @@
             font-size: 16px;
             cursor: pointer;
             margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
             width: 80%;
             max-width: 280px;
         }
 
         .spin-info {
             font-size: 12px;
-            color: #888;
             margin-top: 15px;
         }
 
@@ -131,8 +122,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #111;
-            border-top: 1px solid #222;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -144,17 +133,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
             font-size: 10px;
             gap: 4px;
         }
 
         .nav-item i {
             font-size: 16px;
-        }
-
-        .nav-item.active {
-            color: #ffb703;
         }
     </style>
 </head>
@@ -189,16 +173,18 @@
             <i class="fa-solid fa-rotate"></i>
             <span>Earn</span>
         </a>
-        <a href="bio.html" class="nav-item">
+        <a href="../refer/index.html" class="nav-item">
             <i class="fa-solid fa-user-group"></i>
             <span>Refer</span>
         </a>
-        <a href="convert.html" class="nav-item">
+        <a href="../profile/index.html" class="nav-item">
             <i class="fa-solid fa-user"></i>
             <span>Profile</span>
         </a>
     </div>
 
+    <!-- Linked to Earn Folder's Centralized Aura JS -->
+    <script src="aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
@@ -213,7 +199,7 @@
             const info = document.getElementById('spinInfo');
             info.innerText = "Spinning...";
 
-            const randomDegree = Math.floor(Math.random * 360) + 1800; // At least 5 full rotations
+            const randomDegree = Math.floor(Math.random() * 360) + 1800; // Fixed Math.random() function call
             wheel.style.transform = `rotate(${randomDegree}deg)`;
 
             setTimeout(() => {
