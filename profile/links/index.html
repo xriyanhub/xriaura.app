@@ -21,8 +21,6 @@
         }
 
         body {
-            background-color: #12100e;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -35,7 +33,6 @@
         }
 
         .back-btn {
-            color: #ffb703;
             font-size: 18px;
             text-decoration: none;
         }
@@ -43,7 +40,6 @@
         .main-title {
             font-size: 18px;
             font-weight: 900;
-            color: #ffb703;
         }
 
         .menu-grid {
@@ -53,20 +49,13 @@
         }
 
         .menu-item {
-            background: #191612;
-            border: 1px solid #26221c;
             border-radius: 16px;
             padding: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             text-decoration: none;
-            color: #fff;
             transition: 0.2s;
-        }
-
-        .menu-item:active {
-            border-color: #ffb703;
         }
 
         .menu-left {
@@ -78,8 +67,6 @@
         .menu-icon {
             width: 40px;
             height: 40px;
-            background: rgba(255, 183, 3, 0.15);
-            color: #ffb703;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -95,11 +82,9 @@
 
         .menu-info p {
             font-size: 11px;
-            color: #888;
         }
 
         .menu-arrow {
-            color: #ffb703;
             font-size: 14px;
         }
 
@@ -109,8 +94,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #14110d;
-            border-top: 1px solid #26221c;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -122,17 +105,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #777;
             font-size: 10px;
             gap: 4px;
         }
 
         .nav-item i {
             font-size: 16px;
-        }
-
-        .nav-item.active {
-            color: #ffb703;
         }
     </style>
 </head>
@@ -213,7 +191,8 @@
         </a>
     </div>
 
-    <!-- Firebase Realtime Database Integration -->
+    <!-- Linked to Profile Folder's Centralized Aura JS -->
+    <script src="../aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
