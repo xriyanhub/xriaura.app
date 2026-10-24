@@ -2,66 +2,577 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XriAura - Earn</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Earn Arcade</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        /* Top Header */
+        .sub-header {
+            font-size: 11px;
+            color: #ffb703;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .sub-title {
+            font-size: 13px;
+            color: #888888;
+            margin-bottom: 16px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .stat-icon {
+            font-size: 18px;
+            color: #ffb703;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #777;
+        }
+
+        /* Contest Results Banner */
+        .contest-banner {
+            background: linear-gradient(135deg, #1d1a10, #141414);
+            border: 1px solid #3d3319;
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .contest-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trophy-box {
+            width: 44px;
+            height: 44px;
+            background: #ffb703;
+            color: #000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .contest-tag {
+            font-size: 10px;
+            color: #ffb703;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .contest-name {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .contest-sub {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .view-btn {
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Featured Game Banner */
+        .featured-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .featured-img-box {
+            width: 100%;
+            height: 140px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2a0845, #6441a5);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ffb703;
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .featured-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .featured-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .featured-reward {
+            font-size: 12px;
+            color: #ffb703;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .play-btn-large {
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        /* Daily Spin Box */
+        .spin-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .spin-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .spin-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffb703;
+            font-size: 18px;
+        }
+
+        .spin-sub {
+            font-size: 10px;
+            color: #777;
+            letter-spacing: 0.5px;
+        }
+
+        .spin-main {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .spin-timer {
+            font-size: 11px;
+            color: #ffb703;
+            font-weight: 600;
+        }
+
+        /* Filter Categories */
+        .filter-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .filter-btn {
+            background: #141414;
+            border: 1px solid #242424;
+            color: #aaa;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: #ffb703;
+            color: #000;
+            font-weight: 700;
+            border-color: #ffb703;
+        }
+
+        /* Game Grid Layout */
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .game-card {
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 12px;
+            position: relative;
+        }
+
+        .game-thumb {
+            width: 100%;
+            height: 100px;
+            border-radius: 12px;
+            background: #1a1a1a;
+            position: relative;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            overflow: hidden;
+        }
+
+        .play-circle-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ffb703;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .game-category-tag {
+            font-size: 10px;
+            color: #38ef7d;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .game-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .game-reward {
+            font-size: 12px;
+            color: #ffb703;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .game-attempts {
+            font-size: 10px;
+            color: #ffb703;
+            letter-spacing: 1px;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: #111111;
+            border-top: 1px solid #222222;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666666;
+            text-decoration: none;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+
+        .nav-item.center-btn {
+            position: relative;
+            top: -15px;
+        }
+
+        .center-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #ffb703;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 4px solid #0d0d0d;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="mobile-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="user-profile">
-                <div class="avatar-box">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar">
-                </div>
-                <div class="user-info">
-                    <h2>Token Mining</h2>
-                    <span class="badge">⚡️ Active Bot</span>
-                </div>
-            </div>
-            <div class="username">@xriyan_hub</div>
+    <!-- Header Section -->
+    <div class="sub-header"><i class="fa-solid fa-bolt"></i> PLAY & EARN</div>
+    <div class="main-title">Arcade</div>
+    <div class="sub-title">Play mini-games, win WAVES</div>
+
+    <!-- Stats Bar -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="stat-value">+49</div>
+            <div class="stat-label">Earned today</div>
         </div>
-
-        <!-- Main Content -->
-        <div class="content">
-            <div class="balance-card" style="text-align: center; padding: 30px 20px;">
-                <div style="font-size: 13px; color: #888; text-transform: uppercase;">Tap to Mine</div>
-                
-                <!-- Mining Circle Button -->
-                <div style="width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(255,183,3,0.2) 0%, rgba(22,22,22,1) 80%); border: 2px solid #ffb703; box-shadow: 0 0 30px rgba(255,183,3,0.3); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 25px auto; cursor: pointer;">
-                    <span style="font-size: 28px; font-weight: 800; color: #ffb703;">⚡️</span>
-                    <span style="font-size: 14px; font-weight: 700; color: #fff; margin-top: 5px;">TAP ME</span>
-                </div>
-
-                <div style="font-size: 12px; color: #888;">Speed: <span style="color: #ffb703; font-weight: bold;">+1 XAURA / tap</span></div>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation Bar -->
-        <div class="bottom-nav">
-            <a href="index.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                Home
-            </a>
-            <a href="tasks.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                Tasks
-            </a>
-            <a href="earn.html" class="nav-item active">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                Earn
-            </a>
-            <a href="refer.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                Refer
-            </a>
-            <a href="profile.html" class="nav-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#888"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                Profile
-            </a>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="stat-value">36</div>
+            <div class="stat-label">Plays left</div>
         </div>
     </div>
 
+    <!-- Contest Banner -->
+    <div class="contest-banner">
+        <div class="contest-left">
+            <div class="trophy-box"><i class="fa-solid fa-trophy"></i></div>
+            <div>
+                <div class="contest-tag">CONTEST RESULTS +1</div>
+                <div class="contest-name">Snake • ⚡ 107K</div>
+                <div class="contest-sub">Rewards sent</div>
+            </div>
+        </div>
+        <button class="view-btn">View</button>
+    </div>
+
+    <!-- Featured Game -->
+    <div class="featured-card">
+        <div class="featured-img-box">
+            <span class="featured-badge"><i class="fa-solid fa-star"></i> FEATURED GAME</span>
+            <i class="fa-solid fa-rocket" style="font-size: 60px; color: #ffb703;"></i>
+        </div>
+        <div class="featured-bottom">
+            <div>
+                <div class="featured-title">Space Shooter</div>
+                <div class="featured-reward"><i class="fa-solid fa-bolt"></i> Up to 330 <span style="color:#ffb703; margin-left:6px;">▮▮▮▮ 4/4</span></div>
+            </div>
+            <button class="play-btn-large"><i class="fa-solid fa-play"></i> Play</button>
+        </div>
+    </div>
+
+    <!-- Daily Spin Box -->
+    <div class="spin-card">
+        <div class="spin-left">
+            <div class="spin-icon"><i class="fa-solid fa-dharmachakra"></i></div>
+            <div>
+                <div class="spin-sub">DAILY BONUS</div>
+                <div class="spin-main">Lucky Spin</div>
+                <div class="spin-timer">Back in 🕒 09:23:47</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-lock" style="color:#555;"></i>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-scroll">
+        <button class="filter-btn active" onclick="filterGames('all', this)">All</button>
+        <button class="filter-btn" onclick="filterGames('arcade', this)">Arcade</button>
+        <button class="filter-btn" onclick="filterGames('sports', this)">Sports</button>
+        <button class="filter-btn" onclick="filterGames('puzzle', this)">Puzzle</button>
+        <button class="filter-btn" onclick="filterGames('brain', this)">Brain</button>
+    </div>
+
+    <!-- Games Grid -->
+    <div class="game-grid" id="games-container">
+        <!-- Games will be injected via JS -->
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="tasks.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="earn.html" class="nav-item active center-btn">
+            <div class="center-circle">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <span>Earn</span>
+        </a>
+        <a href="frends.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="wallet.html" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        const gamesData = [
+            { id: 1, title: 'Lane Racer', cat: 'sports', type: 'SPORTS', reward: '450', attempts: '▮▮▮▮ 4/4', icon: 'fa-car', color: '#ff4757' },
+            { id: 2, title: 'Hoops', cat: 'sports', type: 'SPORTS', reward: '300', attempts: '▮▮ 2/2', icon: 'fa-basketball', color: '#ffa502' },
+            { id: 3, title: 'Snake', cat: 'arcade', type: 'ARCADE', reward: '330', attempts: '▮▮▮ 3/3', icon: 'fa-staff-snake', color: '#2ed573' },
+            { id: 4, title: 'Stack Tower', cat: 'arcade', type: 'ARCADE', reward: '250', attempts: '▮▮▮ 3/3', icon: 'fa-cubes', color: '#a55eea' },
+            { id: 5, title: 'Word Search', cat: 'puzzle', type: 'PUZZLE', reward: '300', attempts: '▮▮▮ 3/3', icon: 'fa-font', color: '#2ed573' },
+            { id: 6, title: 'Wordle', cat: 'puzzle', type: 'PUZZLE', reward: '250', attempts: '▮▮▮ 3/3', icon: 'fa-spell-check', color: '#2ed573' },
+            { id: 7, title: '2048', cat: 'puzzle', type: 'PUZZLE', reward: '350', attempts: '▮▮▮ 3/3', icon: 'fa-hashtag', color: '#ffb703' },
+            { id: 8, title: 'Memory Match', cat: 'brain', type: 'MEMORY', reward: '120', attempts: '▮▮▮ 3/3', icon: 'fa-brain', color: '#e1306c' },
+            { id: 9, title: 'Tic Tac Toe', cat: 'brain', type: 'STRATEGY', reward: '80', attempts: '▮▮▮ 3/3', icon: 'fa-xmark', color: '#ffb703' }
+        ];
+
+        function renderGames(filterCategory = 'all') {
+            const container = document.getElementById('games-container');
+            container.innerHTML = '';
+
+            const filteredList = filterCategory === 'all' 
+                ? gamesData 
+                : gamesData.filter(g => g.cat === filterCategory);
+
+            filteredList.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="game-thumb">
+                        <i class="fa-solid ${game.icon}" style="color: ${game.color};"></i>
+                        <div class="play-circle-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="game-category-tag">${game.type}</div>
+                    <div class="game-title">${game.title}</div>
+                    <div class="game-meta">
+                        <div class="game-reward"><i class="fa-solid fa-bolt"></i> ${game.reward}</div>
+                        <div class="game-attempts">${game.attempts}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterGames(category, el) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            el.classList.add('active');
+            renderGames(category);
+        }
+
+        // Initial render
+        renderGames('all');
+    </script>
 </body>
 </html>
