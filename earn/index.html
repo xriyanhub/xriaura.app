@@ -7,6 +7,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDKs (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -148,9 +152,9 @@
         <a href="spin.html" class="earn-card">
             <div class="card-left">
                 <div class="card-icon"><i class="fa-solid fa-circle-notch"></i></div>
-                <div class="card-info">
+                <div class="card-info" id="spinCardInfo">
                     <h3>Lucky Spin</h3>
-                    <p>Spin the wheel for daily prizes</p>
+                    <p id="spinLimitText">Spin the wheel for daily prizes</p>
                 </div>
             </div>
             <div class="card-arrow"><i class="fa-solid fa-chevron-right"></i></div>
@@ -181,9 +185,38 @@
         </a>
     </div>
 
+    <!-- Firebase Realtime Database Integration -->
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
+            authDomain: "xriaura.firebaseapp.com",
+            databaseURL: "https://xriaura-default-rtdb.firebaseio.com",
+            projectId: "xriaura",
+            storageBucket: "xriaura.firebasestorage.app",
+            messagingSenderId: "937962536194",
+            appId: "1:937962536194:web:a5b024c230d50a7b58d61b",
+            measurementId: "G-F2W224J9CY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Listen for Realtime Spin & System Updates from Admin
+        db.ref("admin/homeSettings").on("value", (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const limitText = document.getElementById('spinLimitText');
+                
+                // If admin sets spin limit, show it live here
+                if (data.spinLimit && limitText) {
+                    limitText.innerText = `Daily Free Spins Limit: ${data.spinLimit}`;
+                }
+            }
+        });
     </script>
 </body>
 </html>
