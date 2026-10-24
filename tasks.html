@@ -54,7 +54,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .cat-item {
@@ -80,7 +80,6 @@
             transition: all 0.2s ease;
         }
 
-        /* Glowing effect for Active Tab */
         .cat-item.active .cat-icon-box {
             background: #ffb703;
             color: #000000;
@@ -117,6 +116,136 @@
             font-weight: bold;
         }
 
+        /* Sub-navigation for Exclusive Tab */
+        .sub-tab-container {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+
+        .sub-tab-group {
+            display: flex;
+            background: #141414;
+            border: 1px solid #242424;
+            padding: 4px;
+            border-radius: 14px;
+            flex: 1;
+        }
+
+        .sub-tab-btn {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .sub-tab-btn.active {
+            background: #222;
+            color: #fff;
+        }
+
+        .add-task-btn {
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        /* Sponsored Banner (For Daily Tab) */
+        .sponsored-card {
+            display: none;
+            background: linear-gradient(135deg, #1f142e, #120e1a);
+            border: 1px solid #3d2459;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .sponsored-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .sponsored-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .sponsored-tag {
+            background: rgba(165, 94, 234, 0.2);
+            color: #a55eea;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .sponsored-reward {
+            background: rgba(255, 183, 3, 0.1);
+            color: #ffb703;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Promote Link Card (Exclusive / My Tasks) */
+        .promote-card {
+            display: none;
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .promote-icon {
+            font-size: 40px;
+            color: #ffb703;
+            margin-bottom: 12px;
+        }
+
+        .promote-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .promote-card p {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .create-task-btn {
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
         /* Section Header */
         .tasks-header {
             display: flex;
@@ -134,7 +263,7 @@
         }
 
         .tasks-title span {
-            color: #0088cc;
+            color: #ffb703;
             font-weight: bold;
         }
 
@@ -206,11 +335,6 @@
             font-size: 13px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(255, 183, 3, 0.2);
-            transition: transform 0.1s ease;
-        }
-
-        .start-btn:active {
-            transform: scale(0.95);
         }
 
         /* Bottom Navigation Bar */
@@ -275,30 +399,30 @@
     <div class="main-title">Tasks</div>
     <div class="sub-title">Complete tasks, collect WAVES</div>
 
-    <!-- Category Tabs -->
+    <!-- Main Category Tabs -->
     <div class="category-grid">
-        <div class="cat-item active" onclick="selectTab(this)">
+        <div class="cat-item active" onclick="switchCategory('social', this)">
             <div class="cat-icon-box">
                 <i class="fa-solid fa-bullhorn"></i>
                 <span class="badge">4</span>
             </div>
             <button class="cat-label-btn">Social</button>
         </div>
-        <div class="cat-item" onclick="selectTab(this)">
+        <div class="cat-item" onclick="switchCategory('daily', this)">
             <div class="cat-icon-box">
                 <i class="fa-solid fa-calendar-days"></i>
                 <span class="badge">7</span>
             </div>
             <button class="cat-label-btn">Daily</button>
         </div>
-        <div class="cat-item" onclick="selectTab(this)">
+        <div class="cat-item" onclick="switchCategory('exclusive', this)">
             <div class="cat-icon-box">
                 <i class="fa-solid fa-gem"></i>
                 <span class="badge">2</span>
             </div>
             <button class="cat-label-btn">Exclusive</button>
         </div>
-        <div class="cat-item" onclick="selectTab(this)">
+        <div class="cat-item" onclick="switchCategory('partner', this)">
             <div class="cat-icon-box">
                 <i class="fa-solid fa-handshake"></i>
                 <span class="badge">22</span>
@@ -307,77 +431,47 @@
         </div>
     </div>
 
-    <!-- Section Header -->
-    <div class="tasks-header">
+    <!-- Sub Navigation for Exclusive Tab -->
+    <div class="sub-tab-container" id="exclusive-sub-tabs">
+        <div class="sub-tab-group">
+            <button class="sub-tab-btn active" onclick="switchExclusiveSubTab('tasks', this)">Tasks</button>
+            <button class="sub-tab-btn" onclick="switchExclusiveSubTab('mytasks', this)">My tasks</button>
+        </div>
+        <button class="add-task-btn"><i class="fa-solid fa-plus"></i> Add task</button>
+    </div>
+
+    <!-- Sponsored Banner -->
+    <div class="sponsored-card" id="sponsored-banner">
+        <div class="sponsored-header">
+            <div class="sponsored-title"><i class="fa-solid fa-bullhorn" style="color: #a55eea;"></i> Sponsored tasks</div>
+            <span class="sponsored-tag">AdsGram</span>
+        </div>
+        <p style="font-size: 11px; color: #aaa; margin-bottom: 12px;">Complete a partner task and earn 60 WAVES</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="sponsored-reward"><i class="fa-solid fa-bolt"></i> +60</div>
+            <button class="start-btn">Start</button>
+        </div>
+    </div>
+
+    <!-- Promote Card (My Tasks View) -->
+    <div class="promote-card" id="promote-card">
+        <div class="promote-icon"><i class="fa-solid fa-cloud-bolt"></i></div>
+        <h3>Promote your channel or link</h3>
+        <p>Create a task, pay in TON, and real users complete it for WAVES.</p>
+        <button class="create-task-btn">+ Create task</button>
+    </div>
+
+    <!-- Dynamic Section Title -->
+    <div class="tasks-header" id="tasks-header">
         <div class="tasks-title">
-            <span>|</span> Social
+            <span>|</span> <span id="current-cat-title">Social</span>
         </div>
-        <div class="tasks-progress">0/4 done</div>
+        <div class="tasks-progress" id="current-cat-progress">0/4 done</div>
     </div>
 
-    <!-- Task List -->
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon" style="color: #38ef7d;">
-                <i class="fa-solid fa-bolt"></i>
-            </div>
-            <div class="task-info">
-                <h4>Join announcement channel</h4>
-                <p>Get news, drops and announ...</p>
-                <div class="task-reward">
-                    <i class="fa-solid fa-bolt"></i> +150
-                </div>
-            </div>
-        </div>
-        <button class="start-btn">Start</button>
-    </div>
-
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon" style="color: #0088cc;">
-                <i class="fa-solid fa-comments"></i>
-            </div>
-            <div class="task-info">
-                <h4>Join the community chat</h4>
-                <p>Join official ThunderWaves C...</p>
-                <div class="task-reward">
-                    <i class="fa-solid fa-bolt"></i> +150
-                </div>
-            </div>
-        </div>
-        <button class="start-btn">Start</button>
-    </div>
-
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon" style="color: #a55eea;">
-                <i class="fa-solid fa-parachute-box"></i>
-            </div>
-            <div class="task-info">
-                <h4>Mystery Airdrops</h4>
-                <p>Join our partner telegram ch...</p>
-                <div class="task-reward">
-                    <i class="fa-solid fa-bolt"></i> +100
-                </div>
-            </div>
-        </div>
-        <button class="start-btn">Start</button>
-    </div>
-
-    <div class="task-card">
-        <div class="task-left">
-            <div class="task-icon" style="background: #ffffff; color: #000000;">
-                <i class="fa-solid fa-globe"></i>
-            </div>
-            <div class="task-info">
-                <h4>All earnings BD</h4>
-                <p>Join our partner telegram ch...</p>
-                <div class="task-reward">
-                    <i class="fa-solid fa-bolt"></i> +100
-                </div>
-            </div>
-        </div>
-        <button class="start-btn">Start</button>
+    <!-- Dynamic Task List Container -->
+    <div id="task-list-container">
+        <!-- Dynamic Tasks will render here -->
     </div>
 
     <!-- Bottom Navigation -->
@@ -410,12 +504,102 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        function selectTab(element) {
-            document.querySelectorAll('.cat-item').forEach(item => {
-                item.classList.remove('active');
+        const allTasks = {
+            social: [
+                { title: 'Join announcement channel', desc: 'Get news, drops and announ...', reward: '+150', icon: 'fa-bolt', color: '#38ef7d', btn: 'Start' },
+                { title: 'Join the community chat', desc: 'Join official ThunderWaves C...', reward: '+150', icon: 'fa-comments', color: '#0088cc', btn: 'Start' },
+                { title: 'Mystery Airdrops', desc: 'Join our partner telegram ch...', reward: '+100', icon: 'fa-parachute-box', color: '#a55eea', btn: 'Start' },
+                { title: 'All earnings BD', desc: 'Join our partner telegram ch...', reward: '+100', icon: 'fa-globe', color: '#ffb703', btn: 'Start' }
+            ],
+            daily: [
+                { title: 'Adsgram', desc: 'Watch Adsgram ad and earn ...', reward: '+1,150', icon: 'fa-play', color: '#0088cc', btn: '▶ 0/15' },
+                { title: 'Monetag', desc: 'Watch monetag ads and earn...', reward: '+385', icon: 'fa-rectangle-ad', color: '#2ed573', btn: '▶ 0/8' },
+                { title: 'GigaPub', desc: 'Watch Gigapub Ads and earn...', reward: '+645', icon: 'fa-tv', color: '#ff4757', btn: '▶ 0/10' }
+            ],
+            exclusive: [
+                { title: 'Open Free Case', desc: 'Open a free case on Epic Gift...', reward: '+200', icon: 'fa-box-open', color: '#ffb703', btn: 'Start', extra: '2,822 spots left' },
+                { title: 'AR INCOME BD', desc: 'Join the channel', reward: '+150', icon: 'fa-bullhorn', color: '#ff4757', btn: 'Start' }
+            ],
+            partner: [
+                { title: 'RG Crypto Lab', desc: 'Join our partner telegram ch...', reward: '+75', icon: 'fa-flask', color: '#ff4757', btn: 'Start' },
+                { title: 'PokerGram', desc: 'Join Pokergram & Grab your ...', reward: '+75', icon: 'fa-dice', color: '#e1306c', btn: 'Start' },
+                { title: 'Twitter', desc: 'Follow our partner on twitter', reward: '+75', icon: 'fa-brands fa-x-twitter', color: '#fff', btn: 'Start' },
+                { title: 'YouTube', desc: 'Like, Subscribe & Comment...', reward: '+75', icon: 'fa-brands fa-youtube', color: '#ff0000', btn: 'Start' }
+            ]
+        };
+
+        function renderTasks(category) {
+            const container = document.getElementById('task-list-container');
+            container.innerHTML = '';
+
+            const tasks = allTasks[category] || [];
+            tasks.forEach(task => {
+                const card = document.createElement('div');
+                card.className = 'task-card';
+                card.innerHTML = `
+                    <div class="task-left">
+                        <div class="task-icon" style="color: ${task.color};">
+                            <i class="fa-solid ${task.icon}"></i>
+                        </div>
+                        <div class="task-info">
+                            <h4>${task.title}</h4>
+                            <p>${task.desc}</p>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <div class="task-reward"><i class="fa-solid fa-bolt"></i> ${task.reward}</div>
+                                ${task.extra ? `<span style="font-size:10px; color:#ff4757;">${task.extra}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <button class="start-btn">${task.btn}</button>
+                `;
+                container.appendChild(card);
             });
-            element.classList.add('active');
         }
+
+        function switchCategory(cat, el) {
+            document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+
+            // Hide special layouts
+            document.getElementById('exclusive-sub-tabs').style.display = 'none';
+            document.getElementById('sponsored-banner').style.display = 'none';
+            document.getElementById('promote-card').style.display = 'none';
+            document.getElementById('tasks-header').style.display = 'flex';
+
+            document.getElementById('current-cat-title').innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
+            
+            if(cat === 'social') {
+                document.getElementById('current-cat-progress').innerText = '0/4 done';
+            } else if(cat === 'daily') {
+                document.getElementById('sponsored-banner').style.display = 'block';
+                document.getElementById('current-cat-progress').innerText = '0/7 done';
+            } else if(cat === 'exclusive') {
+                document.getElementById('exclusive-sub-tabs').style.display = 'flex';
+                document.getElementById('current-cat-progress').innerText = '0/2 done';
+            } else if(cat === 'partner') {
+                document.getElementById('current-cat-progress').innerText = '0/22 done';
+            }
+
+            renderTasks(cat);
+        }
+
+        function switchExclusiveSubTab(type, el) {
+            document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+
+            if(type === 'mytasks') {
+                document.getElementById('tasks-header').style.display = 'none';
+                document.getElementById('task-list-container').innerHTML = '';
+                document.getElementById('promote-card').style.display = 'block';
+            } else {
+                document.getElementById('promote-card').style.display = 'none';
+                document.getElementById('tasks-header').style.display = 'flex';
+                renderTasks('exclusive');
+            }
+        }
+
+        // Initial Load
+        renderTasks('social');
     </script>
 </body>
 </html>
