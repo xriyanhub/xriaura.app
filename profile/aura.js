@@ -126,15 +126,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainTitle = document.querySelector('.main-title');
     if (mainTitle) mainTitle.style.color = themeColor;
 
-    // 7. Wallet & Info Cards Support
-    const cards = document.querySelectorAll('.card');
+    // 7. Wallet, Admin Cards & Info Cards Support
+    const cards = document.querySelectorAll('.card, .admin-card');
     cards.forEach(card => {
         card.style.background = cardBg;
         card.style.border = `1px solid ${cardBorder}`;
     });
 
-    const cardTitles = document.querySelectorAll('.card h3');
+    const cardTitles = document.querySelectorAll('.card h3, .admin-card h3');
     cardTitles.forEach(title => title.style.color = themeColor);
+
+    const adminAvatars = document.querySelectorAll('.admin-avatar');
+    adminAvatars.forEach(avatar => {
+        avatar.style.background = "rgba(255, 183, 3, 0.15)";
+        avatar.style.color = themeColor;
+        avatar.style.border = `2px solid ${themeColor}`;
+    });
 
     const infoRows = document.querySelectorAll('.info-row');
     infoRows.forEach(row => row.style.color = "#aaa");
