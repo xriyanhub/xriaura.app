@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>XriAura - Admin Panel</title>
+    <title>XriAura - Secure Control Center</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -27,7 +27,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .back-btn {
@@ -45,21 +45,21 @@
         }
 
         .main-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
         }
 
-        /* Admin Profile Card */
-        .admin-card {
+        /* Lockscreen PIN Box */
+        #lockScreen {
             background: #191612;
             border: 1px solid #26221c;
             border-radius: 20px;
-            padding: 24px;
+            padding: 40px 20px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 40px;
         }
 
-        .admin-avatar {
+        .lock-icon {
             width: 70px;
             height: 70px;
             background: rgba(255, 183, 3, 0.15);
@@ -69,97 +69,121 @@
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            margin: 0 auto 12px auto;
+            margin: 0 auto 16px auto;
             border: 2px solid #ffb703;
         }
 
-        .admin-card h3 {
+        #lockScreen h3 {
             font-size: 18px;
             font-weight: 900;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
-        .admin-card p {
+        #lockScreen p {
             font-size: 12px;
-            color: #ffb703;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        /* Section Group */
-        .section-group {
+            color: #888;
             margin-bottom: 20px;
         }
 
-        .section-title {
-            font-size: 11px;
-            font-weight: 800;
-            color: #ffb703;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+        /* Admin Dashboard (Hidden initially) */
+        #adminDashboard {
+            display: none;
         }
 
-        .menu-list {
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
             background: #191612;
             border: 1px solid #26221c;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            border-bottom: 1px solid #221e18;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
-
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .menu-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .menu-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        .icon-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .icon-yellow { background: rgba(255, 183, 3, 0.15); color: #ffb703; }
-        .icon-blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-        .icon-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
-
-        .menu-info h5 {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .menu-info p {
-            font-size: 11px;
             color: #888;
-        }
-
-        .menu-right {
+            padding: 10px 16px;
+            border-radius: 12px;
             font-size: 12px;
-            color: #888;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .tab-btn.active {
+            background: #ffb703;
+            color: #000000;
+            border-color: #ffb703;
+        }
+
+        .admin-card {
+            background: #191612;
+            border: 1px solid #26221c;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffb703;
+            border-bottom: 1px dashed #26221c;
+            padding-bottom: 12px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #bbb;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            background: #1f1b15;
+            border: 1px solid #2a241c;
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: #ffb703;
+        }
+
+        .save-btn {
+            background: #ffb703;
+            color: #000000;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 900;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
         }
 
         /* Bottom Navigation Bar */
@@ -199,80 +223,70 @@
 
     <div class="header-top">
         <a href="../index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <div class="main-title">Admin Panel</div>
+        <div class="main-title">Full App Control Center</div>
     </div>
 
-    <div class="admin-card">
-        <div class="admin-avatar"><i class="fa-solid fa-shield-halved"></i></div>
-        <h3>Xri YΛη</h3>
-        <p>Lead Developer & Founder</p>
-    </div>
-
-    <div class="section-group">
-        <div class="section-title">Ecosystem & Resources</div>
-        <div class="menu-list">
-            <a href="apps.html" class="menu-item">
-                <div class="menu-left">
-                    <div class="menu-icon icon-purple"><i class="fa-solid fa-cube"></i></div>
-                    <div class="menu-info">
-                        <h5>Apps & Channels</h5>
-                        <p>YouTube, ecosystem links & tools</p>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right menu-right"></i>
-            </a>
+    <!-- Security Lock Screen -->
+    <div id="lockScreen">
+        <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+        <h3>Restricted Access</h3>
+        <p>Enter Master Security Key to unlock</p>
+        <div class="input-group">
+            <input type="password" id="pinInput" class="input-field" placeholder="Enter password..." style="text-align: center;">
         </div>
+        <button class="save-btn" onclick="verifyPin()">Unlock Panel</button>
     </div>
 
-    <div class="section-group">
-        <div class="section-title">Creator Socials</div>
-        <div class="menu-list">
-            <a href="https://youtube.com/@Xriyan_hub" target="_blank" class="menu-item">
-                <div class="menu-left">
-                    <div class="menu-icon icon-red"><i class="fa-brands fa-youtube"></i></div>
-                    <div class="menu-info">
-                        <h5>YouTube Channel</h5>
-                        <p>Tutorials & updates</p>
-                    </div>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square menu-right" style="font-size: 11px;"></i>
-            </a>
-            <a href="https://t.me/Xriyan_hub" target="_blank" class="menu-item">
-                <div class="menu-left">
-                    <div class="menu-icon icon-blue"><i class="fa-brands fa-telegram"></i></div>
-                    <div class="menu-info">
-                        <h5>Telegram Hub</h5>
-                        <p>Official community</p>
-                    </div>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square menu-right" style="font-size: 11px;"></i>
-            </a>
+    <!-- Main Protected Dashboard -->
+    <div id="adminDashboard">
+        <div class="tabs-container">
+            <button class="tab-btn active"><i class="fa-solid fa-gear"></i> General</button>
+            <a href="apps.html" class="tab-btn"><i class="fa-solid fa-cube"></i> Apps Hub</a>
+            <a href="owner_social.html" class="tab-btn"><i class="fa-solid fa-user-shield"></i> Owner Socials</a>
         </div>
-    </div>
 
-    <div class="section-group">
-        <div class="section-title">App Master Control</div>
-        <div class="menu-list">
-            <div class="menu-item" onclick="alert('App Version: v0.3.0 | Status: Online')">
-                <div class="menu-left">
-                    <div class="menu-icon icon-yellow"><i class="fa-solid fa-server"></i></div>
-                    <div class="menu-info">
-                        <h5>System Status</h5>
-                        <p>v0.3.0 (Operational)</p>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right menu-right"></i>
+        <div class="admin-card">
+            <div class="card-header">
+                <i class="fa-solid fa-robot"></i>
+                <span>Master Bot & App Configuration</span>
             </div>
-            <div class="menu-item" onclick="alert('Database cache cleared successfully!')">
-                <div class="menu-left">
-                    <div class="menu-icon icon-purple"><i class="fa-solid fa-database"></i></div>
-                    <div class="menu-info">
-                        <h5>Clear Cache</h5>
-                        <p>Refresh local state</p>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right menu-right"></i>
+            <div class="input-group">
+                <label class="input-label">Bot Username (Without @)</label>
+                <input type="text" class="input-field" value="xriyan_bot">
             </div>
+            <div class="input-group">
+                <label class="input-label">Currency Symbol</label>
+                <input type="text" class="input-field" value="WAVES">
+            </div>
+            <div class="input-group">
+                <label class="input-label">System Maintenance Mode</label>
+                <input type="text" class="input-field" value="Online (Active)">
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <div class="card-header">
+                <i class="fa-solid fa-gift"></i>
+                <span>Earnings, Referral & Bonuses</span>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Daily Login Bonus (Amount)</label>
+                <input type="number" class="input-field" value="20">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Bonus Per Referral</label>
+                <input type="number" class="input-field" value="5">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Tutorial Video Link (YouTube)</label>
+                <input type="text" class="input-field" value="https://youtube.com/@Xriyan_hub">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Support Group/Channel Link</label>
+                <input type="text" class="input-field" value="https://t.me/Xriyan_hub">
+            </div>
+
+            <button class="save-btn" onclick="alert('All system changes saved successfully!')">Save All Changes</button>
         </div>
     </div>
 
@@ -303,6 +317,20 @@
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+
+        // Secure password set to "xriyanaura"
+        const ADMIN_PASSWORD = "xriyanaura";
+
+        function verifyPin() {
+            const enteredValue = document.getElementById('pinInput').value;
+            if (enteredValue === ADMIN_PASSWORD) {
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+            } else {
+                alert('Incorrect Security Password! Access Denied.');
+                document.getElementById('pinInput').value = '';
+            }
+        }
     </script>
 </body>
 </html>
