@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Tasks</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .header-top {
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #ffb703;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .main-title {
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .desc {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        /* Category Tabs */
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-card {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 14px 12px;
+            min-width: 80px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: 0.2s;
+        }
+
+        .cat-card.active {
+            background: linear-gradient(135deg, #2a220c, #141414);
+            border-color: #ffb703;
+        }
+
+        .cat-icon {
+            font-size: 18px;
+            color: #ffb703;
+            margin-bottom: 8px;
+        }
+
+        .cat-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #bbb;
+        }
+
+        .cat-card.active .cat-name {
+            color: #fff;
+        }
+
+        .badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #ff4757;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 10px;
+        }
+
+        /* Sub Tab Bar (Tasks / My tasks / Add task) */
+        .sub-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .sub-btn {
+            background: #141414;
+            border: 1px solid #222;
+            color: #888;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+
+        .sub-btn.active {
+            background: #ffb703;
+            color: #000;
+            border-color: #ffb703;
+        }
+
+        /* Task Item Card */
+        .task-list-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-card {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .task-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #1c1c1c;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #ffb703;
+            overflow: hidden;
+        }
+
+        .task-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .task-info h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .task-info p {
+            font-size: 11px;
+            color: #777;
+            margin-bottom: 4px;
+        }
+
+        .task-reward {
+            font-size: 11px;
+            color: #ffb703;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .start-btn {
+            background: #ffb703;
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Bottom Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #111;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-top">
+        <div class="subtitle"><i class="fa-solid fa-bolt"></i> Complete & Collect</div>
+        <div class="main-title">Tasks</div>
+    </div>
+    <div class="desc">Complete tasks, collect WAVES</div>
+
+    <!-- Category Tabs -->
+    <div class="categories">
+        <div class="cat-card active" onclick="switchTab('social')">
+            <div class="badge">4</div>
+            <div class="cat-icon"><i class="fa-solid fa-bullhorn"></i></div>
+            <div class="cat-name">Social</div>
+        </div>
+        <div class="cat-card" onclick="switchTab('daily')">
+            <div class="badge">7</div>
+            <div class="cat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="cat-name">Daily</div>
+        </div>
+        <div class="cat-card" onclick="switchTab('exclusive')">
+            <div class="badge">2</div>
+            <div class="cat-icon"><i class="fa-solid fa-gem"></i></div>
+            <div class="cat-name">Exclusive</div>
+        </div>
+        <div class="cat-card" onclick="switchTab('partner')">
+            <div class="badge">22</div>
+            <div class="cat-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div class="cat-name">Partner</div>
+        </div>
+    </div>
+
+    <!-- Sub Nav -->
+    <div class="sub-nav">
+        <div class="sub-btn active">Tasks</div>
+        <div class="sub-btn">My tasks</div>
+        <div class="sub-btn" style="color: #ffb703;">+ Add task</div>
+    </div>
+
+    <!-- Tasks List Container -->
+    <div class="task-list-title">
+        <span id="categoryTitle">Social</span>
+        <span style="font-size: 11px; color: #777;" id="taskProgress">0/4 done</span>
+    </div>
+
+    <div id="taskListContent">
+        <!-- Default Social Tasks -->
+        <div class="task-card">
+            <div class="task-left">
+                <div class="task-icon"><i class="fa-solid fa-bullhorn" style="color:#ffb703;"></i></div>
+                <div class="task-info">
+                    <h4>Join announcement channel</h4>
+                    <p>Get news, drops and announc...</p>
+                    <div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div>
+                </div>
+            </div>
+            <button class="start-btn" onclick="alert('Task started!')">Start</button>
+        </div>
+
+        <div class="task-card">
+            <div class="task-left">
+                <div class="task-icon"><i class="fa-solid fa-comments" style="color:#ffb703;"></i></div>
+                <div class="task-info">
+                    <h4>Join the community chat</h4>
+                    <p>Join official ThunderWaves C...</p>
+                    <div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div>
+                </div>
+            </div>
+            <button class="start-btn" onclick="alert('Task started!')">Start</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="index.html" class="nav-item active">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="../home/spin.html" class="nav-item">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Earn</span>
+        </a>
+        <a href="../home/bio.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="../home/convert.html" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function switchTab(tab) {
+            document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            const titleEl = document.getElementById('categoryTitle');
+            const progressEl = document.getElementById('taskProgress');
+            const contentEl = document.getElementById('taskListContent');
+
+            if(tab === 'social') {
+                titleEl.innerText = 'Social';
+                progressEl.innerText = '0/4 done';
+                contentEl.innerHTML = `
+                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-bullhorn" style="color:#ffb703;"></i></div><div class="task-info"><h4>Join announcement channel</h4><p>Get news, drops and announc...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
+                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-comments" style="color:#ffb703;"></i></div><div class="task-info"><h4>Join the community chat</h4><p>Join official ThunderWaves C...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +150</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
+                `;
+            } else if(tab === 'daily') {
+                titleEl.innerText = 'Daily';
+                progressEl.innerText = '0/7 done';
+                contentEl.innerHTML = `
+                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-video" style="color:#ffb703;"></i></div><div class="task-info"><h4>Adsgram</h4><p>Watch Adsgram ad and earn...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +1,150</div></div></div><button class="start-btn" style="background:#222; color:#ffb703;">▶ 0/15</button></div>
+                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-play" style="color:#ffb703;"></i></div><div class="task-info"><h4>Monetag</h4><p>Watch monetag ads and earn...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +385</div></div></div><button class="start-btn" style="background:#222; color:#ffb703;">▶ 0/8</button></div>
+                `;
+            } else if(tab === 'exclusive') {
+                titleEl.innerText = 'Exclusive';
+                progressEl.innerText = '0/2 done';
+                contentEl.innerHTML = `
+                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-box-open" style="color:#ffb703;"></i></div><div class="task-info"><h4>Open Free Case</h4><p>Open a free case on Epic Gift...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +200</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
+                `;
+            } else if(tab === 'partner') {
+                titleEl.innerText = 'Partner';
+                progressEl.innerText = '0/22 done';
+                contentEl.innerHTML = `
+                    <div class="task-card"><div class="task-left"><div class="task-icon"><i class="fa-solid fa-robot" style="color:#ffb703;"></i></div><div class="task-info"><h4>RG Crypto Lab</h4><p>Join our partner telegram ch...</p><div class="task-reward"><i class="fa-solid fa-bolt"></i> +75</div></div></div><button class="start-btn" onclick="alert('Task started!')">Start</button></div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
