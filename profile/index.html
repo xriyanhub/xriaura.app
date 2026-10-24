@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XriAura - Profile</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        /* User Profile Header */
+        .profile-header {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .avatar-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px auto;
+            position: relative;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #222;
+            border: 2px solid #ffb703;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #ffb703;
+        }
+
+        .level-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #ffb703;
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 2px solid #141414;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
+
+        .profile-handle {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 16px;
+        }
+
+        /* Progress Bar */
+        .progress-box {
+            background: #1c1c1c;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .progress-info span:last-child {
+            color: #ffb703;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: #2a2a2a;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-fill {
+            width: 0.5%;
+            height: 100%;
+            background: #ffb703;
+            border-radius: 3px;
+        }
+
+        .progress-sub {
+            font-size: 10px;
+            color: #666;
+        }
+
+        /* Balance Cards */
+        .balance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .balance-card {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .balance-card .lbl {
+            font-size: 11px;
+            color: #777;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .balance-card .val {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffb703;
+        }
+
+        /* Stats Counter Row */
+        .stats-counter {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .counter-box {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 14px;
+            padding: 12px 8px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .counter-box .val {
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffb703;
+            margin-bottom: 2px;
+        }
+
+        .counter-box .lbl {
+            font-size: 9px;
+            color: #777;
+            text-transform: uppercase;
+        }
+
+        /* Section Group */
+        .section-group {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffb703;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-list {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid #1c1c1c;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .icon-yellow { background: rgba(255, 183, 3, 0.15); color: #ffb703; }
+        .icon-green { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+        .icon-purple { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+        .icon-orange { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+
+        .menu-info h5 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .menu-info p {
+            font-size: 11px;
+            color: #777;
+        }
+
+        .menu-right {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Bottom Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #111;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item i {
+            font-size: 16px;
+        }
+
+        .nav-item.active {
+            color: #ffb703;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-header">
+        <div class="avatar-container">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="level-badge">Lv 1</div>
+        </div>
+        <div class="profile-name">Xri YΛη</div>
+        <div class="profile-handle">@Xriyan_hub</div>
+
+        <div class="progress-box">
+            <div class="progress-info">
+                <span>PROGRESS TO LEVEL 2</span>
+                <span>49 / 10K</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <div class="progress-sub">9,951 WAVES more to reach level 2</div>
+        </div>
+    </div>
+
+    <div class="balance-grid">
+        <div class="balance-card">
+            <div class="lbl"><i class="fa-solid fa-bolt" style="color: #ffb703;"></i> WAVES</div>
+            <div class="val">49</div>
+        </div>
+        <div class="balance-card">
+            <div class="lbl"><i class="fa-solid fa-dollar-sign" style="color: #22c55e;"></i> USDT</div>
+            <div class="val">0.00</div>
+        </div>
+    </div>
+
+    <div class="stats-counter">
+        <div class="counter-box">
+            <div class="val">49</div>
+            <div class="lbl">Earned</div>
+        </div>
+        <div class="counter-box">
+            <div class="val">0</div>
+            <div class="lbl">Withdrawn</div>
+        </div>
+        <div class="counter-box">
+            <div class="val">0</div>
+            <div class="lbl">Friends</div>
+        </div>
+    </div>
+
+    <div class="section-group">
+        <div class="section-title">Wallet</div>
+        <div class="menu-list">
+            <a href="convert.html" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-yellow"><i class="fa-solid fa-right-left"></i></div>
+                    <div class="menu-info">
+                        <h5>Convert</h5>
+                        <p>Swap WAVES for USDT</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </a>
+            <a href="withdraw.html" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-green"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                    <div class="menu-info">
+                        <h5>Withdraw</h5>
+                        <p>Send USDT to your wallet</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </a>
+            <a href="wallet.html" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-purple"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="menu-info">
+                        <h5>Set wallet</h5>
+                        <p>Not connected</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </a>
+            <a href="history.html" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-orange"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div class="menu-info">
+                        <h5>History</h5>
+                        <p>All your transactions</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-group">
+        <div class="section-title">Community</div>
+        <div class="menu-list">
+            <a href="leaderboard.html" class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon icon-yellow"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="menu-info">
+                        <h5>Leaderboard</h5>
+                        <p>Top earners</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right menu-right"></i>
+            </a>
+            <div class="menu-item">
+                <div class="menu-left">
+                    <div class="menu-icon" style="background: rgba(236, 72, 153, 0.15); color: #ec4899;"><i class="fa-solid fa-language"></i></div>
+                    <div class="menu-info">
+                        <h5>Language</h5>
+                        <p>English</p>
+                    </div>
+                </div>
+                <div class="menu-right">
+                    <span>🇬🇧 English</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="../tasks/index.html" class="nav-item">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Tasks</span>
+        </a>
+        <a href="../earn/arcade.html" class="nav-item">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Earn</span>
+        </a>
+        <a href="../refer/index.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Refer</span>
+        </a>
+        <a href="index.html" class="nav-item active">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+    </script>
+</body>
+</html>
