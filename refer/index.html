@@ -21,8 +21,6 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #ffffff;
             padding: 16px;
             padding-bottom: 90px;
         }
@@ -33,7 +31,6 @@
 
         .subtitle {
             font-size: 11px;
-            color: #ffb703;
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -47,8 +44,6 @@
 
         /* Hero Refer Card */
         .refer-hero {
-            background: linear-gradient(135deg, #2a220c, #141414);
-            border: 1px solid #ffb703;
             border-radius: 20px;
             padding: 20px;
             text-align: center;
@@ -58,28 +53,22 @@
         .refer-badge-icon {
             width: 60px;
             height: 60px;
-            background: #1c1c1c;
-            border: 2px solid #ffb703;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            color: #ffb703;
             margin: 0 auto 12px auto;
-            box-shadow: 0 0 15px rgba(255, 183, 3, 0.3);
         }
 
         .refer-hero h2 {
             font-size: 26px;
             font-weight: 900;
-            color: #ffb703;
             margin-bottom: 4px;
         }
 
         .refer-hero p {
             font-size: 12px;
-            color: #aaa;
             margin-bottom: 16px;
         }
 
@@ -91,8 +80,6 @@
         }
 
         .breakdown-box {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 12px;
             padding: 10px 6px;
             text-align: center;
@@ -101,22 +88,17 @@
         .breakdown-box .val {
             font-size: 13px;
             font-weight: 800;
-            color: #ffb703;
             margin-bottom: 2px;
         }
 
         .breakdown-box .lbl {
             font-size: 10px;
-            color: #777;
         }
 
         .bonus-hint {
             font-size: 11px;
-            color: #ffb703;
-            background: rgba(255, 183, 3, 0.1);
             padding: 8px;
             border-radius: 10px;
-            border: 1px dashed rgba(255, 183, 3, 0.3);
         }
 
         /* Stats Row */
@@ -127,8 +109,6 @@
         }
 
         .stat-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 14px;
             flex: 1;
@@ -138,20 +118,16 @@
         .stat-card .val {
             font-size: 16px;
             font-weight: 800;
-            color: #ffb703;
             margin-bottom: 2px;
         }
 
         .stat-card .lbl {
             font-size: 10px;
-            color: #777;
             text-transform: uppercase;
         }
 
         /* Invite Link Section */
         .invite-box {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 14px;
             margin-bottom: 20px;
@@ -159,19 +135,15 @@
 
         .link-label {
             font-size: 11px;
-            color: #777;
             text-transform: uppercase;
             margin-bottom: 6px;
             font-weight: 700;
         }
 
         .link-field {
-            background: #1c1c1c;
-            border: 1px solid #2a2a2a;
             border-radius: 10px;
             padding: 10px;
             font-size: 11px;
-            color: #aaa;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -198,14 +170,7 @@
         }
 
         .btn-copy {
-            background: #1c1c1c;
-            color: #fff;
             border: 1px solid #333;
-        }
-
-        .btn-share {
-            background: #ffb703;
-            color: #000;
         }
 
         /* Section Title */
@@ -213,13 +178,10 @@
             font-size: 14px;
             font-weight: 800;
             margin-bottom: 12px;
-            color: #ffb703;
         }
 
         /* Top Friends / List */
         .friends-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 24px;
             text-align: center;
@@ -228,7 +190,6 @@
 
         .friends-card i {
             font-size: 32px;
-            color: #444;
             margin-bottom: 10px;
         }
 
@@ -240,13 +201,10 @@
 
         .friends-card p {
             font-size: 11px;
-            color: #777;
         }
 
         /* How it works */
         .steps-card {
-            background: #141414;
-            border: 1px solid #222;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 20px;
@@ -265,8 +223,6 @@
         .step-num {
             width: 26px;
             height: 26px;
-            background: #ffb703;
-            color: #000;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -284,7 +240,6 @@
 
         .step-info p {
             font-size: 11px;
-            color: #777;
         }
 
         /* Bottom Navigation Bar */
@@ -293,8 +248,6 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #14110d;
-            border-top: 1px solid #26221c;
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
@@ -306,7 +259,6 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #777;
             font-size: 10px;
             gap: 4px;
         }
@@ -314,17 +266,13 @@
         .nav-item i {
             font-size: 16px;
         }
-
-        .nav-item.active {
-            color: #ffb703;
-        }
     </style>
 </head>
 <body>
 
     <div class="header-top">
         <div class="subtitle"><i class="fa-solid fa-user-group"></i> Invite & Earn</div>
-        <div class="main-title">Refer & Earn</div>
+        <div class="main-title" id="referMainTitle">Refer & Earn</div>
     </div>
 
     <div class="refer-hero">
@@ -432,12 +380,12 @@
         </a>
     </div>
 
-    <!-- Firebase Realtime Database Integration -->
+    <!-- Refer Aura JS Controller -->
+    <script src="aura.js"></script>
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBy2MFbE-B3VcD1GjbdRUds_IH_DcQKczo",
             authDomain: "xriaura.firebaseapp.com",
@@ -452,7 +400,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Listen for Realtime Admin Settings Updates for Refer System
         db.ref("admin/homeSettings").on("value", (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
