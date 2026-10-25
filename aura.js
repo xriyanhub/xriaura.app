@@ -1,15 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
     // ---------------------------------------------------------------------------
-    // THEME CONFIGURATION (শূধু এখান থেকে কালার চেঞ্জ করলেই পুরো পেজ ও গ্লো আপডেট হবে)
+    // THEME CONFIGURATION (Dark & Light Mode Support)
     // ---------------------------------------------------------------------------
+    const savedTheme = localStorage.getItem('aura_theme') || 'dark';
+    const isLight = savedTheme === 'light';
+
     const themeColor = "#ffb703"; // Golden Amber Theme
-    const glowShadow = "rgba(255, 183, 3, 0.4)";
-    const bgDark = "#12100e";
-    const cardBg = "linear-gradient(145deg, #191612, #12100e)";
-    const cardBorder = "#26221c";
-    const subCardBg = "#191612";
-    const actionBtnBg = "#1f1b15";
-    const actionBtnBorder = "#2a241c";
+    const glowShadow = isLight ? "rgba(255, 183, 3, 0.2)" : "rgba(255, 183, 3, 0.4)";
+    
+    // Dynamic Colors based on Mode
+    const bgDark = isLight ? "#f8f9fa" : "#12100e";
+    const textColor = isLight ? "#12100e" : "#ffffff";
+    const cardBg = isLight ? "linear-gradient(145deg, #ffffff, #f1f3f5)" : "linear-gradient(145deg, #191612, #12100e)";
+    const cardBorder = isLight ? "#dee2e6" : "#26221c";
+    const subCardBg = isLight ? "#ffffff" : "#191612";
+    const actionBtnBg = isLight ? "#e9ecef" : "#1f1b15";
+    const actionBtnBorder = isLight ? "#ced4da" : "#2a241c";
+    const navBarBg = isLight ? "#ffffff" : "#14110d";
+    const rateTextColor = isLight ? "#6c757d" : "#777";
 
     // 1. Root Variables & Global Styling Injection
     document.documentElement.style.setProperty('--primary-glow', themeColor);
@@ -26,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             body {
                 background-color: ${bgDark} !important;
-                color: #ffffff !important;
+                color: ${textColor} !important;
             }
         `;
         document.head.appendChild(styleSheet);
@@ -35,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Header & User Profile Elements
     const avatar = document.querySelector('.avatar');
     if (avatar) {
-        avatar.style.background = "#1f1a14";
+        avatar.style.background = isLight ? "#e9ecef" : "#1f1a14";
         avatar.style.border = `2px solid ${themeColor}`;
         avatar.style.color = themeColor;
         avatar.style.boxShadow = `0 0 10px ${glowShadow}`;
@@ -52,11 +60,20 @@ document.addEventListener("DOMContentLoaded", () => {
         userHandle.style.color = themeColor;
     }
 
+    // Theme Toggle Button Logic & Click Event
     const themeToggle = document.querySelector('.theme-toggle');
     if (themeToggle) {
         themeToggle.style.background = subCardBg;
         themeToggle.style.border = `1px solid ${cardBorder}`;
         themeToggle.style.color = themeColor;
+        themeToggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        
+        themeToggle.onclick = () => {
+            const currentTheme = localStorage.getItem('aura_theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('aura_theme', newTheme);
+            location.reload();
+        };
     }
 
     // 3. System Notice Banner
@@ -95,14 +112,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const rateText = document.querySelector('.rate-text');
-    if (rateText) rateText.style.color = "#777";
+    if (rateText) rateText.style.color = rateTextColor;
 
     // 5. Action Buttons Grid
     const actionButtons = document.querySelectorAll('.action-btn');
     actionButtons.forEach(btn => {
         btn.style.background = actionBtnBg;
         btn.style.border = `1px solid ${actionBtnBorder}`;
-        btn.style.color = "#fff";
+        btn.style.color = textColor;
     });
 
     const actionIcons = document.querySelectorAll('.action-btn i');
@@ -126,9 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const promoInput = document.querySelector('.promo-input');
     if (promoInput) {
-        promoInput.style.background = bgDark;
+        promoInput.style.background = isLight ? "#ffffff" : bgDark;
         promoInput.style.border = `1px solid ${cardBorder}`;
-        promoInput.style.color = "#fff";
+        promoInput.style.color = textColor;
     }
 
     const promoBtn = document.querySelector('.promo-btn');
@@ -183,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 9. Bottom Navigation Bar & Active Tab Glow
     const navBar = document.querySelector('.nav-bar');
     if (navBar) {
-        navBar.style.background = "#14110d";
+        navBar.style.background = navBarBg;
         navBar.style.borderTop = `1px solid ${cardBorder}`;
     }
 
