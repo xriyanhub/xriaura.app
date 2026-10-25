@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ---------------------------------------------------------------------------
-    // PROFILE & SUB-FOLDERS CENTRALIZED THEME CONFIGURATION
-    // ---------------------------------------------------------------------------
-    const themeColor = "#ffb703"; // Golden Amber Theme
-    const glowShadow = "rgba(255, 183, 3, 0.4)";
-    const bgDark = "#12100e";
-    const cardBg = "#191612";
-    const cardBorder = "#26221c";
-    const subBoxBg = "#1f1b15";
+    const savedTheme = localStorage.getItem('aura_theme') || 'dark';
+    const isLight = savedTheme === 'light';
 
-    // 1. Root & Body Setup
+    const themeColor = "#ffb703"; // Golden Amber Theme
+    const bgDark = isLight ? "#f8f9fa" : "#12100e";
+    const cardBg = isLight ? "#ffffff" : "#191612";
+    const cardBorder = isLight ? "#dee2e6" : "#26221c";
+    const textColor = isLight ? "#12100e" : "#ffffff";
+    const subText = isLight ? "#6c757d" : "#888";
+
+    // 1. Root & Body Styling Injection
     document.documentElement.style.setProperty('--primary-glow', themeColor);
     
     if (!document.getElementById('profile-aura-styles')) {
@@ -18,148 +18,79 @@ document.addEventListener("DOMContentLoaded", () => {
         styleSheet.innerHTML = `
             body {
                 background-color: ${bgDark} !important;
-                color: #ffffff !important;
+                color: ${textColor} !important;
             }
-            .menu-item:active {
-                border-color: ${themeColor} !important;
+            .convert-btn:active, .action-btn:active {
+                opacity: 0.8;
             }
         `;
         document.head.appendChild(styleSheet);
     }
 
-    // 2. Profile Header & Avatar (Main Profile Page)
-    const profileHeader = document.querySelector('.profile-header');
-    if (profileHeader) {
-        profileHeader.style.background = cardBg;
-        profileHeader.style.border = `1px solid ${cardBorder}`;
-    }
-
-    const avatar = document.querySelector('.avatar');
-    if (avatar) {
-        avatar.style.background = "#1f1a14";
-        avatar.style.border = `2px solid ${themeColor}`;
-        avatar.style.color = themeColor;
-        avatar.style.boxShadow = `0 0 12px ${glowShadow}`;
-    }
-
-    const levelBadge = document.querySelector('.level-badge');
-    if (levelBadge) {
-        levelBadge.style.background = themeColor;
-        levelBadge.style.color = "#000";
-        levelBadge.style.border = `2px solid ${cardBg}`;
-    }
-
-    const profileHandle = document.querySelector('.profile-handle');
-    if (profileHandle) profileHandle.style.color = "#888";
-
-    // 3. Progress Box
-    const progressBox = document.querySelector('.progress-box');
-    if (progressBox) {
-        progressBox.style.background = subBoxBg;
-        progressBox.style.border = `1px solid ${cardBorder}`;
-    }
-
-    const progressFill = document.querySelector('.progress-bar-fill');
-    if (progressFill) progressFill.style.background = themeColor;
-
-    const progressBarBg = document.querySelector('.progress-bar-bg');
-    if (progressBarBg) progressBarBg.style.background = "#2a241c";
-
-    const progressSub = document.querySelector('.progress-sub');
-    if (progressSub) progressSub.style.color = "#777";
-
-    // 4. Balance Cards & Counters
-    const balanceCards = document.querySelectorAll('.balance-card');
-    balanceCards.forEach(card => {
-        card.style.background = cardBg;
-        card.style.border = `1px solid ${cardBorder}`;
-    });
-
-    const values = document.querySelectorAll('.balance-card .val, .counter-box .val');
-    values.forEach(val => val.style.color = themeColor);
-
-    const counterBoxes = document.querySelectorAll('.counter-box');
-    counterBoxes.forEach(box => {
-        box.style.background = cardBg;
-        box.style.border = `1px solid ${cardBorder}`;
-    });
-
-    const counterLbls = document.querySelectorAll('.counter-box .lbl');
-    counterLbls.forEach(lbl => lbl.style.color = "#888");
-
-    // 5. Section Titles, Menu Lists & Items (Main Profile & Sub-hubs)
-    const sectionTitles = document.querySelectorAll('.section-title');
-    sectionTitles.forEach(title => title.style.color = themeColor);
-
-    const menuLists = document.querySelectorAll('.menu-list');
-    menuLists.forEach(list => {
-        list.style.background = cardBg;
-        list.style.border = `1px solid ${cardBorder}`;
-    });
-
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-        item.style.background = cardBg;
-        item.style.border = `1px solid ${cardBorder}`;
-        item.style.color = "#fff";
-    });
-
-    const menuIcons = document.querySelectorAll('.menu-icon');
-    menuIcons.forEach(icon => {
-        icon.style.background = "rgba(255, 183, 3, 0.15)";
-        icon.style.color = themeColor;
-    });
-
-    const menuArrows = document.querySelectorAll('.menu-arrow');
-    menuArrows.forEach(arrow => arrow.style.color = themeColor);
-
-    const menuRights = document.querySelectorAll('.menu-right');
-    menuRights.forEach(right => right.style.color = "#888");
-
-    const menuSubTexts = document.querySelectorAll('.menu-info p');
-    menuSubTexts.forEach(p => p.style.color = "#888");
-
-    // 6. Back Buttons & Main Titles in Sub-folders (Admin, Community, Links, Wallet)
+    // 2. Header Elements
     const backBtn = document.querySelector('.back-btn');
-    if (backBtn) backBtn.style.color = themeColor;
+    if (backBtn) {
+        backBtn.style.background = cardBg;
+        backBtn.style.border = `1px solid ${cardBorder}`;
+        backBtn.style.color = themeColor;
+    }
 
     const mainTitle = document.querySelector('.main-title');
-    if (mainTitle) mainTitle.style.color = themeColor;
+    if (mainTitle) mainTitle.style.color = textColor;
 
-    // 7. Wallet, Admin Cards & Info Cards Support
-    const cards = document.querySelectorAll('.card, .admin-card');
+    // 3. Cards & Inputs (For Convert / Wallet / Profile pages)
+    const cards = document.querySelectorAll('.convert-card, .menu-item, .profile-card, .wallet-card');
     cards.forEach(card => {
         card.style.background = cardBg;
         card.style.border = `1px solid ${cardBorder}`;
     });
 
-    const cardTitles = document.querySelectorAll('.card h3, .admin-card h3');
-    cardTitles.forEach(title => title.style.color = themeColor);
-
-    const adminAvatars = document.querySelectorAll('.admin-avatar');
-    adminAvatars.forEach(avatar => {
-        avatar.style.background = "rgba(255, 183, 3, 0.15)";
-        avatar.style.color = themeColor;
-        avatar.style.border = `2px solid ${themeColor}`;
+    const inputGroups = document.querySelectorAll('.input-group');
+    inputGroups.forEach(group => {
+        group.style.background = isLight ? "#f1f3f5" : "#12100e";
+        group.style.border = `1px solid ${cardBorder}`;
     });
 
-    const infoRows = document.querySelectorAll('.info-row');
-    infoRows.forEach(row => row.style.color = "#aaa");
+    const inputLabels = document.querySelectorAll('.input-label');
+    inputLabels.forEach(label => label.style.color = subText);
 
-    const infoSpans = document.querySelectorAll('.info-row span');
-    infoSpans.forEach(span => span.style.color = "#fff");
+    const inputValues = document.querySelectorAll('.input-value');
+    inputValues.forEach(val => val.style.color = textColor);
 
-    // 8. Bottom Navigation Bar & Active Tab Glow
+    const currencyBadges = document.querySelectorAll('.currency-badge');
+    currencyBadges.forEach(badge => {
+        badge.style.background = isLight ? "rgba(255, 183, 3, 0.2)" : "#221d14";
+        badge.style.color = themeColor;
+        badge.style.border = `1px solid ${cardBorder}`;
+    });
+
+    const swapCircle = document.querySelector('.swap-circle');
+    if (swapCircle) {
+        swapCircle.style.background = themeColor;
+        swapCircle.style.color = "#000";
+        swapCircle.style.boxShadow = `0 0 10px rgba(255, 183, 3, 0.4)`;
+    }
+
+    const convertBtn = document.querySelector('.convert-btn');
+    if (convertBtn) {
+        convertBtn.style.background = themeColor;
+        convertBtn.style.color = "#000";
+    }
+
+    const infoNotes = document.querySelectorAll('.info-note');
+    infoNotes.forEach(note => note.style.color = subText);
+
+    // 4. Bottom Navigation Bar & Active Tab Glow
     const navBar = document.querySelector('.nav-bar');
     if (navBar) {
-        navBar.style.background = "#14110d";
+        navBar.style.background = isLight ? "#ffffff" : "#14110d";
         navBar.style.borderTop = `1px solid ${cardBorder}`;
     }
 
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
         if (!item.classList.contains('active')) {
-            item.style.color = "#777";
+            item.style.color = isLight ? "#adb5bd" : "#777";
         }
     });
 
