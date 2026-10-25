@@ -16,9 +16,16 @@
             user-select: none;
         }
 
+        html, body {
+            background-color: #12100e !important;
+            color: #ffffff;
+        }
+
         body {
             padding: 16px;
             padding-bottom: 90px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .header-top {
@@ -365,6 +372,10 @@
     <!-- Linked to Earn Folder's Centralized Aura JS -->
     <script src="aura.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.opacity = "1";
+        });
+
         const tg = window.Telegram.WebApp;
         tg.expand();
     </script>
