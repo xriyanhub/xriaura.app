@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ---------------------------------------------------------------------------
-    // REFER PAGE THEME CONFIGURATION (এখানে কালার পরিবর্তন করলেই Refer পেজ আপডেট হবে)
-    // ---------------------------------------------------------------------------
-    const themeColor = "#ffb703"; // Golden Amber Theme
-    const glowShadow = "rgba(255, 183, 3, 0.3)";
-    const bgDark = "#0d0d0d";
-    const cardBg = "#141414";
-    const cardBorder = "#222";
+    const savedTheme = localStorage.getItem('aura_theme') || 'dark';
+    const isLight = savedTheme === 'light';
 
-    // 1. Root & Body Styling Injection
+    const themeColor = "#ffb703"; 
+    const glowShadow = isLight ? "rgba(255, 183, 3, 0.2)" : "rgba(255, 183, 3, 0.3)";
+    const bgDark = isLight ? "#f8f9fa" : "#0d0d0d";
+    const cardBg = isLight ? "#ffffff" : "#141414";
+    const cardBorder = isLight ? "#dee2e6" : "#222";
+    const textColor = isLight ? "#12100e" : "#ffffff";
+    const subText = isLight ? "#6c757d" : "#777";
+
     document.documentElement.style.setProperty('--primary-glow', themeColor);
     
     if (!document.getElementById('refer-aura-styles')) {
@@ -17,29 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
         styleSheet.innerHTML = `
             body {
                 background-color: ${bgDark} !important;
-                color: #ffffff !important;
+                color: ${textColor} !important;
             }
         `;
         document.head.appendChild(styleSheet);
     }
 
-    // 2. Header Titles & Subtitles
     const subtitle = document.querySelector('.subtitle');
     if (subtitle) subtitle.style.color = themeColor;
 
     const mainTitle = document.getElementById('referMainTitle');
-    if (mainTitle) mainTitle.style.color = "#fff";
+    if (mainTitle) mainTitle.style.color = textColor;
 
-    // 3. Refer Hero Card Styling
     const referHero = document.querySelector('.refer-hero');
     if (referHero) {
-        referHero.style.background = "linear-gradient(135deg, #2a220c, #141414)";
+        referHero.style.background = isLight ? "linear-gradient(135deg, #fffdf5, #ffffff)" : "linear-gradient(135deg, #2a220c, #141414)";
         referHero.style.border = `1px solid ${themeColor}`;
     }
 
     const badgeIcon = document.querySelector('.refer-badge-icon');
     if (badgeIcon) {
-        badgeIcon.style.background = "#1c1c1c";
+        badgeIcon.style.background = isLight ? "rgba(255, 183, 3, 0.15)" : "#1c1c1c";
         badgeIcon.style.border = `2px solid ${themeColor}`;
         badgeIcon.style.color = themeColor;
         badgeIcon.style.boxShadow = `0 0 15px ${glowShadow}`;
@@ -58,16 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
     breakdownVals.forEach(val => val.style.color = themeColor);
 
     const breakdownLbls = document.querySelectorAll('.breakdown-box .lbl');
-    breakdownLbls.forEach(lbl => lbl.style.color = "#777");
+    breakdownLbls.forEach(lbl => lbl.style.color = subText);
 
     const bonusHint = document.querySelector('.bonus-hint');
     if (bonusHint) {
         bonusHint.style.color = themeColor;
-        bonusHint.style.background = "rgba(255, 183, 3, 0.1)";
+        bonusHint.style.background = isLight ? "rgba(255, 183, 3, 0.1)" : "rgba(255, 183, 3, 0.1)";
         bonusHint.style.border = `1px dashed rgba(255, 183, 3, 0.3)`;
     }
 
-    // 4. Stats Row & Cards
     const statCards = document.querySelectorAll('.stat-card');
     statCards.forEach(card => {
         card.style.background = cardBg;
@@ -78,9 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
     statVals.forEach(val => val.style.color = themeColor);
 
     const statLbls = document.querySelectorAll('.stat-card .lbl');
-    statLbls.forEach(lbl => lbl.style.color = "#777");
+    statLbls.forEach(lbl => lbl.style.color = subText);
 
-    // 5. Invite Link Box
     const inviteBox = document.querySelector('.invite-box');
     if (inviteBox) {
         inviteBox.style.background = cardBg;
@@ -89,16 +86,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const linkField = document.querySelector('.link-field');
     if (linkField) {
-        linkField.style.background = "#1c1c1c";
-        linkField.style.border = "1px solid #2a2a2a";
-        linkField.style.color = "#aaa";
+        linkField.style.background = isLight ? "#f1f3f5" : "#1c1c1c";
+        linkField.style.border = `1px solid ${cardBorder}`;
+        linkField.style.color = isLight ? "#495057" : "#aaa";
     }
 
     const btnCopy = document.querySelector('.btn-copy');
     if (btnCopy) {
-        btnCopy.style.background = "#1c1c1c";
-        btnCopy.style.color = "#fff";
-        btnCopy.style.border = "1px solid #333";
+        btnCopy.style.background = isLight ? "#e9ecef" : "#1c1c1c";
+        btnCopy.style.color = textColor;
+        btnCopy.style.border = `1px solid ${cardBorder}`;
     }
 
     const btnShare = document.querySelector('.btn-share');
@@ -107,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnShare.style.color = "#000";
     }
 
-    // 6. Section Titles, Friends Card & Steps Card
     const sectionTitles = document.querySelectorAll('.section-title');
     sectionTitles.forEach(title => title.style.color = themeColor);
 
@@ -118,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const friendsIcon = document.querySelector('.friends-card i');
-    if (friendsIcon) friendsIcon.style.color = "#444";
+    if (friendsIcon) friendsIcon.style.color = isLight ? "#adb5bd" : "#444";
 
     const stepsCard = document.querySelector('.steps-card');
     if (stepsCard) {
@@ -133,19 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const stepParas = document.querySelectorAll('.step-info p, .friends-card p');
-    stepParas.forEach(p => p.style.color = "#777");
+    stepParas.forEach(p => p.style.color = subText);
 
-    // 7. Bottom Navigation Bar & Active Tab (Refer) Glow
     const navBar = document.querySelector('.nav-bar');
     if (navBar) {
-        navBar.style.background = "#14110d";
-        navBar.style.borderTop = `1px solid #26221c`;
+        navBar.style.background = isLight ? "#ffffff" : "#14110d";
+        navBar.style.borderTop = `1px solid ${cardBorder}`;
     }
 
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
         if (!item.classList.contains('active')) {
-            item.style.color = "#777";
+            item.style.color = isLight ? "#adb5bd" : "#777";
         }
     });
 
