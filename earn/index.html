@@ -198,7 +198,7 @@
         db.ref("admin/homeSettings").on("value", (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                const limitText = document.getElementById('spinLimitText');
+                const limitText = document.getElementById('spinLimitList') || document.getElementById('spinLimitText');
                 if (data.spinLimit && limitText) {
                     limitText.innerText = `Daily Free Spins Limit: ${data.spinLimit}`;
                 }
