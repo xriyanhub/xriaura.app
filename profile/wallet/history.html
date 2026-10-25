@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #12100e;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,9 +16,16 @@
             user-select: none;
         }
 
+        html, body {
+            background-color: #12100e !important;
+            color: #ffffff;
+        }
+
         body {
             padding: 16px;
             padding-bottom: 90px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .header-top {
@@ -107,7 +114,7 @@
     <div class="history-card">
         <div class="history-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
         <h3>No Transactions Yet</h3>
-        <p>Your conversion and withdrawal history will appear here once you start trading.</p>
+        <p>Your conversion and transfer histories will appear here.</p>
     </div>
 
     <!-- Bottom Navigation Bar -->
@@ -137,6 +144,10 @@
     <!-- Linked to Profile Folder's Centralized Aura JS -->
     <script src="../aura.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.opacity = "1";
+        });
+
         const tg = window.Telegram.WebApp;
         tg.expand();
     </script>
