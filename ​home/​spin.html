@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #12100e;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,6 +16,11 @@
             user-select: none;
         }
 
+        html, body {
+            background-color: #12100e !important;
+            color: #ffffff;
+        }
+
         body {
             padding: 16px;
             padding-bottom: 90px;
@@ -23,6 +28,8 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .header-top {
@@ -169,7 +176,7 @@
             <i class="fa-solid fa-list-check"></i>
             <span>Tasks</span>
         </a>
-        <a href="spin.html" class="nav-item active">
+        <a href="index.html" class="nav-item active">
             <i class="fa-solid fa-rotate"></i>
             <span>Earn</span>
         </a>
@@ -186,6 +193,10 @@
     <!-- Linked to Earn Folder's Centralized Aura JS -->
     <script src="aura.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.opacity = "1";
+        });
+
         const tg = window.Telegram.WebApp;
         tg.expand();
 
@@ -199,7 +210,7 @@
             const info = document.getElementById('spinInfo');
             info.innerText = "Spinning...";
 
-            const randomDegree = Math.floor(Math.random() * 360) + 1800; // Fixed Math.random() function call
+            const randomDegree = Math.floor(Math.random() * 360) + 1800;
             wheel.style.transform = `rotate(${randomDegree}deg)`;
 
             setTimeout(() => {
