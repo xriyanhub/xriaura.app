@@ -1,9 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem('aura_theme') || 'dark';
+    const isLight = savedTheme === 'light';
+
     const themeColor = "#ffb703"; // Golden Amber Theme
-    const bgDark = "#0d0d0d";
-    const cardBg = "#141414";
-    const cardBorder = "#222";
-    const glowShadow = "rgba(255, 183, 3, 0.3)";
+    const bgDark = isLight ? "#f8f9fa" : "#0d0d0d";
+    const cardBg = isLight ? "#ffffff" : "#141414";
+    const cardBorder = isLight ? "#dee2e6" : "#222";
+    const glowShadow = isLight ? "rgba(255, 183, 3, 0.2)" : "rgba(255, 183, 3, 0.3)";
+    const textColor = isLight ? "#12100e" : "#ffffff";
+    const subText = isLight ? "#6c757d" : "#888";
+    const iconBg = isLight ? "rgba(255, 183, 3, 0.15)" : "#1c1c1c";
+    const iconBorder = isLight ? "rgba(255, 183, 3, 0.3)" : "#2a2a2a";
+    const navBarBg = isLight ? "#ffffff" : "#111";
+    const navInactive = isLight ? "#adb5bd" : "#666";
 
     document.documentElement.style.setProperty('--primary-glow', themeColor);
     
@@ -13,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         styleSheet.innerHTML = `
             body {
                 background-color: ${bgDark} !important;
-                color: #ffffff !important;
+                color: ${textColor} !important;
             }
             .earn-card:active {
                 border-color: ${themeColor} !important;
@@ -35,17 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cardIcons = document.querySelectorAll('.card-icon');
     cardIcons.forEach(icon => {
-        icon.style.background = "#1c1c1c";
-        icon.style.border = "1px solid #2a2a2a";
+        icon.style.background = iconBg;
+        icon.style.border = `1px solid ${iconBorder}`;
         icon.style.color = themeColor;
         icon.style.boxShadow = `0 0 10px ${glowShadow}`;
     });
 
     const cardTitles = document.querySelectorAll('.card-info h3');
-    cardTitles.forEach(h3 => h3.style.color = "#fff");
+    cardTitles.forEach(h3 => h3.style.color = textColor);
 
     const cardParas = document.querySelectorAll('.card-info p');
-    cardParas.forEach(p => p.style.color = "#888");
+    cardParas.forEach(p => p.style.color = subText);
 
     const cardArrows = document.querySelectorAll('.card-arrow');
     cardArrows.forEach(arrow => arrow.style.color = themeColor);
@@ -53,14 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Bottom Navigation Bar & Active Tab (Earn) Glow
     const navBar = document.querySelector('.nav-bar');
     if (navBar) {
-        navBar.style.background = "#111";
-        navBar.style.borderTop = "1px solid #222";
+        navBar.style.background = navBarBg;
+        navBar.style.borderTop = `1px solid ${cardBorder}`;
     }
 
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
         if (!item.classList.contains('active')) {
-            item.style.color = "#666";
+            item.style.color = navInactive;
         }
     });
 
