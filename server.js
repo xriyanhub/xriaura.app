@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const path = require('path');
 
 dotenv.config();
 
@@ -9,6 +10,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static frontend files (index.html, style.css, etc.)
+app.use(express.static(path.join(__dirname)));
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/xriaura')
@@ -26,11 +30,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
-
-// Root Route
-app.get('/', (req, res) => {
-    res.json({ message: 'XriAura API Server is running successfully! 🚀' });
-});
 
 // Register Route
 app.post('/api/auth/register', async (req, res) => {
