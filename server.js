@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs'); // Debugging er jonno add kora holo
 
 dotenv.config();
 
@@ -10,6 +11,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Debugging: Server-er folder-e kon kon file gulo ashol e ache ta console-e dekhar jonno
+console.log("Current Directory (__dirname):", __dirname);
+try {
+    console.log("Files available in directory:", fs.readdirSync(__dirname));
+} catch (err) {
+    console.error("Error reading directory:", err.message);
+}
 
 // Serve static frontend files
 app.use(express.static(path.join(__dirname)));
