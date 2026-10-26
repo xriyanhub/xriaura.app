@@ -12,25 +12,32 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files from multiple possible directories safely
+// Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
 app.use(express.static(path.join('/opt/render/project/src')));
 app.use(express.static(path.join('/opt/render/project')));
 
-// Dynamic Path Resolver for index.html across any environment layout
+// Bulletproof Dynamic Path Resolver for index.html
 app.get('/', (req, res) => {
-    const possiblePath1 = path.join(__dirname, 'index.html');
-    const possiblePath2 = path.join('/opt/render/project/src/index.html');
-    const possiblePath3 = path.join('/opt/render/project/index.html');
+    const possiblePaths = [
+        path.join(__dirname, 'index.html'),
+        path.join(process.cwd(), 'index.html'),
+        '/opt/render/project/src/index.html',
+        '/opt/render/project/index.html'
+    ];
 
-    if (fs.existsSync(possiblePath1)) {
-        res.sendFile(possiblePath1);
-    } else if (fs.existsSync(possiblePath2)) {
-        res.sendFile(possiblePath2);
-    } else if (fs.existsSync(possiblePath3)) {
-        res.sendFile(possiblePath3);
+    let foundPath = null;
+    for (const filePath of possiblePaths) {
+        if (fs.existsSync(filePath)) {
+            foundPath = filePath;
+            break;
+        }
+    }
+
+    if (foundPath) {
+        res.sendFile(foundPath);
     } else {
-        res.sendFile(path.join(__dirname, '../index.html'));
+        res.status(404).send('<h3>Error: index.html not found in server directory. Please check if index.html is pushed in your GitHub repository root.</h3>');
     }
 });
 
