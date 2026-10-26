@@ -7,22 +7,64 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
+
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/xriaura')
     .then(() => console.log('MongoDB Connected successfully!'))
     .catch((err) => {
         console.error(`Database Connection Error: ${err.message}`);
-        process.exit(1);
     });
 
-app.use(cors());
-app.use(express.json());
+// User Schema & Model
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
+});
 
-// Use External Routes
-app.use('/api/auth', require('./routes/authRoutes'));
+const User = mongoose.model('User', userSchema);
 
+// Root Route
 app.get('/', (req, res) => {
     res.json({ message: 'XriAura API Server is running successfully! 🚀' });
+});
+
+// Register Route
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email is already registered!' });
+        }
+
+        const newUser = new User({ username, email, password });
+        await newUser.save();
+
+        res.status(201).json({ message: 'User registered successfully! 🎉', userId: newUser._id });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Login Route
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user || user.password !== password) {
+            return res.status(400).json({ error: 'Invalid email or password!' });
+        }
+
+        res.json({ message: 'Login successful! 🚀', userId: user._id, username: user.username });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 const PORT = process.env.PORT || 5000;
