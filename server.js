@@ -15,14 +15,26 @@ app.use(express.json());
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
 
-// Bulletproof route for index.html with logging
+// Bulletproof route for index.html with multi-path checking
 app.get('/', (req, res) => {
-    const indexPath = path.join(__dirname, 'index.html');
-    console.log('Trying to serve index.html from:', indexPath);
-    console.log('File exists?', fs.existsSync(indexPath));
+    const possiblePaths = [
+        path.join(__dirname, 'index.html'),
+        path.join(__dirname, 'xriaura', 'index.html'),
+        path.resolve(__dirname, '../index.html')
+    ];
 
-    if (fs.existsSync(indexPath)) {
-        res.sendFile(indexPath);
+    let foundPath = null;
+    for (const p of possiblePaths) {
+        if (fs.existsSync(p)) {
+            foundPath = p;
+            break;
+        }
+    }
+
+    console.log('Trying to serve index.html. Found path:', foundPath);
+
+    if (foundPath) {
+        res.sendFile(foundPath);
     } else {
         res.status(404).send(`Not Found: index.html not found in directory: ${__dirname}`);
     }
