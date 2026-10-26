@@ -14,34 +14,18 @@ app.use(express.json());
 
 // Debugging
 console.log("Current Directory (__dirname):", __dirname);
-console.log("Process Working Directory (cwd):", process.cwd());
 try {
-    console.log("Files available in __dirname:", fs.readdirSync(__dirname));
-    console.log("Files available in cwd:", fs.readdirSync(process.cwd()));
+    console.log("Files available in directory:", fs.readdirSync(__dirname));
 } catch (err) {
     console.error("Error reading directory:", err.message);
 }
 
-// Serve static frontend files safely from multiple possible directories
+// Serve static frontend files safely
 app.use(express.static(__dirname));
-app.use(express.static(process.cwd()));
 
-// Explicit route with Smart Fallback to prevent any ENOENT error
+// Direct and clean route for index.html
 app.get('/', (req, res) => {
-    const possiblePaths = [
-        path.join(__dirname, 'index.html'),
-        path.join(process.cwd(), 'index.html'),
-        path.join(__dirname, '../index.html'),
-        path.resolve('index.html')
-    ];
-
-    const targetFile = possiblePaths.find(p => fs.existsSync(p));
-
-    if (targetFile) {
-        res.sendFile(targetFile);
-    } else {
-        res.status(404).send('Error: index.html could not be located by the server.');
-    }
+    res.sendFile('index.html', { root: __dirname });
 });
 
 // Database Connection
