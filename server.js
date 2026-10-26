@@ -17,18 +17,44 @@ app.use(express.json());
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
 
-// Route Import with explicit .js extensions for Render/Linux compatibility
+// Bulletproof Modular Route Loader with multi-path checking
 try {
-    const authRoutes = require('./routes/authRoutes.js');
-    const userRoutes = require('./routes/userRoutes.js');
-    const earningRoutes = require('./routes/earningRoutes.js');
+    const getRoutePath = (routeName) => {
+        const possiblePaths = [
+            path.join(__dirname, 'routes', `${routeName}.js`),
+            path.join(__dirname, 'routes', routeName.toLowerCase() + '.js'),
+            path.join(__dirname, 'src', 'routes', `${routeName}.js`),
+            path.resolve(__dirname, '../routes', `${routeName}.js`)
+        ];
+        
+        for (const p of possiblePaths) {
+            if (fs.existsSync(p)) {
+                return p;
+            }
+        }
+        return null;
+    };
 
-    app.use('/api/auth', authRoutes);
-    app.use('/api/users', userRoutes);
-    app.use('/api/earnings', earningRoutes);
-    console.log('All modular routes loaded successfully!');
+    const authPath = getRoutePath('authRoutes');
+    const userPath = getRoutePath('userRoutes');
+    const earningPath = getRoutePath('earningRoutes');
+
+    if (authPath) {
+        app.use('/api/auth', require(authPath));
+        console.log('Loaded authRoutes from:', authPath);
+    }
+    if (userPath) {
+        app.use('/api/users', require(userPath));
+        console.log('Loaded userRoutes from:', userPath);
+    }
+    if (earningPath) {
+        app.use('/api/earnings', require(earningPath));
+        console.log('Loaded earningRoutes from:', earningPath);
+    }
+
+    console.log('All available modular routes loaded successfully!');
 } catch (err) {
-    console.log('Route Loading Error:', err.message);
+    console.log('Route Loading Notice:', err.message);
 }
 
 // Bulletproof route for index.html with multi-path checking
