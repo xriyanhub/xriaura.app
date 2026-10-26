@@ -57,7 +57,7 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Direct Fully-Styled HTML Serving Fallback (Zero external dependency issues)
+// Direct Fully-Styled HTML Serving Fallback with Reference Navigation Design
 app.get('*', (req, res) => {
     const htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -79,41 +79,82 @@ app.get('*', (req, res) => {
         .spa-container {
             flex: 1;
             padding: 20px;
-            padding-bottom: 90px;
+            padding-bottom: 110px;
             text-align: center;
         }
         #moduleView {
-            background: #1e293b;
+            background: #161e2e;
             padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
             font-size: 18px;
             font-weight: 600;
             color: #38bdf8;
             margin-top: 40px;
+            border: 1px solid #1e293b;
         }
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #1e293b;
+            background: #111827;
             display: flex;
             justify-content: space-around;
-            padding: 14px 0;
-            border-top: 1px solid #334155;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.4);
+            align-items: center;
+            padding: 10px 0 18px 0;
+            border-top: 1px solid #1f2937;
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.5);
             z-index: 1000;
         }
         .nav-item {
-            color: #94a3b8;
+            color: #9ca3af;
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: color 0.2s;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+            flex: 1;
         }
-        .nav-item:hover, .nav-item.active {
-            color: #38bdf8;
+        .nav-item svg {
+            stroke: currentColor;
+            width: 22px;
+            height: 22px;
+        }
+        .nav-item.active {
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.08);
+            padding: 6px 10px;
+            border-radius: 16px;
+        }
+        .center-fab {
+            position: relative;
+            margin-top: -28px;
+        }
+        .fab-circle {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #fef08a, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.5);
+            border: 3px solid #0f172a;
+        }
+        .center-fab svg {
+            fill: #0f172a;
+            stroke: #0f172a;
+            width: 26px;
+            height: 26px;
+        }
+        .center-fab span {
+            color: #f59e0b;
+            font-weight: 600;
+            margin-top: 2px;
         }
     </style>
 </head>
@@ -124,13 +165,30 @@ app.get('*', (req, res) => {
         <div id="moduleView">Welcome to XriAura Platform! 🚀</div>
     </div>
 
-    <!-- 5-Tab Fixed Bottom Navigation -->
+    <!-- 5-Tab Fixed Bottom Navigation matching reference design -->
     <nav class="bottom-nav">
-        <a href="#home" class="nav-item" data-module="home">Home</a>
-        <a href="#task" class="nav-item" data-module="task">Task</a>
-        <a href="#earn" class="nav-item" data-module="earn">Earn</a>
-        <a href="#refer" class="nav-item" data-module="refer">Refer</a>
-        <a href="#profile" class="nav-item" data-module="profile">Profile</a>
+        <a href="#home" class="nav-item active" data-module="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>Home</span>
+        </a>
+        <a href="#task" class="nav-item" data-module="task">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Tasks</span>
+        </a>
+        <a href="#earn" class="nav-item center-fab" data-module="earn">
+            <div class="fab-circle">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <span>Earn</span>
+        </a>
+        <a href="#refer" class="nav-item" data-module="refer">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Refer</span>
+        </a>
+        <a href="#profile" class="nav-item" data-module="profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Profile</span>
+        </a>
     </nav>
 
     <!-- Main Router Script -->
