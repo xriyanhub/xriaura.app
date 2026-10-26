@@ -5,15 +5,31 @@ const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 
+// Environment variables load
 dotenv.config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
+
+// Route Import (Apnar repository-te thaka alada routes gulo connect korar jonno)
+try {
+    const authRoutes = require('./routes/authRoutes');
+    const userRoutes = require('./routes/userRoutes');
+    const earningRoutes = require('./routes/earningRoutes');
+
+    app.use('/api/auth', authRoutes);
+    app.use('/api/users', userRoutes);
+    app.use('/api/earnings', earningRoutes);
+    console.log('All modular routes loaded successfully!');
+} catch (err) {
+    console.log('Notice: Some modular routes were not loaded directly, running base server.', err.message);
+}
 
 // Bulletproof route for index.html with multi-path checking
 app.get('/', (req, res) => {
@@ -31,8 +47,6 @@ app.get('/', (req, res) => {
         }
     }
 
-    console.log('Trying to serve index.html. Found path:', foundPath);
-
     if (foundPath) {
         res.sendFile(foundPath);
     } else {
@@ -47,51 +61,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/xriaura')
         console.error(`Database Connection Error: ${err.message}`);
     });
 
-// User Schema & Model
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, trim: true },
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
-});
-
-const User = mongoose.model('User', userSchema);
-
-// Register Route
-app.post('/api/auth/register', async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
-
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ error: 'Email is already registered!' });
-        }
-
-        const newUser = new User({ username, email, password });
-        await newUser.save();
-
-        res.status(201).json({ message: 'User registered successfully! 🎉', userId: newUser._id });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Login Route
-app.post('/api/auth/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
-        if (!user || user.password !== password) {
-            return res.status(400).json({ error: 'Invalid email or password!' });
-        }
-
-        res.json({ message: 'Login successful! 🚀', userId: user._id, username: user.username });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
+// Server Listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
