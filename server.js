@@ -23,9 +23,9 @@ try {
 // Serve static frontend files
 app.use(express.static(path.join(__dirname)));
 
-// Explicit route to fix Cannot GET /
+// Explicit route to fix Cannot GET / (Fixed with root option)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile('index.html', { root: __dirname });
 });
 
 // Database Connection
