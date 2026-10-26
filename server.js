@@ -20,12 +20,17 @@ try {
     console.error("Error reading directory:", err.message);
 }
 
-// Serve static frontend files safely
+// Serve static files from both current and parent directory safely
 app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../')));
 
-// Direct and clean route for index.html
+// Absolute Safe Route for index.html to prevent any ENOENT error
 app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: __dirname });
+    const filePath = fs.existsSync(path.join(__dirname, 'index.html')) 
+        ? path.join(__dirname, 'index.html') 
+        : path.join(__dirname, '../index.html');
+        
+    res.sendFile(filePath);
 });
 
 // Database Connection
