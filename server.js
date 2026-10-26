@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs');
 
 dotenv.config();
 
@@ -14,31 +13,10 @@ app.use(express.json());
 
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
-app.use(express.static(path.join('/opt/render/project/src')));
-app.use(express.static(path.join('/opt/render/project')));
 
-// Bulletproof Dynamic Path Resolver for index.html
+// Direct and clean route for index.html
 app.get('/', (req, res) => {
-    const possiblePaths = [
-        path.join(__dirname, 'index.html'),
-        path.join(process.cwd(), 'index.html'),
-        '/opt/render/project/src/index.html',
-        '/opt/render/project/index.html'
-    ];
-
-    let foundPath = null;
-    for (const filePath of possiblePaths) {
-        if (fs.existsSync(filePath)) {
-            foundPath = filePath;
-            break;
-        }
-    }
-
-    if (foundPath) {
-        res.sendFile(foundPath);
-    } else {
-        res.status(404).send('<h3>Error: index.html not found in server directory. Please check if index.html is pushed in your GitHub repository root.</h3>');
-    }
+    res.sendFile('index.html', { root: __dirname });
 });
 
 // Database Connection
