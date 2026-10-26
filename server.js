@@ -12,12 +12,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files directly from __dirname
+// Serve static frontend files from multiple possible directories safely
 app.use(express.static(__dirname));
+app.use(express.static(path.join('/opt/render/project/src')));
+app.use(express.static(path.join('/opt/render/project')));
 
-// Direct and clean route for index.html
+// Dynamic Path Resolver for index.html across any environment layout
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    const possiblePath1 = path.join(__dirname, 'index.html');
+    const possiblePath2 = path.join('/opt/render/project/src/index.html');
+    const possiblePath3 = path.join('/opt/render/project/index.html');
+
+    if (fs.existsSync(possiblePath1)) {
+        res.sendFile(possiblePath1);
+    } else if (fs.existsSync(possiblePath2)) {
+        res.sendFile(possiblePath2);
+    } else if (fs.existsSync(possiblePath3)) {
+        res.sendFile(possiblePath3);
+    } else {
+        res.sendFile(path.join(__dirname, '../index.html'));
+    }
 });
 
 // Database Connection
