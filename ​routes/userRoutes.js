@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/authMiddleware');
-const { getProfile } = require('../controllers/userController');
 
-router.get('/profile', auth, getProfile);
+router.get('/', (req, res) => {
+    res.json({ message: 'User Route Working!' });
+});
 
 module.exports = router;
