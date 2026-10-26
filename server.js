@@ -16,7 +16,6 @@ app.use(express.json());
 
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Bulletproof Modular Route Loader with multi-path checking
 try {
@@ -58,50 +57,39 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Comprehensive Bulletproof Fallback route for index.html with recursive directory scanning
-app.get('*', (req, res) => {
-    const searchDirs = [
-        __dirname,
-        path.join(__dirname, 'public'),
-        path.join(__dirname, 'xriaura'),
-        path.resolve(__dirname, '..'),
-        path.resolve('/opt/render/project/src')
-    ];
-
-    let foundPath = null;
-    
-    // Search index.html in all possible standard locations
-    for (const dir of searchDirs) {
-        const filePath = path.join(dir, 'index.html');
-        if (fs.existsSync(filePath)) {
-            foundPath = filePath;
-            break;
-        }
-    }
-
-    // Recursive search in subdirectories if not found in root
-    if (!foundPath) {
-        try {
-            const files = fs.readdirSync(__dirname);
-            for (const file of files) {
-                const fullPath = path.join(__dirname, file);
-                if (fs.statSync(fullPath).isDirectory()) {
-                    const subIndex = path.join(fullPath, 'index.html');
-                    if (fs.existsSync(subIndex)) {
-                        foundPath = subIndex;
-                        break;
-                    }
-                }
+// Deep Recursive Function to find index.html anywhere in the project
+const findIndexHtml = (dir) => {
+    try {
+        const entries = fs.readdirSync(dir, { withFileTypes: true });
+        for (const entry of entries) {
+            const fullPath = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                if (entry.name === 'node_modules' || entry.name === '.git') continue;
+                const found = findIndexHtml(fullPath);
+                if (found) return found;
+            } else if (entry.name === 'index.html') {
+                return fullPath;
             }
-        } catch (e) {
-            console.log('Directory scan error:', e.message);
         }
+    } catch (e) {
+        // Ignore errors
     }
+    return null;
+};
+
+// Comprehensive Fallback route for index.html
+app.get('*', (req, res) => {
+    // Search starting from current directory, parent directory, and root project directory
+    let foundPath = findIndexHtml(__dirname) || 
+                    findIndexHtml(path.resolve(__dirname, '..')) || 
+                    findIndexHtml('/opt/render/project');
+
+    console.log('Serving index.html from path:', foundPath);
 
     if (foundPath) {
         res.sendFile(foundPath);
     } else {
-        res.status(404).send(`Not Found: index.html could not be located in directory: ${__dirname}`);
+        res.status(404).send(`Not Found: index.html could not be located anywhere in directory: ${__dirname}`);
     }
 });
 
