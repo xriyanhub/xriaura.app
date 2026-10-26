@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 
 dotenv.config();
 
@@ -14,9 +15,17 @@ app.use(express.json());
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
 
-// Direct and clean route for index.html
+// Bulletproof route for index.html with logging
 app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: __dirname });
+    const indexPath = path.join(__dirname, 'index.html');
+    console.log('Trying to serve index.html from:', indexPath);
+    console.log('File exists?', fs.existsSync(indexPath));
+
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        res.status(404).send(`Not Found: index.html not found in directory: ${__dirname}`);
+    }
 });
 
 // Database Connection
