@@ -1,17 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 
 // Load environment variables
 dotenv.config();
 
-// Server configuration update
 // Initialize Express App
 const app = express();
 
-// Connect to Database
-connectDB();
+// Connect to Database directly
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/xriaura')
+    .then(() => console.log('MongoDB Connected successfully!'))
+    .catch((err) => {
+        console.error(`Database Connection Error: ${err.message}`);
+        process.exit(1);
+    });
 
 // Middleware
 app.use(cors());
