@@ -11,8 +11,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files (index.html, style.css, etc.)
+// Serve static frontend files
 app.use(express.static(path.join(__dirname)));
+
+// Explicit route to fix Cannot GET /
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/xriaura')
