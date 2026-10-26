@@ -57,40 +57,49 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Deep Recursive Function to find index.html anywhere in the project
-const findIndexHtml = (dir) => {
-    try {
-        const entries = fs.readdirSync(dir, { withFileTypes: true });
-        for (const entry of entries) {
-            const fullPath = path.join(dir, entry.name);
-            if (entry.isDirectory()) {
-                if (entry.name === 'node_modules' || entry.name === '.git') continue;
-                const found = findIndexHtml(fullPath);
-                if (found) return found;
-            } else if (entry.name === 'index.html') {
-                return fullPath;
-            }
-        }
-    } catch (e) {
-        // Ignore errors
-    }
-    return null;
-};
-
-// Comprehensive Fallback route for index.html
+// Direct HTML Serving Fallback (Eliminates all path-hunting errors)
 app.get('*', (req, res) => {
-    // Search starting from current directory, parent directory, and root project directory
-    let foundPath = findIndexHtml(__dirname) || 
-                    findIndexHtml(path.resolve(__dirname, '..')) || 
-                    findIndexHtml('/opt/render/project');
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XriAura - ThunderWaves Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <!-- App Container -->
+    <div id="app" class="spa-container">
+        <!-- Dynamic Module Content Loads Here -->
+        <div id="moduleView">Loading XriAura...</div>
+    </div>
 
-    console.log('Serving index.html from path:', foundPath);
+    <!-- 5-Tab Fixed Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#home" class="nav-item" data-module="home">
+            <span>Home</span>
+        </a>
+        <a href="#task" class="nav-item" data-module="task">
+            <span>Task</span>
+        </a>
+        <a href="#earn" class="nav-item" data-module="earn">
+            <span>Earn</span>
+        </a>
+        <a href="#refer" class="nav-item" data-module="refer">
+            <span>Refer</span>
+        </a>
+        <a href="#profile" class="nav-item" data-module="profile">
+            <span>Profile</span>
+        </a>
+    </nav>
 
-    if (foundPath) {
-        res.sendFile(foundPath);
-    } else {
-        res.status(404).send(`Not Found: index.html could not be located anywhere in directory: ${__dirname}`);
-    }
+    <!-- Main Router Script -->
+    <script type="module" src="theme.js"></script>
+</body>
+</html>`;
+
+    res.setHeader('Content-Type', 'text/html');
+    res.send(htmlContent);
 });
 
 // Database Connection
