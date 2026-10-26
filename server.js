@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs'); // Debugging er jonno add kora holo
+const fs = require('fs');
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Debugging: Server-er folder-e kon kon file gulo ashol e ache ta console-e dekhar jonno
+// Debugging
 console.log("Current Directory (__dirname):", __dirname);
 console.log("Process Working Directory (cwd):", process.cwd());
 try {
@@ -21,10 +21,10 @@ try {
     console.error("Error reading directory:", err.message);
 }
 
-// Serve static frontend files using process.cwd()
+// Serve static frontend files
 app.use(express.static(process.cwd()));
 
-// Explicit route to fix Cannot GET / (Fixed with process.cwd() to resolve path mismatch)
+// Explicit route to fix Cannot GET /
 app.get('/', (req, res) => {
     res.sendFile('index.html', { root: process.cwd() });
 });
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-const User = mongoose.model('User', userSession = mongoose.model || mongoose.model('User', userSchema));
+const User = mongoose.model('User', userSchema);
 
 // Register Route
 app.post('/api/auth/register', async (req, res) => {
