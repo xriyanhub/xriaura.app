@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files directly from root (index.html, style.css, theme.js, modules)
+// Serve static frontend files directly from current directory
 app.use(express.static(__dirname));
 
 // Modular Route Loader
@@ -44,13 +44,16 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Fallback to index.html for SPA frontend routing
+// Clean SPA Fallback to external index.html
 app.get('*', (req, res) => {
     const indexPath = path.join(__dirname, 'index.html');
+    console.log('Looking for index.html at:', indexPath);
+    
     if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
     } else {
-        res.status(404).send('Error: index.html not found in root directory.');
+        console.error('ERROR: index.html missing in directory:', __dirname);
+        res.status(404).send('Error: index.html not found in root directory. Please check if index.html is pushed to GitHub.');
     }
 });
 
