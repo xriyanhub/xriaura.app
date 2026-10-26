@@ -16,6 +16,8 @@ app.use(express.json());
 
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, '../')));
 
 // Bulletproof Modular Route Loader with multi-path checking
 try {
@@ -57,7 +59,41 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Direct HTML Serving Fallback (Eliminates all path-hunting errors)
+// Explicit Bulletproof Route for style.css
+app.get('/style.css', (req, res) => {
+    const searchPaths = [
+        path.join(__dirname, 'style.css'),
+        path.join(__dirname, 'public', 'style.css'),
+        path.join(__dirname, 'xriaura', 'style.css'),
+        path.resolve(__dirname, '../style.css'),
+        path.resolve('/opt/render/project/src/style.css')
+    ];
+    for (const p of searchPaths) {
+        if (fs.existsSync(p)) {
+            return res.sendFile(p);
+        }
+    }
+    res.status(404).send('/* style.css not found */');
+});
+
+// Explicit Bulletproof Route for theme.js
+app.get('/theme.js', (req, res) => {
+    const searchPaths = [
+        path.join(__dirname, 'theme.js'),
+        path.join(__dirname, 'public', 'theme.js'),
+        path.join(__dirname, 'xriaura', 'theme.js'),
+        path.resolve(__dirname, '../theme.js'),
+        path.resolve('/opt/render/project/src/theme.js')
+    ];
+    for (const p of searchPaths) {
+        if (fs.existsSync(p)) {
+            return res.sendFile(p);
+        }
+    }
+    res.status(404).send('// theme.js not found');
+});
+
+// Direct HTML Serving Fallback
 app.get('*', (req, res) => {
     const htmlContent = `<!DOCTYPE html>
 <html lang="en">
