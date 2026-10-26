@@ -17,18 +17,18 @@ app.use(express.json());
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
 
-// Route Import (Apnar repository-te thaka alada routes gulo connect korar jonno)
+// Route Import with explicit .js extensions for Render/Linux compatibility
 try {
-    const authRoutes = require('./routes/authRoutes');
-    const userRoutes = require('./routes/userRoutes');
-    const earningRoutes = require('./routes/earningRoutes');
+    const authRoutes = require('./routes/authRoutes.js');
+    const userRoutes = require('./routes/userRoutes.js');
+    const earningRoutes = require('./routes/earningRoutes.js');
 
     app.use('/api/auth', authRoutes);
     app.use('/api/users', userRoutes);
     app.use('/api/earnings', earningRoutes);
     console.log('All modular routes loaded successfully!');
 } catch (err) {
-    console.log('Notice: Some modular routes were not loaded directly, running base server.', err.message);
+    console.log('Route Loading Error:', err.message);
 }
 
 // Bulletproof route for index.html with multi-path checking
