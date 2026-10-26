@@ -28,6 +28,7 @@ app.use('/api/earn', require('./routes/earningRoutes'));
 
 // Root Endpoint
 app.get('/', (req, res) => {
+    
     res.json({ message: 'XriAura API Server is running successfully! 🚀' });
 });
 
