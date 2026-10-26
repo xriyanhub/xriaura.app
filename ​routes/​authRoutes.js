@@ -1,19 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
 
-// Register Route
+// Auth Test Route
+router.get('/', (req, res) => {
+    res.json({ message: 'Auth Route is working perfectly!' });
+});
+
+// Basic Register Route
 router.post('/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
-        // Check if user already exists
+        // Try importing User model safely inside try-catch
+        let User;
+        try {
+            User = require('../models/User');
+        } catch (e) {
+            try {
+                User = require('../models/user');
+            } catch (err) {
+                return res.status(500).json({ error: 'User model file not found!' });
+            }
+        }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'Email is already registered!' });
         }
 
-        // Create new user
         const newUser = new User({ username, email, password });
         await newUser.save();
 
@@ -23,12 +37,18 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// Login Route (Basic)
+// Basic Login Route
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Find user by email
+        let User;
+        try {
+            User = require('../models/User');
+        } catch (e) {
+            User = require('../models/user');
+        }
+
         const user = await User.findOne({ email });
         if (!user || user.password !== password) {
             return res.status(400).json({ error: 'Invalid email or password!' });
