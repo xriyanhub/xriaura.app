@@ -14,18 +14,19 @@ app.use(express.json());
 
 // Debugging: Server-er folder-e kon kon file gulo ashol e ache ta console-e dekhar jonno
 console.log("Current Directory (__dirname):", __dirname);
+console.log("Process Working Directory (cwd):", process.cwd());
 try {
-    console.log("Files available in directory:", fs.readdirSync(__dirname));
+    console.log("Files available in directory:", fs.readdirSync(process.cwd()));
 } catch (err) {
     console.error("Error reading directory:", err.message);
 }
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname)));
+// Serve static frontend files using process.cwd()
+app.use(express.static(process.cwd()));
 
-// Explicit route to fix Cannot GET / (Fixed with root option)
+// Explicit route to fix Cannot GET / (Fixed with process.cwd() to resolve path mismatch)
 app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: __dirname });
+    res.sendFile('index.html', { root: process.cwd() });
 });
 
 // Database Connection
@@ -43,7 +44,7 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSession = mongoose.model || mongoose.model('User', userSchema));
 
 // Register Route
 app.post('/api/auth/register', async (req, res) => {
