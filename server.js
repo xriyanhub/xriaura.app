@@ -16,6 +16,7 @@ app.use(express.json());
 
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Bulletproof Modular Route Loader with multi-path checking
 try {
@@ -57,8 +58,8 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Comprehensive Bulletproof route for index.html with recursive directory scanning
-app.get('/', (req, res) => {
+// Comprehensive Bulletproof Fallback route for index.html with recursive directory scanning
+app.get('*', (req, res) => {
     const searchDirs = [
         __dirname,
         path.join(__dirname, 'public'),
@@ -97,12 +98,10 @@ app.get('/', (req, res) => {
         }
     }
 
-    console.log('Serving index.html from path:', foundPath);
-
     if (foundPath) {
         res.sendFile(foundPath);
     } else {
-        res.status(404).send(`Not Found: index.html could not be located. Current Dir: ${__dirname}`);
+        res.status(404).send(`Not Found: index.html could not be located in directory: ${__dirname}`);
     }
 });
 
