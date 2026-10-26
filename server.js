@@ -12,18 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Debugging
-console.log("Current Directory (__dirname):", __dirname);
-try {
-    console.log("Files available in directory:", fs.readdirSync(__dirname));
-} catch (err) {
-    console.error("Error reading directory:", err.message);
-}
-
 // Serve static frontend files directly from __dirname
 app.use(express.static(__dirname));
 
-// Direct route for index.html
+// Direct and clean route for index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
