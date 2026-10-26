@@ -57,26 +57,52 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Bulletproof route for index.html with multi-path checking
+// Comprehensive Bulletproof route for index.html with recursive directory scanning
 app.get('/', (req, res) => {
-    const possiblePaths = [
-        path.join(__dirname, 'index.html'),
-        path.join(__dirname, 'xriaura', 'index.html'),
-        path.resolve(__dirname, '../index.html')
+    const searchDirs = [
+        __dirname,
+        path.join(__dirname, 'public'),
+        path.join(__dirname, 'xriaura'),
+        path.resolve(__dirname, '..'),
+        path.resolve('/opt/render/project/src')
     ];
 
     let foundPath = null;
-    for (const p of possiblePaths) {
-        if (fs.existsSync(p)) {
-            foundPath = p;
+    
+    // Search index.html in all possible standard locations
+    for (const dir of searchDirs) {
+        const filePath = path.join(dir, 'index.html');
+        if (fs.existsSync(filePath)) {
+            foundPath = filePath;
             break;
         }
     }
 
+    // Recursive search in subdirectories if not found in root
+    if (!foundPath) {
+        try {
+            const files = fs.readdirSync(__dirname);
+            for (const file of files) {
+                const fullPath = path.join(__dirname, file);
+                if (fs.statSync(fullPath).isDirectory()) {
+                    const subIndex = path.join(fullPath, 'index.html');
+                    if (fs.existsSync(subIndex)) {
+                        foundPath = subIndex;
+                        break;
+                    }
+                }
+            }
+        } catch (e) {
+            console.log('Directory scan error:', e.message);
+        }
+    }
+
+    console.log('Serving index.html from path:', foundPath);
+
     if (foundPath) {
         res.sendFile(foundPath);
     } else {
-        res.status(404).send(`Not Found: index.html not found in directory: ${__dirname}`);
+        res.status(404).send(`Not Found: index.html could not be located. Current Dir: ${__dirname}`);
     }
 });
 
