@@ -16,8 +16,6 @@ app.use(express.json());
 
 // Serve static frontend files safely from current directory
 app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.resolve(__dirname, '../')));
 
 // Bulletproof Modular Route Loader with multi-path checking
 try {
@@ -59,41 +57,7 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Explicit Bulletproof Route for style.css
-app.get('/style.css', (req, res) => {
-    const searchPaths = [
-        path.join(__dirname, 'style.css'),
-        path.join(__dirname, 'public', 'style.css'),
-        path.join(__dirname, 'xriaura', 'style.css'),
-        path.resolve(__dirname, '../style.css'),
-        path.resolve('/opt/render/project/src/style.css')
-    ];
-    for (const p of searchPaths) {
-        if (fs.existsSync(p)) {
-            return res.sendFile(p);
-        }
-    }
-    res.status(404).send('/* style.css not found */');
-});
-
-// Explicit Bulletproof Route for theme.js
-app.get('/theme.js', (req, res) => {
-    const searchPaths = [
-        path.join(__dirname, 'theme.js'),
-        path.join(__dirname, 'public', 'theme.js'),
-        path.join(__dirname, 'xriaura', 'theme.js'),
-        path.resolve(__dirname, '../theme.js'),
-        path.resolve('/opt/render/project/src/theme.js')
-    ];
-    for (const p of searchPaths) {
-        if (fs.existsSync(p)) {
-            return res.sendFile(p);
-        }
-    }
-    res.status(404).send('// theme.js not found');
-});
-
-// Direct HTML Serving Fallback
+// Direct Fully-Styled HTML Serving Fallback (Zero external dependency issues)
 app.get('*', (req, res) => {
     const htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -101,32 +65,72 @@ app.get('*', (req, res) => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XriAura - ThunderWaves Platform</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .spa-container {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: 90px;
+            text-align: center;
+        }
+        #moduleView {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            font-size: 18px;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-top: 40px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #1e293b;
+            display: flex;
+            justify-content: space-around;
+            padding: 14px 0;
+            border-top: 1px solid #334155;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.4);
+            z-index: 1000;
+        }
+        .nav-item {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #38bdf8;
+        }
+    </style>
 </head>
 <body class="dark-mode">
     <!-- App Container -->
     <div id="app" class="spa-container">
         <!-- Dynamic Module Content Loads Here -->
-        <div id="moduleView">Loading XriAura...</div>
+        <div id="moduleView">Welcome to XriAura Platform! 🚀</div>
     </div>
 
     <!-- 5-Tab Fixed Bottom Navigation -->
     <nav class="bottom-nav">
-        <a href="#home" class="nav-item" data-module="home">
-            <span>Home</span>
-        </a>
-        <a href="#task" class="nav-item" data-module="task">
-            <span>Task</span>
-        </a>
-        <a href="#earn" class="nav-item" data-module="earn">
-            <span>Earn</span>
-        </a>
-        <a href="#refer" class="nav-item" data-module="refer">
-            <span>Refer</span>
-        </a>
-        <a href="#profile" class="nav-item" data-module="profile">
-            <span>Profile</span>
-        </a>
+        <a href="#home" class="nav-item" data-module="home">Home</a>
+        <a href="#task" class="nav-item" data-module="task">Task</a>
+        <a href="#earn" class="nav-item" data-module="earn">Earn</a>
+        <a href="#refer" class="nav-item" data-module="refer">Refer</a>
+        <a href="#profile" class="nav-item" data-module="profile">Profile</a>
     </nav>
 
     <!-- Main Router Script -->
