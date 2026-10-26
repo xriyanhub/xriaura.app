@@ -57,9 +57,36 @@ try {
     console.log('Route Loading Notice:', err.message);
 }
 
-// Clean Fallback route serving index.html directly from file
+// Deep Finder for index.html so it never fails
+const findIndexHtml = (dir) => {
+    try {
+        const entries = fs.readdirSync(dir, { withFileTypes: true });
+        for (const entry of entries) {
+            const fullPath = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                if (entry.name === 'node_modules' || entry.name === '.git') continue;
+                const found = findIndexHtml(fullPath);
+                if (found) return found;
+            } else if (entry.name === 'index.html') {
+                return fullPath;
+            }
+        }
+    } catch (e) {}
+    return null;
+};
+
+// Fallback route that serves the physical index.html file dynamically
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    let foundPath = findIndexHtml(__dirname) || 
+                    findIndexHtml(path.resolve(__dirname, '..')) || 
+                    findIndexHtml('/opt/render/project');
+
+    if (foundPath && fs.existsSync(foundPath)) {
+        console.log('Serving physical index.html from:', foundPath);
+        return res.sendFile(foundPath);
+    } else {
+        res.status(404).send('Error: index.html file not found in repository. Please make sure index.html is pushed to GitHub.');
+    }
 });
 
 // Database Connection
