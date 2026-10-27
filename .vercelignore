@@ -3,8 +3,8 @@ controllers/
 middleware/
 models/
 routes/
-config.js
 server.js
+config.js
 utils.js
 .env
 render.yaml
